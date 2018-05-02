@@ -7,7 +7,8 @@ import java.awt.event.KeyListener;
 public class Graphics extends JPanel implements Runnable, KeyListener {
 	private Thread t;
 	private JFrame frame;
-	private int dim = 800;
+	private int dim = 1000;
+	private Map map;
 	
 	public Graphics() {
 		frame = new JFrame("Super Fun Game");
@@ -19,22 +20,23 @@ public class Graphics extends JPanel implements Runnable, KeyListener {
 		frame.repaint();
 		t = new Thread(this);
 		t.start();
+		map = new Map(dim);
 	}
-
+	
 	@Override
 	public void run() {
 		frame.repaint();
 	}
 
 	public void paint(java.awt.Graphics g) {
-//		super.paintComponent(g);
+		super.paintComponent(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim, dim);
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		g.drawString("time: "+(int)(System.currentTimeMillis()), 10, 10);
+		map.drawMap(g);
 		frame.repaint();
-}
+	}
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {
