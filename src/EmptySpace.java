@@ -34,7 +34,7 @@ public class EmptySpace implements Tile {
 	}
 	
 	public String toString() {
-		if(contents.equals(TileStatus.EMPTY)) return "";
+		if(contents.equals(TileStatus.EMPTY)) return ".";
 		return ("" + contents).substring(0, 1);
 	}
 }
