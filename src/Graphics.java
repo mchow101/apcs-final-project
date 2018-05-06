@@ -40,7 +40,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
    @Override
    public void keyTyped(KeyEvent event) {
-   
        }
 
    @Override
@@ -77,8 +76,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
    @Override
    public void keyReleased(KeyEvent e) {
-       // TODO Auto-generated method stub
-       
    }
 
     @Override
