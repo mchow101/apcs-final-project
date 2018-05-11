@@ -9,11 +9,11 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	private Thread t;
 	private Charecter MtD;
 	private JFrame frame;
-	private JPanel ivt;
-	private int dim = 750;
+	private int dim = 600;
 	private Map map;
 	private Tile imSad; // because he's empty inside D=
 	ArrayList<Items> choices = new ArrayList<Items>();
+	private ArrayList<KaiH> kai = new ArrayList<>();
 
 	public Graphics() {
 		frame = new JFrame("Super Fun Game");
@@ -28,9 +28,11 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		addKeyListener(this);
 		this.setFocusable(true);
 		MtD = new Charecter();
-		imSad = new EmptySpace();
 		frame.setVisible(true);
 		choices.add(Items.NONE);
+		kai.add(new KaiH(5, 8));
+		kai.add(new KaiH(5, 20));
+		kai.add(new KaiH(5, 11));
 	}
 
 	public void paint(java.awt.Graphics g) {
@@ -50,7 +52,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void keyPressed(KeyEvent event) {
 
-		choices = map.updateInventory(MtD.getX(), MtD.getY(), choices);
+		choices = Map.updateInventory(MtD.getX(), MtD.getY(), choices);
 		if(event.getKeyChar() == 'i' || event.getKeyChar() == 'I') {
 			Items[] aChoices = new Items[choices.size()];
 			choices.toArray(aChoices);
@@ -58,35 +60,64 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		}
 		
 		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-			moveMtD(MtD.getX(), MtD.getX() + 1, MtD.getY(), MtD.getY(), 1, 0);
+			move(MtD.getX(), MtD.getX() + 1, MtD.getY(), MtD.getY(), 1, 0, MtD);
 		}
 		
 		if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-			moveMtD(MtD.getX(), MtD.getX() - 1, MtD.getY(), MtD.getY(), -1, 0);
-			
+			move(MtD.getX(), MtD.getX() - 1, MtD.getY(), MtD.getY(), -1, 0, MtD);
 		}
 		if (event.getKeyCode() == KeyEvent.VK_UP) {
-			moveMtD(MtD.getX(), MtD.getX(), MtD.getY(), MtD.getY() - 1, 0, -1);
+			move(MtD.getX(), MtD.getX(), MtD.getY(), MtD.getY() - 1, 0, -1, MtD);
 		}
 		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-			moveMtD(MtD.getX(), MtD.getX(), MtD.getY(), MtD.getY() + 1, 0, 1);
+			move(MtD.getX(), MtD.getX(), MtD.getY(), MtD.getY() + 1, 0, 1, MtD);
+			
 		}
+		
+		for (int i = 0; i < kai.size(); i++) {
+		System.out.println(i);
+		map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i).getTile();
+		
+		if (kai.get(i).isDead()) {
+			kai.remove(i);
+			break;
+		}
+		
+			kai.get(i).move(MtD, map);
+			
+			if (map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()].canContainMonster()) {
+			
+		//	map.getLevel1()[kai.getPrevY()][kai.getPrevX()] = kai.getTile();
+			map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i);
+			}
+			else {
+				kai.get(i).setX(kai.get(i).getPrevX());
+				kai.get(i).setY(kai.get(i).getPrevY());
+			}
+			}
 	}
 	
-	public void moveMtD(int x1, int x2, int y1, int y2, int dx, int dy) {
+	public void move(int x1, int x2, int y1, int y2, int dx, int dy, Creature thing) {
 		if (map.getLevel1()[y2][x2].canContainMtD()) {
-			map.getLevel1()[y1][x1] = imSad;
-			imSad = map.getLevel1()[y2][x2];
-			MtD.setDx(dx);
-			MtD.setDy(dy);
-			MtD.move();
-			map.getLevel1()[MtD.getY()][MtD.getX()] = MtD;
+			map.getLevel1()[y1][x1] = thing.getTile();
+			thing.setTile(map.getLevel1()[y2][x2]);
+			thing.setDx(dx);
+			thing.setDy(dy);
+			thing.move(MtD, map);
+			map.getLevel1()[thing.getY()][thing.getX()] = MtD;
+		}
+
+		else if (map.getLevel1()[y2][x2] instanceof Door){
+			((Door) map.getLevel1()[y2][x2]).setOpen(true);
+		}
+		
+		else if (map.getLevel1()[y2][x2] instanceof Creature){
+			  MtD.attack((Creature) map.getLevel1()[y2][x2], map);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
