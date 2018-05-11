@@ -65,13 +65,11 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		}
 		
 		for (int i = 0; i < kai.size(); i++) {
-		System.out.println(i);
 		map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i).getTile();
 		
 		if (kai.get(i).isDead()) {
 			kai.remove(i);
-			i--;
-			//break;
+			break;
 		}
 		
 			kai.get(i).move(MtD, map);

@@ -101,4 +101,10 @@ public class Charecter implements Tile, Creature {
 		
 	}
 
+	@Override
+	public boolean isDead() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

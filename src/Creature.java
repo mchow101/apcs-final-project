@@ -10,5 +10,6 @@ public interface Creature {
 	public int getX();
 	public Tile getTile();
 	public void setTile(Tile tile);
+	public boolean isDead();
 	
 }
