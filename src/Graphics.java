@@ -3,14 +3,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Graphics extends JPanel implements KeyListener, Runnable {
 	private Thread t;
 	private Charecter MtD;
 	private JFrame frame;
+	private JPanel ivt;
 	private int dim = 750;
 	private Map map;
 	private Tile imSad; // because he's empty inside D=
+	ArrayList<Items> choices = new ArrayList<Items>();
 
 	public Graphics() {
 		frame = new JFrame("Super Fun Game");
@@ -27,6 +30,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		MtD = new Charecter();
 		imSad = new EmptySpace();
 		frame.setVisible(true);
+		choices.add(Items.NONE);
 	}
 
 	public void paint(java.awt.Graphics g) {
@@ -45,6 +49,13 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void keyPressed(KeyEvent event) {
+
+		choices = map.updateInventory(MtD.getX(), MtD.getY(), choices);
+		if(event.getKeyChar() == 'i' || event.getKeyChar() == 'I') {
+			Items[] aChoices = new Items[choices.size()];
+			choices.toArray(aChoices);
+			String choice = (Inventory.showDialog(frame, "Here are your items and such", "Inventory", aChoices, null));
+		}
 		
 		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
 			moveMtD(MtD.getX(), MtD.getX() + 1, MtD.getY(), MtD.getY(), 1, 0);
@@ -70,11 +81,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			MtD.setDy(dy);
 			MtD.move();
 			map.getLevel1()[MtD.getY()][MtD.getX()] = MtD;
-			
-		}
-
-		else if (map.getLevel1()[y2][x2] instanceof Door){
-			((Door) map.getLevel1()[y2][x2]).setOpen(true);
 		}
 	}
 
