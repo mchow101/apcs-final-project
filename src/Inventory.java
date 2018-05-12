@@ -124,7 +124,7 @@ public class Inventory extends JDialog implements ActionListener {
             case "CloseWindow": setVisible(false); break;
         	case "Open": case "Close": Map.act(Items.DOORS); break;
     	}
-        
+        setVisible(false);
     }
     
     //Set button text based on object to interact with

@@ -9,7 +9,7 @@ public class Door implements Tile, Item {
 		this.y = y;
 	}
 	
-	public String toString(){
+	public String toString() {
 		if (open)
 			return "'";
 		return"+";

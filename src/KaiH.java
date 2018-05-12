@@ -1,26 +1,24 @@
 
-public class KaiH implements Creature, Tile{
+public class KaiH implements Creature, Tile {
 
 	private int health;
 	private int strength;
 	private int intel;
 	private int AC;
 	private int maxHealth;
-	
-	
+
 	private int x;
 	private int y;
 	private int prevX;
 	private int prevY;
-	
+
 	int up;
 	int down;
 	int left;
 	int right;
-	
+
 	private boolean dead;
-	
-	
+
 	public boolean isDead() {
 		return dead;
 	}
@@ -39,7 +37,7 @@ public class KaiH implements Creature, Tile{
 
 	private int dx;
 	private int dy;
-	
+
 	private Tile tile;
 
 	public Tile getTile() {
@@ -61,38 +59,37 @@ public class KaiH implements Creature, Tile{
 		prevX = x;
 		prevY = y;
 		tile = new EmptySpace();
-		
+
 		right = 0;
 		left = 0;
 		up = 0;
 		down = 0;
-		
-		
+
 	}
 
 	public void move(Creature MtD, Map map) {
-		
+
 		int direction = 0;
-		
-		if (Math.abs(this.x -  ((Charecter) MtD).getX()) + Math.abs(this.y-((Charecter) MtD).getY()) == 1){
+
+		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
 			this.attack((Charecter) MtD, map);
-		}
-		else {
-			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y+1)-((Charecter) MtD).getY());
-			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y-1)-((Charecter) MtD).getY());
-			left = Math.abs((this.x -1)- ((Charecter) MtD).getX()) + Math.abs(this.y-((Charecter) MtD).getY());
-			right = Math.abs((this.x + 1)- ((Charecter) MtD).getX()) + Math.abs(this.y-((Charecter) MtD).getY());
-			
-			if (!map.getLevel1()[this.y+1][this.x].canContainMonster())
+		} else {
+
+			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
+			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
+			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
+			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
+
+			if (!map.getLevel1()[this.y + 1][this.x].canContainMonster())
 				up = 10000;
-			if (!map.getLevel1()[this.y-1][this.x].canContainMonster())
+			if (!map.getLevel1()[this.y - 1][this.x].canContainMonster())
 				down = 10000;
-			if (!map.getLevel1()[this.y][this.x+1].canContainMonster())
+			if (!map.getLevel1()[this.y][this.x + 1].canContainMonster())
 				right = 10000;
-			if (!map.getLevel1()[this.y][this.x-1].canContainMonster())
+			if (!map.getLevel1()[this.y][this.x - 1].canContainMonster())
 				left = 10000;
-				
-			if (up < down && up < left && up < right )
+
+			if (up < down && up < left && up < right)
 				this.setDy(1);
 			else if (down < left && down < right)
 				this.setDy(-1);
@@ -100,27 +97,24 @@ public class KaiH implements Creature, Tile{
 				this.setDx(-1);
 			else
 				this.setDx(1);
-			
+
 		}
-		
+
 		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
 			this.health++;
 		}
-		
-		//System.out.println(this.tile.toString());
-		
+
+		// System.out.println(this.tile.toString());
+
 		this.prevX = this.x;
 		this.prevY = this.y;
-		
+
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 		this.dx = 0;
 		this.dy = 0;
 		this.setTile(map.getLevel1()[this.y][this.x]);
-		//System.out.println(this.tile.toString());
-//	
-//		System.out.println("the numb " + (MtD.getX() - x) + "  " + (MtD.getY()-y));
-		
+
 	}
 
 	public int getStrength() {
@@ -163,7 +157,7 @@ public class KaiH implements Creature, Tile{
 	public void die(Map map) {
 		map.getLevel1()[this.y][this.x] = this.getTile();
 		this.dead = true;
-		
+
 	}
 
 	public String toString() {
@@ -179,7 +173,7 @@ public class KaiH implements Creature, Tile{
 	public boolean canContainMonster() {
 		return false;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
@@ -198,7 +192,7 @@ public class KaiH implements Creature, Tile{
 
 	public void setHealth(int a) {
 		health = a;
-		
+
 	}
 
 	@Override
@@ -214,8 +208,6 @@ public class KaiH implements Creature, Tile{
 	@Override
 	public void setDy(int dy) {
 		this.dy = dy;
-		
-	}
-	
 
+	}
 }
