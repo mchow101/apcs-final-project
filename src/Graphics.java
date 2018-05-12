@@ -11,6 +11,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	private JFrame frame;
 	private int dim = 600;
 	private Map map;
+	private Tile imSad; // because he's empty inside D=
 	ArrayList<Items> choices = new ArrayList<Items>();
 	private ArrayList<Creature> kai = new ArrayList<>();
 
@@ -60,7 +61,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void keyPressed(KeyEvent event) {
-<<<<<<< HEAD
 
 		if (!MtD.isDead()) {
 
@@ -87,30 +87,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 			}
 
-=======
-		boolean turn = true;
-		choices = Map.updateInventory(MtD.getX(), MtD.getY(), choices);
-		if (event.getKeyChar() == 'i' || event.getKeyChar() == 'I') {
-			turn = false;
-			Items[] aChoices = new Items[choices.size()];
-			choices.toArray(aChoices);
-			String choice = (Inventory.showDialog(frame, "Here are your items and such", "Inventory", aChoices, null));
-		}
-
-		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-			move(MtD.getX(), MtD.getX() + 1, MtD.getY(), MtD.getY(), 1, 0, MtD);
-		}
-		if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-			move(MtD.getX(), MtD.getX() - 1, MtD.getY(), MtD.getY(), -1, 0, MtD);
-		}
-		if (event.getKeyCode() == KeyEvent.VK_UP) {
-			move(MtD.getX(), MtD.getX(), MtD.getY(), MtD.getY() - 1, 0, -1, MtD);
-		}
-		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-			move(MtD.getX(), MtD.getX(), MtD.getY(), MtD.getY() + 1, 0, 1, MtD);
-		}
-		if (turn) {
->>>>>>> 2f70eadb2a31d79d625d6b71fe7de984824549d5
 			for (int i = 0; i < kai.size(); i++) {
 				map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i).getTile();
 
@@ -122,28 +98,19 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 				kai.get(i).move(MtD, map);
 
 				if (map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()].canContainMonster()) {
-<<<<<<< HEAD
 
 					// map.getLevel1()[kai.getPrevY()][kai.getPrevX()] = kai.getTile();
 					map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = (Tile) kai.get(i);
-=======
-					map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i);
->>>>>>> 2f70eadb2a31d79d625d6b71fe7de984824549d5
 				} else {
 					kai.get(i).setX(kai.get(i).getPrevX());
 					kai.get(i).setY(kai.get(i).getPrevY());
 				}
-<<<<<<< HEAD
 			}
 			
 			
 				
 			}
 		
-=======
-			}
-		}
->>>>>>> 2f70eadb2a31d79d625d6b71fe7de984824549d5
 	}
 
 	public void move(int x1, int x2, int y1, int y2, int dx, int dy, Creature thing) {
@@ -168,7 +135,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		if (MtD.getStrength() > Math.random()*25 && MtD.getHealth() != MtD.getMaxHealth()) {
 			MtD.setHealth(MtD.getHealth() + 1);
 			System.out.println(MtD.getHealth());
-=======
 		}
 	}
 
