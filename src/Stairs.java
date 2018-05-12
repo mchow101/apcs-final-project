@@ -34,7 +34,6 @@ public class Stairs implements Tile, Item {
 
 	@Override
 	public boolean canUse(int locx, int locy) {
-		System.out.println(x + " " + y + " " + locx + " " + locy);
 		return (locx == x && locy == y);
 	}
 

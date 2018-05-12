@@ -73,35 +73,12 @@ public class KaiH implements Creature, Tile{
 			this.attack((Charecter) MtD);
 		}
 		else {
-//			if (Math.abs(this.x - ((Charecter) MtD).getX()) >= Math.abs(this.y - ((Charecter) MtD).getY())) {
-//				if (this.x - ((Charecter) MtD).getX() > 0) { 
-//					this.setDx(-1);
-//					//System.out.println("check 1");
-//				}
-//				else {
-//					this.setDx(1);
-//					//System.out.println("check 2");
-//				}
-//			}
-//			
-//			else {
-//				if (this.y - ((Charecter) MtD).getY() > 0) {
-//					this.setDy(-1);
-//					//System.out.println("check 3");
-//				}
-//				else {
-//					//System.out.println("check 4");
-//					this.setDy(1);
-//				}
-//			}
 			
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y+1)-((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y-1)-((Charecter) MtD).getY());
 			left = Math.abs((this.x -1)- ((Charecter) MtD).getX()) + Math.abs(this.y-((Charecter) MtD).getY());
 			right = Math.abs((this.x + 1)- ((Charecter) MtD).getX()) + Math.abs(this.y-((Charecter) MtD).getY());
-			
-		//	System.out.println("up is: " + up + " down is: " + down + " left is: " + left + " right is: " + right);
-			
+						
 			if (!map.getLevel1()[this.y+1][this.x].canContainMonster())
 				up = 10000;
 			if (!map.getLevel1()[this.y-1][this.x].canContainMonster())
@@ -122,9 +99,6 @@ public class KaiH implements Creature, Tile{
 			
 		}
 		
-		
-		//System.out.println(this.tile.toString());
-		
 		this.prevX = this.x;
 		this.prevY = this.y;
 		
@@ -133,9 +107,6 @@ public class KaiH implements Creature, Tile{
 		this.dx = 0;
 		this.dy = 0;
 		this.setTile(map.getLevel1()[this.y][this.x]);
-		//System.out.println(this.tile.toString());
-//	
-//		System.out.println("the numb " + (MtD.getX() - x) + "  " + (MtD.getY()-y));
 		
 	}
 
@@ -161,7 +132,6 @@ public class KaiH implements Creature, Tile{
 
 	public void attack(Charecter MtD) {
 		MtD.setHealth(MtD.getHealth()-strength);
-	//	System.out.println(MtD.getHealth());
 	}
 
 	@Override
@@ -221,6 +191,4 @@ public class KaiH implements Creature, Tile{
 		this.dy = dy;
 		
 	}
-	
-
 }
