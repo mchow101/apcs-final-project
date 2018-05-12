@@ -1,8 +1,12 @@
+import java.util.ArrayList;
+
 public class Map {
 	private Tile[][] level1;
 	private Tile[][] level2;
 	private int dim;
 	
+	private static Tile[][] level;
+	private static ArrayList<Tile> inventory;
 	private static int lvl = 1;
 	
 	public Map(int dim) {
@@ -66,13 +70,13 @@ public class Map {
 				switch(level1bp[i][j]) {
 				case '.': level1[i][j] = new EmptySpace(); break;
 				case 'w': level1[i][j] = new Wall(); break;
-				case 'd': level1[i][j] = new Door(); break;
-				case 's': level1[i][j] = new Stairs(); break;
+				case 'd': level1[i][j] = new Door(j, i); break;
+				case 's': level1[i][j] = new Stairs(j, i); break;
 				}
 			}
 		}
 		level2 = level1;
-		
+		inventory = new ArrayList<Tile>();
 	}
 	
 	public Tile[][] getLevel1() {
@@ -93,7 +97,7 @@ public class Map {
 
 	//converts array to actual map
 	public void drawMap(java.awt.Graphics g) {
-		Tile[][] level = null;
+		level = null;
 		//sets to current level
 		switch(getLvl()) {
 		case 1: level = level1; break;
@@ -115,6 +119,38 @@ public class Map {
 
 	public static void setLvl(int lvl) {
 		Map.lvl = lvl;
+	}
+
+	public static ArrayList<Tile> inventory() {
+		return inventory;
+	}
+	
+	public static ArrayList<Items> updateInventory(int locx, int locy, ArrayList<Items> choices) {
+		choices.clear();
+		inventory.clear();
+		for(int i = 0; i < level.length; i++) {
+			for(int j = 0; j < level[i].length; j++) {
+				//Doors
+				if((level[i][j] instanceof Door) && ((Door)(level[i][j])).canUse(locx, locy)) {
+					choices.add(Items.DOORS);
+					inventory.add(level[i][j]);
+				}
+				//Stairs
+				if((level[i][j] instanceof Stairs) && ((Stairs)(level[i][j])).canUse(locx, locy)) {
+					choices.add(Items.STAIRS);
+					inventory.add(level[i][j]);
+				}
+			}
+		}
+		
+		if(choices.size() == 0) choices.add(Items.NONE);
+		return choices;
+	}
+	
+	public static void act(Items item) {
+		if(item.equals(Items.DOORS)) {
+			((Door) inventory.get(0)).setOpen(!(((Door) inventory.get(0)).getOpen()));
+		}
 	}
 	
 }

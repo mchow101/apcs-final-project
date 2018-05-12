@@ -5,6 +5,8 @@ public class KaiH implements Creature, Tile{
 	private int strength;
 	private int intel;
 	private int AC;
+	private int maxHealth;
+	
 	
 	private int x;
 	private int y;
@@ -50,9 +52,10 @@ public class KaiH implements Creature, Tile{
 
 	public KaiH(int x, int y) {
 		health = 25;
+		maxHealth = 25;
 		strength = 5;
-		intel = (int) (12 * Math.random() + 6);
-		AC = (int) (4 * Math.random()) + 2;
+		intel = 5;
+		AC = 12;
 		this.y = x;
 		this.x = y;
 		prevX = x;
@@ -63,6 +66,8 @@ public class KaiH implements Creature, Tile{
 		left = 0;
 		up = 0;
 		down = 0;
+		
+		
 	}
 
 	public void move(Creature MtD, Map map) {
@@ -70,7 +75,7 @@ public class KaiH implements Creature, Tile{
 		int direction = 0;
 		
 		if (Math.abs(this.x -  ((Charecter) MtD).getX()) + Math.abs(this.y-((Charecter) MtD).getY()) == 1){
-			this.attack((Charecter) MtD);
+			this.attack((Charecter) MtD, map);
 		}
 		else {
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y+1)-((Charecter) MtD).getY());
@@ -98,6 +103,9 @@ public class KaiH implements Creature, Tile{
 			
 		}
 		
+		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
+			this.health++;
+		}
 		
 		//System.out.println(this.tile.toString());
 		
@@ -135,9 +143,20 @@ public class KaiH implements Creature, Tile{
 		return dy;
 	}
 
-	public void attack(Charecter MtD) {
-		MtD.setHealth(MtD.getHealth()-strength);
-	//	System.out.println(MtD.getHealth());
+	public void attack(Charecter MtD, Map map) {
+		int damage = 0;
+		
+		damage+=this.strength;
+		
+		if (MtD.getAC() > Math.random()*100) {
+			damage = 0;
+		}
+		
+		MtD.setHealth(MtD.getHealth()-damage);
+		
+		if (MtD.getHealth() <= 0) {
+			MtD.die(map);
+		}
 	}
 
 	@Override

@@ -1,8 +1,11 @@
 
-public class Stairs implements Tile{
+public class Stairs implements Tile, Item {
 	private boolean up;
+	private int x, y;
 
-	public Stairs() {	
+	public Stairs(int x, int y) {	
+		this.x = x;
+		this.y = y;
 	}
 
 	@Override
@@ -21,6 +24,22 @@ public class Stairs implements Tile{
 	
 	public String toString() {
 		return ">";
+	}
+
+	@Override
+	public String action() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean canUse(int locx, int locy) {
+		return (locx == x && locy == y);
+	}
+
+	@Override
+	public Items getType() {
+		return Items.STAIRS;
 	}
 	
 }

@@ -1,10 +1,12 @@
-
-public class Door implements Tile {
+public class Door implements Tile, Item {
 	
 	private boolean open;
+	private int x, y;
 
-	public Door() {
+	public Door(int x, int y) {
 		open = false;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public String toString(){
@@ -15,6 +17,10 @@ public class Door implements Tile {
 		
 	public void setOpen(boolean open) {
 		this.open = open;
+	}
+	
+	public boolean getOpen() {
+		return this.open;
 	}
 
 	@Override
@@ -27,4 +33,24 @@ public class Door implements Tile {
 		return open;
 	}
 
+	@Override
+	public String action() {
+		if(open) return "Close";
+		return "Open";
+	}
+
+	@Override
+	public boolean canUse(int locx, int locy) {
+		if(Math.abs(locy - y) <= 1 && locx == x) {
+			return true;
+		} else if(Math.abs(locx - x) <= 1 && locy == y) {
+			return true;
+		} 
+		return false;
+	}
+
+	@Override
+	public Items getType() {
+		return Items.DOORS;
+	}
 }
