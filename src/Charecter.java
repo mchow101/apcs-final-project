@@ -38,7 +38,7 @@ public class Charecter implements Tile, Creature {
 
 	public Charecter() {
 		health = 50;
-		strength = 5;
+		strength = 15;
 		maxHealth = 50;
 
 		x = 5;
@@ -104,7 +104,7 @@ public class Charecter implements Tile, Creature {
 	}
 
 	public String toString() {
-		return "@";
+		return "!?";
 	}
 
 	@Override

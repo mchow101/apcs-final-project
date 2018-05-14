@@ -115,9 +115,12 @@ public class Map {
 				if(level[i][j] instanceof KaiH) { 
 					g.setColor(new Color((((KaiH) (level[i][j])).getHealth())*9, 0, 0)); 
 				}
+				if(level[i][j] instanceof Bryce) {
+					g.setColor(new Color((((Bryce) (level[i][j])).getHealth())*9, 0, 0));
+				}
 				if(level[i][j] instanceof Charecter) {
-					g.setColor(Color.MAGENTA);
-//					g.setColor(new Color((((Charecter) (level[i][j])).getHealth())*9, 0, 0)); 
+					//g.setColor(Color.BLUE);
+					g.setColor(new Color((((Charecter) (level[i][j])).getHealth())*4, 0, 0)); 
 				}
 				g.drawString(level[i][j].toString(), j*y, i*x);
 			}

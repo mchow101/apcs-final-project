@@ -12,9 +12,10 @@ public interface Creature {
 	public void setTile(Tile tile);
 	public boolean isDead();
 	public int getPrevX();
-	public void setX(int prevX);
+	public void setX(int x);
 	public int getPrevY();
-	public void setY(int prevY);
+	public void setY(int y);
 	public int getAC();
+	public void attack(Creature enemy, Map map);
 	
 }

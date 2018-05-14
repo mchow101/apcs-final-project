@@ -13,7 +13,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	private Map map;
 	private Tile imSad; // because he's empty inside D=
 	ArrayList<Items> choices = new ArrayList<Items>();
-	private ArrayList<Creature> kai = new ArrayList<>();
+	private ArrayList<Creature> enemy = new ArrayList<>();
 
 	public Graphics() {
 		frame = new JFrame("Super Fun Game");
@@ -30,9 +30,26 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		MtD = new Charecter();
 		frame.setVisible(true);
 		choices.add(Items.NONE);
-		kai.add(new KaiH(5, 8));
-		kai.add(new KaiH(5, 20));
-		kai.add(new KaiH(5, 11));
+		//enemy.add(new KaiH(5, 8));
+		enemy.add(new KaiH(5, 20));
+		//enemy.add(new KaiH(5, 11));
+		
+		int randomx;
+		int randomy;
+		
+		for (int i = 0; i < 10; i++) {
+			randomx = (int) (Math.random()*48);
+			randomy = (int) (Math.random()*48);
+			
+			if (map.getLevel1()[randomy][randomy].canContainMonster()) {
+			if (Math.random() > .5)
+		enemy.add(new Bryce (randomy,randomx));
+			else
+		enemy.add(new KaiH(randomy, randomx));
+		}
+			else
+				i--;
+		}
 	}
 
 	public void paint(java.awt.Graphics g) {
@@ -48,7 +65,9 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		}
 		
 		else {	
-			g.drawString("Oh darn, I died", 10, 10);
+			Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
+			// image from https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
+	        g.drawImage(image, 50, 5, 500, 375, this);
 		}
 		
 		frame.repaint();
@@ -87,23 +106,24 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 			}
 
-			for (int i = 0; i < kai.size(); i++) {
-				map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i).getTile();
+			for (int i = 0; i < enemy.size(); i++) {
+				map.getLevel1()[enemy.get(i).getY()][enemy.get(i).getX()] = enemy.get(i).getTile();
 
-				if (kai.get(i).isDead()) {
-					kai.remove(i);
+				if (enemy.get(i).isDead()) {
+					enemy.remove(i);
 					break;
 				}
 
-				kai.get(i).move(MtD, map);
+				enemy.get(i).move(MtD, map);
 
-				if (map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()].canContainMonster()) {
+				if (map.getLevel1()[enemy.get(i).getY()][enemy.get(i).getX()].canContainMonster()) {
 
-					// map.getLevel1()[kai.getPrevY()][kai.getPrevX()] = kai.getTile();
-					map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = (Tile) kai.get(i);
+					// map.getLevel1()[enemy.getPrevY()][enemy.getPrevX()] = enemy.getTile();
+					map.getLevel1()[enemy.get(i).getY()][enemy.get(i).getX()] = (Tile) enemy.get(i);
+					//System.out.println(enemy.get(i).toString());
 				} else {
-					kai.get(i).setX(kai.get(i).getPrevX());
-					kai.get(i).setY(kai.get(i).getPrevY());
+					enemy.get(i).setX(enemy.get(i).getPrevX());
+					enemy.get(i).setY(enemy.get(i).getPrevY());
 				}
 			}
 			
@@ -134,7 +154,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		
 		if (MtD.getStrength() > Math.random()*25 && MtD.getHealth() != MtD.getMaxHealth()) {
 			MtD.setHealth(MtD.getHealth() + 1);
-			System.out.println(MtD.getHealth());
+		//	System.out.println(MtD.getHealth());
 		}
 	}
 

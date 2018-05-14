@@ -1,5 +1,5 @@
 
-public class KaiH implements Creature, Tile {
+public class Bryce implements Creature, Tile {
 
 	private int health;
 	private int strength;
@@ -48,7 +48,7 @@ public class KaiH implements Creature, Tile {
 		this.tile = tile;
 	}
 
-	public KaiH(int x, int y) {
+	public Bryce(int x, int y) {
 		health = 25;
 		maxHealth = 25;
 		strength = 5;
@@ -71,9 +71,11 @@ public class KaiH implements Creature, Tile {
 
 		int direction = 0;
 
-		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
+		if (straightLine(MtD, map)) {
+			//System.out.println("he he he I could attack you");
 			this.attack((Charecter) MtD, map);
-		} else {
+		}
+		else {
 
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
@@ -81,21 +83,21 @@ public class KaiH implements Creature, Tile {
 			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 
 			if (!map.getLevel1()[this.y + 1][this.x].canContainMonster())
-				up = 10000;
+				up = -10000;
 			if (!map.getLevel1()[this.y - 1][this.x].canContainMonster())
-				down = 10000;
+				down = -10000;
 			if (!map.getLevel1()[this.y][this.x + 1].canContainMonster())
-				right = 10000;
+				right = -10000;
 			if (!map.getLevel1()[this.y][this.x - 1].canContainMonster())
-				left = 10000;
-
-			if (up < down && up < left && up < right)
+				left = -10000;
+			
+			if (up > down && up > left && up > right)
 				this.setDy(1);
-			else if (down < left && down < right)
+			else if (down > left && down > right)
 				this.setDy(-1);
-			else if (left < right)
+			else if (left > right)
 				this.setDx(-1);
-			else if (right != 10000)
+			else if (right != -10000)
 				this.setDx(1);
 
 		}
@@ -115,6 +117,31 @@ public class KaiH implements Creature, Tile {
 		this.dy = 0;
 		this.setTile(map.getLevel1()[this.y][this.x]);
 
+	}
+
+	private boolean straightLine(Creature MtD, Map map) {
+		
+		int x = MtD.getX();
+		int y = MtD.getY();
+		
+		while (x != this.x || y != this.y) {
+			if (!map.getLevel1()[y][x].canContainMonster() && !map.getLevel1()[y][x].canContainMtD())
+				return false;
+			if (Math.abs(this.x - x) > Math.abs(this.y-y)) {
+				if (x - this.x > 0)
+					x--;
+				else 
+					x++;
+			}
+			else {
+				if (y - this.y > 0)
+					y--;
+				else
+					y++;
+			}
+		}
+		
+		return true;
 	}
 
 	public int getStrength() {
@@ -138,12 +165,15 @@ public class KaiH implements Creature, Tile {
 	}
 
 	public void attack(Creature MtD, Map map) {
+		int distance = Math.abs(this.y - MtD.getY()) + (this.x - MtD.getY());
+		
 		int damage = 0;
 		
 		damage+=this.strength;
 		
 		if (MtD.getAC() > Math.random()*100) {
 			damage = 0;
+			System.out.println("Damage blocked");
 		}
 		
 		MtD.setHealth(MtD.getHealth()-damage);
@@ -161,7 +191,7 @@ public class KaiH implements Creature, Tile {
 	}
 
 	public String toString() {
-		return "k";
+		return "b";
 	}
 
 	@Override
