@@ -30,27 +30,30 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		MtD = new Charecter();
 		frame.setVisible(true);
 		choices.add(Items.NONE);
-		//enemy.add(new KaiH(5, 8));
-		enemy.add(new KaiH(5, 20));
-		//enemy.add(new KaiH(5, 11));
 		
 		int randomx;
 		int randomy;
 		
-		for (int i = 0; i < 10; i++) {
-			randomx = (int) (Math.random()*48);
-			randomy = (int) (Math.random()*48);
+		for (int i = 0; i < 25; i++) {
+			randomx = (int) (Math.random()*42);
+			randomy = (int) (Math.random()*42);
 			
-			if (map.getLevel1()[randomy][randomy].canContainMonster()) {
+			if (map.getLevel1()[randomy][randomx].canContainMonster()) {
+				System.out.println(map.getLevel1()[randomy][randomx].toString());
 			if (Math.random() > .5)
 		enemy.add(new Bryce (randomy,randomx));
 			else
 		enemy.add(new KaiH(randomy, randomx));
 		}
-			else
-				i--;
 		}
-	}
+		
+//		for (int i = 4; i < map.getLevel1().length-4; i++) {
+//			for (int j = 4; j < map.getLevel1()[i].length-4; j++) {
+//				if (map.getLevel1()[i][j].canContainMonster())
+//					enemy.add(new KaiH(i, j));
+//			}
+//		}
+		}
 
 	public void paint(java.awt.Graphics g) {
 	
