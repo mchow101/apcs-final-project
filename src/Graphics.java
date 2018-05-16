@@ -36,21 +36,21 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	}
 
 	public void paint(java.awt.Graphics g) {
-	
+
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim, dim);
 		g.setColor(Color.WHITE);
-		
+
 		if (!MtD.isDead()) {
-		map.drawMap(g);
-		
+			map.drawMap(g);
+
 		}
-		
-		else {	
+
+		else {
 			g.drawString("Oh darn, I died", 10, 10);
 		}
-		
+
 		frame.repaint();
 	}
 
@@ -64,14 +64,24 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 		if (!MtD.isDead()) {
 
-			choices = Map.updateInventory(MtD.getX(), MtD.getY(), choices);
+			choices = Map.updateInventory(MtD, choices);
 			if (event.getKeyChar() == 'i' || event.getKeyChar() == 'I') {
-				Items[] aChoices = new Items[choices.size()];
-				choices.toArray(aChoices);
-				String choice = (Inventory.showDialog(frame, "Here are your items and such", "Inventory", aChoices,
-						null));
+				String[] aChoices = new String[choices.size()];
+				for(int i = 0; i < choices.size(); i++) {
+					if(choices.get(i).equals(Items.DOORS)) 
+						aChoices[i] = "Door";
+					else if(choices.get(i).equals(Items.STAIRS) && kai.size() == 0)
+						aChoices[i] = "Stairs";
+					else
+						aChoices[i] = "None";
+				}
+				String choice = (Inventory.showDialog(frame, "Here are your items.", "Inventory", aChoices, null));
 			}
 
+			if (event.getKeyChar() == 's' || event.getKeyChar() == 'S') {
+				Stats.showDialog(frame, "Current Level: " + Map.getLvl(), "Player Statistics", MtD.stats(), null);
+			}
+			
 			if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
 				move(MtD.getX(), MtD.getX() + 1, MtD.getY(), MtD.getY(), 1, 0, MtD);
 			}
@@ -88,7 +98,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			}
 
 			for (int i = 0; i < kai.size(); i++) {
-				map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i).getTile();
+				map.getLevel()[kai.get(i).getY()][kai.get(i).getX()] = kai.get(i).getTile();
 
 				if (kai.get(i).isDead()) {
 					kai.remove(i);
@@ -97,50 +107,47 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 				kai.get(i).move(MtD, map);
 
-				if (map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()].canContainMonster()) {
+				if (map.getLevel()[kai.get(i).getY()][kai.get(i).getX()].canContainMonster()) {
 
 					// map.getLevel1()[kai.getPrevY()][kai.getPrevX()] = kai.getTile();
-					map.getLevel1()[kai.get(i).getY()][kai.get(i).getX()] = (Tile) kai.get(i);
+					map.getLevel()[kai.get(i).getY()][kai.get(i).getX()] = (Tile) kai.get(i);
 				} else {
 					kai.get(i).setX(kai.get(i).getPrevX());
 					kai.get(i).setY(kai.get(i).getPrevY());
 				}
 			}
-			
-			
-				
-			}
-		
+
+		}
+
 	}
 
 	public void move(int x1, int x2, int y1, int y2, int dx, int dy, Creature thing) {
-		if (map.getLevel1()[y2][x2].canContainMtD()) {
-			map.getLevel1()[y1][x1] = thing.getTile();
-			thing.setTile(map.getLevel1()[y2][x2]);
+		if (map.getLevel()[y2][x2].canContainMtD()) {
+			map.getLevel()[y1][x1] = thing.getTile();
+			thing.setTile(map.getLevel()[y2][x2]);
 			thing.setDx(dx);
 			thing.setDy(dy);
 			thing.move(MtD, map);
-			map.getLevel1()[thing.getY()][thing.getX()] = MtD;
-			
+			map.getLevel()[thing.getY()][thing.getX()] = MtD;
+
 		}
 
-		else if (map.getLevel1()[y2][x2] instanceof Door) {
-			((Door) map.getLevel1()[y2][x2]).setOpen(true);
+		else if (map.getLevel()[y2][x2] instanceof Door) {
+			((Door) map.getLevel()[y2][x2]).setOpen(true);
 		}
 
-		else if (map.getLevel1()[y2][x2] instanceof Creature) {
-			MtD.attack((Creature) map.getLevel1()[y2][x2], map);
+		else if (map.getLevel()[y2][x2] instanceof Creature) {
+			MtD.attack((Creature) map.getLevel()[y2][x2], map);
 		}
-		
-		if (MtD.getStrength() > Math.random()*25 && MtD.getHealth() != MtD.getMaxHealth()) {
+
+		if (MtD.getStrength() > Math.random() * 25 && MtD.getHealth() != MtD.getMaxHealth()) {
 			MtD.setHealth(MtD.getHealth() + 1);
-			System.out.println(MtD.getHealth());
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+
 	}
 
 	@Override

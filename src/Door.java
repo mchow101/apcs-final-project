@@ -1,12 +1,13 @@
 public class Door implements Tile, Item {
 	
 	private boolean open;
-	private int x, y;
+	private int x, y, i;
 
 	public Door(int x, int y) {
 		open = false;
 		this.x = x;
 		this.y = y;
+		this.i = 0;
 	}
 	
 	public String toString() {
@@ -52,5 +53,15 @@ public class Door implements Tile, Item {
 	@Override
 	public Items getType() {
 		return Items.DOORS;
+	}
+
+	@Override
+	public int getIndex() {
+		return i;
+	}
+	
+	@Override
+	public void setIndex(int i) {
+		this.i = i;
 	}
 }
