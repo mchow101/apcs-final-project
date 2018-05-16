@@ -30,24 +30,23 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		MtD = new Charecter();
 		frame.setVisible(true);
 		choices.add(Items.NONE);
-		//enemy.add(new KaiH(5, 8));
+		// enemy.add(new KaiH(5, 8));
 		enemy.add(new KaiH(5, 20));
-		//enemy.add(new KaiH(5, 11));
-		
+		// enemy.add(new KaiH(5, 11));
+
 		int randomx;
 		int randomy;
-		
+
 		for (int i = 0; i < 10; i++) {
-			randomx = (int) (Math.random()*48) + 1;
-			randomy = (int) (Math.random()*48) + 1;
-			
-			if (map.getLevel()[randomy][randomy].canContainMonster()) {
-			if (Math.random() > .5)
-		enemy.add(new Bryce (randomy,randomx));
-			else
-		enemy.add(new KaiH(randomy, randomx));
-		}
-			else
+			randomx = (int) (Math.random() * 48) + 1;
+			randomy = (int) (Math.random() * 48) + 1;
+
+			if (map.getLevel()[randomy][randomx].canContainMonster()) {
+				if (Math.random() > .5)
+					enemy.add(new Bryce(randomy, randomx));
+				else
+					enemy.add(new KaiH(randomy, randomx));
+			} else
 				i--;
 		}
 	}
@@ -63,11 +62,12 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			map.drawMap(g);
 
 		}
-		
-		else {	
+
+		else {
 			Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
-			// image from https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
-	        g.drawImage(image, 50, 5, 500, 375, this);
+			// image from
+			// https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
+			g.drawImage(image, 50, 5, 500, 375, this);
 		}
 
 		frame.repaint();
@@ -86,10 +86,10 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			choices = Map.updateInventory(MtD, choices);
 			if (event.getKeyChar() == 'i' || event.getKeyChar() == 'I') {
 				String[] aChoices = new String[choices.size()];
-				for(int i = 0; i < choices.size(); i++) {
-					if(choices.get(i).equals(Items.DOORS)) 
+				for (int i = 0; i < choices.size(); i++) {
+					if (choices.get(i).equals(Items.DOORS))
 						aChoices[i] = "Door";
-					else if(choices.get(i).equals(Items.STAIRS) && enemy.size() == 0)
+					else if (choices.get(i).equals(Items.STAIRS) && enemy.size() == 0)
 						aChoices[i] = "Stairs";
 					else
 						aChoices[i] = "None";
@@ -100,7 +100,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			if (event.getKeyChar() == 's' || event.getKeyChar() == 'S') {
 				Stats.showDialog(frame, "Current Level: " + Map.getLvl(), "Player Statistics", MtD.stats(), null);
 			}
-			
+
 			if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
 				move(MtD.getX(), MtD.getX() + 1, MtD.getY(), MtD.getY(), 1, 0, MtD);
 			}
@@ -130,7 +130,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 					// map.getLevel1()[enemy.getPrevY()][enemy.getPrevX()] = enemy.getTile();
 					map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = (Tile) enemy.get(i);
-					//System.out.println(enemy.get(i).toString());
+					// System.out.println(enemy.get(i).toString());
 				} else {
 					enemy.get(i).setX(enemy.get(i).getPrevX());
 					enemy.get(i).setY(enemy.get(i).getPrevY());
