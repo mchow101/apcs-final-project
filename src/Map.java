@@ -184,19 +184,16 @@ public class Map {
 				g.setColor(Color.WHITE);
 				if (level[i][j] instanceof Door) {
 					g.setColor(Color.LIGHT_GRAY);
-				}
-				if (level[i][j] instanceof Stairs) {
+				} else if (level[i][j] instanceof Stairs) {
 					g.setColor(Color.LIGHT_GRAY);
-				}
-				if (level[i][j] instanceof KaiH) {
-					g.setColor(new Color(225 - (((KaiH) (level[i][j])).getHealth()) * 9,
-							(((KaiH) (level[i][j])).getHealth()) * 9, 0));
-				}
-				if (level[i][j] instanceof Charecter) {
+				} else if (level[i][j] instanceof Charecter) {
 					g.setColor(new Color(225 - (((Charecter) (level[i][j])).getHealth()) * 4,
 							(((Charecter) (level[i][j])).getHealth()) * 4,
 							(((Charecter) (level[i][j])).getHealth()) * 4));
-				}
+				} else if (level[i][j] instanceof Creature) {
+						g.setColor(new Color(225 - (((Creature) (level[i][j])).getHealth()) * 9,
+								(((Creature) (level[i][j])).getHealth()) * 9, 0));
+					}
 				g.drawString(level[i][j].toString(), j * y, i * x);
 			}
 		}
