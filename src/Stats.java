@@ -5,8 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
  
-public class Inventory extends JDialog implements ActionListener {
-    private static Inventory dialog;
+public class Stats extends JDialog implements ActionListener {
+    private static Stats dialog;
     private static String value = "";
     private JList list;
  
@@ -22,7 +22,7 @@ public class Inventory extends JDialog implements ActionListener {
         	}
         }
         longValue = (possibleValues[index]);
-        dialog = new Inventory(frame, frame, labelText, title, possibleValues, initialValue, longValue);
+        dialog = new Stats(frame, frame, labelText, title, possibleValues, initialValue, longValue);
         dialog.setVisible(true);
         return value;
     }
@@ -33,7 +33,7 @@ public class Inventory extends JDialog implements ActionListener {
     }
  
     @SuppressWarnings("unchecked")
-	private Inventory(Frame frame, Component locationComp, String labelText, String title, Object[] data, String initialValue,
+	private Stats(Frame frame, Component locationComp, String labelText, String title, Object[] data, String initialValue,
 			String longValue) {
         super(frame, title, true);
  
@@ -71,22 +71,10 @@ public class Inventory extends JDialog implements ActionListener {
         listScroller.setAlignmentX(LEFT_ALIGNMENT);
  
         //Create and initialize the buttons.
-        JButton cancelButton = new JButton("Close");
-        cancelButton.setActionCommand("CloseWindow");
-        cancelButton.addActionListener(this);
-        JButton actionButton = new JButton("Action");
-        actionButton.addActionListener(this);
-        getRootPane().setDefaultButton(actionButton);
-        list.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                actionButton.setText(getAction((String)("" + list.getSelectedValue()), list.getSelectedIndex()));
-                actionButton.setActionCommand(getAction((String)("" + list.getSelectedValue()), list.getSelectedIndex()));
-                if (e.getClickCount() == 2) {
-                    actionButton.doClick(); //emulate button click
-                }
-            }
-        });
-        
+        JButton closeButton = new JButton("Close");
+        closeButton.setActionCommand("CloseWindow");
+        closeButton.addActionListener(this);
+               
         //Lay out the label and scroll pane from top to bottom.
         JPanel listPane = new JPanel();
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
@@ -102,9 +90,7 @@ public class Inventory extends JDialog implements ActionListener {
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
         buttonPane.add(Box.createHorizontalGlue());
-        buttonPane.add(cancelButton);
-        buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-        buttonPane.add(actionButton);
+        buttonPane.add(closeButton);
  
         //Put everything together, using the content pane's BorderLayout.
         Container contentPane = getContentPane();
@@ -120,21 +106,8 @@ public class Inventory extends JDialog implements ActionListener {
     //Handle clicks on the Set and Close buttons.
     public void actionPerformed(ActionEvent e) {
     	switch(e.getActionCommand()) {
-    		case "Action": Inventory.value = "" + list.getSelectedValue(); break;
             case "CloseWindow": setVisible(false); break;
-        	case "Open": case "Close": Map.act(Items.DOORS, list.getSelectedIndex()); break;
-        	case "Next Level": Map.act(Items.STAIRS, list.getSelectedIndex()); break;
     	}
         setVisible(false);
-    }
-    
-    //Set button text based on object to interact with
-    public String getAction(String obj, int i) {
-    	if(obj.equals("Door")) {
-    		return ((Door) Map.inventory().get(i)).action();
-    	} else if(obj.equals("Stairs")) {
-    		return ((Stairs) Map.inventory().get(i)).action();
-    	}
-    	return obj;
     }
 }

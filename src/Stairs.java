@@ -1,11 +1,12 @@
 
 public class Stairs implements Tile, Item {
 	private boolean up;
-	private int x, y;
+	private int x, y, i;
 
 	public Stairs(int x, int y) {	
 		this.x = x;
 		this.y = y;
+		this.i = 0;
 	}
 
 	@Override
@@ -18,7 +19,7 @@ public class Stairs implements Tile, Item {
 		return true;
 	}
 	
-	public void toDo() {
+	public void nextLevel() {
 		Map.setLvl(Map.getLvl()+1);
 	}
 	
@@ -28,18 +29,29 @@ public class Stairs implements Tile, Item {
 
 	@Override
 	public String action() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Next Level";
 	}
 
 	@Override
 	public boolean canUse(int locx, int locy) {
-		return (locx == x && locy == y);
+		if (locx == x && locy == y)
+			return true;
+		return false;
 	}
 
 	@Override
 	public Items getType() {
 		return Items.STAIRS;
+	}
+
+	@Override
+	public int getIndex() {
+		return i;
+	}
+
+	@Override
+	public void setIndex(int i) {
+		this.i = i;
 	}
 	
 }

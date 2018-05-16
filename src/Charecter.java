@@ -64,6 +64,10 @@ public class Charecter implements Tile, Creature {
 	public void setTile(Tile tile) {
 		this.tile = tile;
 	}
+	
+	public String[] stats() {
+		return new String[] {"Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth};
+	}
 
 	public void move() {
 		x = x + dx;
@@ -128,7 +132,7 @@ public class Charecter implements Tile, Creature {
 
 	@Override
 	public void die(Map map) {
-		map.getLevel1()[this.y][this.x] = this.getTile();
+		map.getLevel()[this.y][this.x] = this.getTile();
 		this.setDead(true);
 	}
 

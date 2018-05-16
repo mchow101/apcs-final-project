@@ -82,13 +82,13 @@ public class Bryce implements Creature, Tile {
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 
-			if (!map.getLevel1()[this.y + 1][this.x].canContainMonster())
+			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
 				up = -10000;
-			if (!map.getLevel1()[this.y - 1][this.x].canContainMonster())
+			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
 				down = -10000;
-			if (!map.getLevel1()[this.y][this.x + 1].canContainMonster())
+			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
 				right = -10000;
-			if (!map.getLevel1()[this.y][this.x - 1].canContainMonster())
+			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
 				left = -10000;
 			
 			if (up > down && up > left && up > right)
@@ -115,7 +115,7 @@ public class Bryce implements Creature, Tile {
 		this.y = this.y + this.dy;
 		this.dx = 0;
 		this.dy = 0;
-		this.setTile(map.getLevel1()[this.y][this.x]);
+		this.setTile(map.getLevel()[this.y][this.x]);
 
 	}
 
@@ -125,7 +125,7 @@ public class Bryce implements Creature, Tile {
 		int y = MtD.getY();
 		
 		while (x != this.x || y != this.y) {
-			if (!map.getLevel1()[y][x].canContainMonster() && !map.getLevel1()[y][x].canContainMtD())
+			if (!map.getLevel()[y][x].canContainMonster() && !map.getLevel()[y][x].canContainMtD())
 				return false;
 			if (Math.abs(this.x - x) > Math.abs(this.y-y)) {
 				if (x - this.x > 0)
@@ -185,7 +185,7 @@ public class Bryce implements Creature, Tile {
 
 	@Override
 	public void die(Map map) {
-		map.getLevel1()[this.y][this.x] = this.getTile();
+		map.getLevel()[this.y][this.x] = this.getTile();
 		this.dead = true;
 
 	}
