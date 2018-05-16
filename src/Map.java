@@ -154,6 +154,7 @@ public class Map {
 			}
 		}
 		inventory = new ArrayList<Tile>();
+		setLevel(level1);
 	}
 
 	public Tile[][] getLevel() {
@@ -187,12 +188,11 @@ public class Map {
 				} else if (level[i][j] instanceof Stairs) {
 					g.setColor(Color.LIGHT_GRAY);
 				} else if (level[i][j] instanceof Charecter) {
-					g.setColor(new Color(225 - (((Charecter) (level[i][j])).getHealth()) * 4,
-							(((Charecter) (level[i][j])).getHealth()) * 4,
-							(((Charecter) (level[i][j])).getHealth()) * 4));
+					double hp = ((Charecter) (level[i][j])).getHealth()/((Charecter) (level[i][j])).getMaxHealth();
+					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
 				} else if (level[i][j] instanceof Creature) {
-						g.setColor(new Color(225 - (((Creature) (level[i][j])).getHealth()) * 9,
-								(((Creature) (level[i][j])).getHealth()) * 9, 0));
+					double hp = ((Creature) (level[i][j])).getHealth()/((Creature) (level[i][j])).getMaxHealth();
+					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
 					}
 				g.drawString(level[i][j].toString(), j * y, i * x);
 			}

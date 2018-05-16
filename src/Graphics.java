@@ -34,9 +34,10 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		int randomx;
 		int randomy;
 		
-		for (int i = 0; i < 25; i++) {
-			randomx = (int) (Math.random()*42);
-			randomy = (int) (Math.random()*42);
+
+		for (int i = 0; i < 10; i++) {
+			randomx = (int) (Math.random()*48) + 1;
+			randomy = (int) (Math.random()*48) + 1;
 			
 			if (map.getLevel()[randomy][randomx].canContainMonster()) {
 			if (Math.random() > .5)
@@ -44,6 +45,10 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			else
 		enemy.add(new KaiH(randomy, randomx));
 		}
+			
+			else 
+				i--;
+			
 		}
 		
 //		for (int i = 4; i < map.getLevel1().length-4; i++) {

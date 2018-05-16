@@ -79,8 +79,8 @@ public class Inventory extends JDialog implements ActionListener {
         getRootPane().setDefaultButton(actionButton);
         list.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                actionButton.setText(getAction((String)("" + list.getSelectedValue()), list.getSelectedIndex()));
-                actionButton.setActionCommand(getAction((String)("" + list.getSelectedValue()), list.getSelectedIndex()));
+                actionButton.setText(getAction(("" + list.getSelectedValue()), list.getSelectedIndex()));
+                actionButton.setActionCommand(getAction(("" + list.getSelectedValue()), list.getSelectedIndex()));
                 if (e.getClickCount() == 2) {
                     actionButton.doClick(); //emulate button click
                 }

@@ -17,5 +17,6 @@ public interface Creature {
 	public void setY(int y);
 	public int getAC();
 	public void attack(Creature enemy, Map map);
+	public int getMaxHealth();
 	
 }

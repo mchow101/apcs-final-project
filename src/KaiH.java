@@ -138,11 +138,13 @@ public class KaiH implements Creature, Tile {
 	}
 
 	public void attack(Creature MtD, Map map) {
+		
 		int damage = 0;
 		
 		damage+=this.strength;
 		
 		if (MtD.getAC() > Math.random()*100) {
+			System.out.println(MtD.getAC());
 			damage = 0;
 		}
 		
@@ -198,6 +200,11 @@ public class KaiH implements Creature, Tile {
 	@Override
 	public int getHealth() {
 		return health;
+	}
+	
+	@Override
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
 	@Override

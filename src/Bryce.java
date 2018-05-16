@@ -173,7 +173,7 @@ public class Bryce implements Creature, Tile {
 		
 		if (MtD.getAC() > Math.random()*100) {
 			damage = 0;
-			System.out.println("Damage blocked");
+//			System.out.println("Damage blocked");
 		}
 		
 		MtD.setHealth(MtD.getHealth()-damage);
@@ -228,6 +228,11 @@ public class Bryce implements Creature, Tile {
 	@Override
 	public int getHealth() {
 		return health;
+	}
+	
+	@Override
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
 	@Override
