@@ -154,6 +154,7 @@ public class Map {
 			}
 		}
 		inventory = new ArrayList<Tile>();
+		setLevel(level1);
 	}
 
 	public Tile[][] getLevel() {

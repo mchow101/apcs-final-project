@@ -38,8 +38,8 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		int randomy;
 		
 		for (int i = 0; i < 10; i++) {
-			randomx = (int) (Math.random()*48);
-			randomy = (int) (Math.random()*48);
+			randomx = (int) (Math.random()*48) + 1;
+			randomy = (int) (Math.random()*48) + 1;
 			
 			if (map.getLevel()[randomy][randomy].canContainMonster()) {
 			if (Math.random() > .5)
