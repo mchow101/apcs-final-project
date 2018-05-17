@@ -24,7 +24,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		frame.repaint();
 		t = new Thread(this);
 		t.start();
-		map = new Map(dim);
+		map = new Map(dim, this);
 		addKeyListener(this);
 		this.setFocusable(true);
 		MtD = new Charecter();
@@ -48,8 +48,16 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 					enemy.add(new KaiH(randomy, randomx));
 			} else
 				i--;
+			
 		}
-	}
+		
+//		for (int i = 4; i < map.getLevel1().length-4; i++) {
+//			for (int j = 4; j < map.getLevel1()[i].length-4; j++) {
+//				if (map.getLevel1()[i][j].canContainMonster())
+//					enemy.add(new KaiH(i, j));
+//			}
+//		}
+		}
 
 	public void paint(java.awt.Graphics g) {
 
@@ -91,6 +99,8 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 						aChoices[i] = "Door";
 					else if (choices.get(i).equals(Items.STAIRS) && enemy.size() == 0)
 						aChoices[i] = "Stairs";
+					else if (choices.get(i).equals(Items.POTION))
+						aChoices[i] = "Potion";
 					else
 						aChoices[i] = "None";
 				}
@@ -173,5 +183,9 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void run() {
 		frame.repaint();
+	}
+	
+	public Charecter getMtD() {
+		return MtD;
 	}
 }

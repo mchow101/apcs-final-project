@@ -229,6 +229,11 @@ public class Bryce implements Creature, Tile {
 	public int getHealth() {
 		return health;
 	}
+	
+	@Override
+	public int getMaxHealth() {
+		return maxHealth;
+	}
 
 	@Override
 	public void setDx(int dx) {

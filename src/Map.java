@@ -6,11 +6,12 @@ public class Map {
 	private Tile[][] level2;
 	private int dim;
 
+	private static Graphics graphics;
 	private static Tile[][] level;
 	private static ArrayList<Tile> inventory;
 	private static int lvl = 1;
 
-	public Map(int dim) {
+	public Map(int dim, Graphics graphics) {
 		this.dim = dim;
 		// character blueprint for the map
 		char[][] level1bp =  {{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'},
@@ -21,7 +22,7 @@ public class Map {
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','d','.','.','.','.','.','.','.','.','.','.','.','.','.','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','.','.','.','.','w'},
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','w','w','w','w','w','w','.','w','w','w','w','w','w','d','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
 				{'w','.','d','.','.','.','.','.','.','w','.','.','.','.','w','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
-				{'w','.','w','d','.','.','.','.','.','w','.','.','.','.','w','.','w','w','w','w','w','w','w','w','w','w','w','w','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
+				{'w','.','w','p','.','.','.','.','.','w','.','.','.','.','w','.','w','w','w','w','w','w','w','w','w','w','w','w','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','w','.','w','.','.','.','.','.','.','.','.','.','.','.','w','w','d','w','w','w','d','w','w','w','d','w','w','w','d','w','w','.','.','.','.','w'},
 				{'w','.','w','.','.','.','s','.','.','w','.','.','.','.','w','.','d','.','.','.','.','.','.','.','.','.','.','.','d','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','d','.','.','.','.','w'},
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','w','.','w','.','.','.','.','.','.','.','.','.','.','.','w','w','d','w','w','w','d','w','w','w','d','w','w','w','d','w','w','.','.','.','.','w'},
@@ -79,6 +80,9 @@ public class Map {
 					break;
 				case 's':
 					level1[i][j] = new Stairs(j, i);
+					break;
+				case 'p':
+					level1[i][j] = new Potion(j, i);
 					break;
 				}
 			}
@@ -150,11 +154,15 @@ public class Map {
 				case 's':
 					level2[i][j] = new Stairs(j, i);
 					break;
+				case 'p':
+					level2[i][j] = new Potion(j, i);
+					break;
 				}
 			}
 		}
 		inventory = new ArrayList<Tile>();
 		setLevel(level1);
+		Map.graphics = graphics;
 	}
 
 	public Tile[][] getLevel() {
@@ -188,13 +196,12 @@ public class Map {
 				} else if (level[i][j] instanceof Stairs) {
 					g.setColor(Color.LIGHT_GRAY);
 				} else if (level[i][j] instanceof Charecter) {
-					g.setColor(new Color(225 - (((Charecter) (level[i][j])).getHealth()) * 4,
-							(((Charecter) (level[i][j])).getHealth()) * 4,
-							(((Charecter) (level[i][j])).getHealth()) * 4));
+					double hp = (double)((Charecter) (level[i][j])).getHealth()/((Charecter) (level[i][j])).getMaxHealth();
+					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
 				} else if (level[i][j] instanceof Creature) {
-						g.setColor(new Color(225 - (((Creature) (level[i][j])).getHealth()) * 9,
-								(((Creature) (level[i][j])).getHealth()) * 9, 0));
-					}
+					double hp = (double)((Creature) (level[i][j])).getHealth()/((Creature) (level[i][j])).getMaxHealth();
+					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
+				}
 				g.drawString(level[i][j].toString(), j * y, i * x);
 			}
 		}
@@ -235,7 +242,12 @@ public class Map {
 					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
 					choices.add(Items.STAIRS);
 				}
-				
+				// Potion
+				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Potion)) {
+					inventory.add(MtD.getTile());
+					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
+					choices.add(Items.POTION);
+				}	
 			}
 		}
 
@@ -249,6 +261,8 @@ public class Map {
 			((Door) inventory.get(i)).setOpen(!(((Door) inventory.get(i)).getOpen()));
 		} else if(item.equals(Items.STAIRS)) {
 			((Stairs) inventory.get(i)).nextLevel();
+		} else if(item.equals(Items.POTION)) {
+			((Potion) inventory.get(i)).quaff(graphics.getMtD());
 		}
 	}
 

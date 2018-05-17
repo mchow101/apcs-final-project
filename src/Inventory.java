@@ -124,6 +124,7 @@ public class Inventory extends JDialog implements ActionListener {
             case "CloseWindow": setVisible(false); break;
         	case "Open": case "Close": Map.act(Items.DOORS, list.getSelectedIndex()); break;
         	case "Next Level": Map.act(Items.STAIRS, list.getSelectedIndex()); break;
+        	case "Quaff": Map.act(Items.POTION, list.getSelectedIndex()); break;
     	}
         setVisible(false);
     }
@@ -134,6 +135,8 @@ public class Inventory extends JDialog implements ActionListener {
     		return ((Door) Map.inventory().get(i)).action();
     	} else if(obj.equals("Stairs")) {
     		return ((Stairs) Map.inventory().get(i)).action();
+    	} else if(obj.equals("Potion")) {
+    		return ((Potion) Map.inventory().get(i)).action();
     	}
     	return obj;
     }

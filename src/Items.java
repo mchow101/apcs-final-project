@@ -1,3 +1,3 @@
 public enum Items {
-	DOORS, STAIRS, NONE
+	DOORS, STAIRS, NONE, POTION
 }

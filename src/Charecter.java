@@ -4,7 +4,7 @@ public class Charecter implements Tile, Creature {
 	private int health;
 	private int strength;
 	private int maxHealth;
-
+	
 	public int getStrength() {
 		return strength;
 	}
@@ -37,9 +37,9 @@ public class Charecter implements Tile, Creature {
 	}
 
 	public Charecter() {
-		health = 50;
+		health = 5000;
 		strength = 15;
-		maxHealth = 50;
+		maxHealth = 5000;
 
 		x = 5;
 		y = 5;
@@ -118,7 +118,6 @@ public class Charecter implements Tile, Creature {
 
 	@Override
 	public boolean canContainMonster() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
