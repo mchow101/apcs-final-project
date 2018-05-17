@@ -1,4 +1,4 @@
-
+//Any type of creature, including character or monsters
 public interface Creature {
 	public void setHealth(int a);
 	public int getHealth();
@@ -18,5 +18,4 @@ public interface Creature {
 	public int getAC();
 	public void attack(Creature enemy, Map map);
 	public int getMaxHealth();
-	
 }

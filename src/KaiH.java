@@ -1,4 +1,5 @@
-
+//Level 1 Monster
+//Add description of abilities
 public class KaiH implements Creature, Tile {
 
 	private int health;
@@ -19,36 +20,13 @@ public class KaiH implements Creature, Tile {
 
 	private boolean dead;
 
-	public boolean isDead() {
-		return dead;
-	}
-
-	public void setDead(boolean dead) {
-		this.dead = dead;
-	}
-
-	public int getPrevX() {
-		return prevX;
-	}
-
-	public int getPrevY() {
-		return prevY;
-	}
-
 	private int dx;
 	private int dy;
 
 	private Tile tile;
 
-	public Tile getTile() {
-		return tile;
-	}
-
-	public void setTile(Tile tile) {
-		this.tile = tile;
-	}
-
 	public KaiH(int x, int y) {
+		// initialize stats
 		health = 25;
 		maxHealth = 25;
 		strength = 5;
@@ -59,7 +37,7 @@ public class KaiH implements Creature, Tile {
 		prevX = x;
 		prevY = y;
 		tile = new EmptySpace();
-
+		// initialize movement variables
 		right = 0;
 		left = 0;
 		up = 0;
@@ -67,6 +45,8 @@ public class KaiH implements Creature, Tile {
 
 	}
 
+	// either attacks or moves monster per turn
+	// add some more comments
 	public void move(Creature MtD, Map map) {
 
 		int direction = 0;
@@ -104,8 +84,6 @@ public class KaiH implements Creature, Tile {
 			this.health++;
 		}
 
-		// System.out.println(this.tile.toString());
-
 		this.prevX = this.x;
 		this.prevY = this.y;
 
@@ -115,6 +93,94 @@ public class KaiH implements Creature, Tile {
 		this.dy = 0;
 		this.setTile(map.getLevel()[this.y][this.x]);
 
+	}
+
+	// attacks MtD
+	public void attack(Creature MtD, Map map) {
+
+		int damage = 0;
+
+		damage += this.strength;
+
+		if (MtD.getAC() > Math.random() * 100) {
+			// random chance to block damage
+			damage = 0;
+		}
+
+		MtD.setHealth(MtD.getHealth() - damage);
+
+		if (MtD.getHealth() <= 0) {
+			MtD.die(map);
+		}
+	}
+
+	// implemented methods for interfaces
+
+	@Override
+	public void die(Map map) {
+		map.getLevel()[this.y][this.x] = this.getTile();
+		this.dead = true;
+	}
+
+	@Override
+	public boolean canContainMtD() {
+		return false;
+	}
+
+	@Override
+	public boolean canContainMonster() {
+		return false;
+	}
+
+	@Override
+	public int getHealth() {
+		return health;
+	}
+
+	@Override
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	@Override
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	@Override
+	public void setDy(int dy) {
+		this.dy = dy;
+
+	}
+
+	// toString, getters and setters
+
+	public String toString() {
+		return "k";
+	}
+
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
+	public int getPrevX() {
+		return prevX;
+	}
+
+	public int getPrevY() {
+		return prevY;
 	}
 
 	public int getStrength() {
@@ -137,45 +203,6 @@ public class KaiH implements Creature, Tile {
 		return dy;
 	}
 
-	public void attack(Creature MtD, Map map) {
-		
-		int damage = 0;
-		
-		damage+=this.strength;
-		
-		if (MtD.getAC() > Math.random()*100) {
-			System.out.println(MtD.getAC());
-			damage = 0;
-		}
-		
-		MtD.setHealth(MtD.getHealth()-damage);
-		
-		if (MtD.getHealth() <= 0) {
-			MtD.die(map);
-		}
-	}
-
-	@Override
-	public void die(Map map) {
-		map.getLevel()[this.y][this.x] = this.getTile();
-		this.dead = true;
-
-	}
-
-	public String toString() {
-		return "k";
-	}
-
-	@Override
-	public boolean canContainMtD() {
-		return false;
-	}
-
-	@Override
-	public boolean canContainMonster() {
-		return false;
-	}
-
 	public int getX() {
 		return x;
 	}
@@ -194,27 +221,5 @@ public class KaiH implements Creature, Tile {
 
 	public void setHealth(int a) {
 		health = a;
-
-	}
-
-	@Override
-	public int getHealth() {
-		return health;
-	}
-	
-	@Override
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
-	@Override
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
-
-	@Override
-	public void setDy(int dy) {
-		this.dy = dy;
-
 	}
 }

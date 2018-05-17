@@ -1,11 +1,14 @@
+//Contains all the Tiles of the map
+//Also contains variables to control inventory
 import java.awt.Color;
 import java.util.ArrayList;
 
 public class Map {
+	//Arrays for each level
 	private Tile[][] level1;
 	private Tile[][] level2;
 	private int dim;
-
+	//static variables for inventory and level tracking
 	private static Graphics graphics;
 	private static Tile[][] level;
 	private static ArrayList<Tile> inventory;
@@ -65,6 +68,7 @@ public class Map {
 				{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'}
 				};
+		//translate character blueprint to tile array
 		level1 = new Tile[50][50];
 		for (int i = 0; i < level1.length; i++) {
 			for (int j = 0; j < level1[i].length; j++) {
@@ -87,6 +91,7 @@ public class Map {
 				}
 			}
 		}
+		//level 2
 		char[][] level2bp =  {{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'},
 				{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
 				{'w','.','.','.','.','.','.','.','.','w','.','.','.','.','w','.','.','.','.','.','.','w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'},
@@ -165,14 +170,6 @@ public class Map {
 		Map.graphics = graphics;
 	}
 
-	public Tile[][] getLevel() {
-		return level;
-	}
-
-	public void setLevel(Tile[][] level) {
-		this.level = level;
-	}
-
 	// converts array to actual map
 	public void drawMap(java.awt.Graphics g) {
 		level = null;
@@ -191,6 +188,7 @@ public class Map {
 		for (int i = 0; i < level.length; i++) {
 			for (int j = 0; j < level[i].length; j++) {
 				g.setColor(Color.WHITE);
+				// different colors for different types of Tiles
 				if (level[i][j] instanceof Door) {
 					g.setColor(Color.LIGHT_GRAY);
 				} else if (level[i][j] instanceof Stairs) {
@@ -207,18 +205,7 @@ public class Map {
 		}
 	}
 
-	public static int getLvl() {
-		return lvl;
-	}
-
-	public static void setLvl(int lvl) {
-		Map.lvl = lvl;
-	}
-
-	public static ArrayList<Tile> inventory() {
-		return inventory;
-	}
-
+	// finds usable items and adds to inventory
 	public static ArrayList<Items> updateInventory(Charecter MtD, ArrayList<Items> choices) {
 		int locx = MtD.getX();
 		int locy = MtD.getY();
@@ -256,6 +243,7 @@ public class Map {
 		return choices;
 	}
 
+	// performs an action based on selected item
 	public static void act(Items item, int i) {
 		if (item.equals(Items.DOORS)) {
 			((Door) inventory.get(i)).setOpen(!(((Door) inventory.get(i)).getOpen()));
@@ -264,6 +252,28 @@ public class Map {
 		} else if(item.equals(Items.POTION)) {
 			((Potion) inventory.get(i)).quaff(graphics.getMtD());
 		}
+	}
+	
+	//getters and setters
+
+	public Tile[][] getLevel() {
+		return level;
+	}
+
+	public void setLevel(Tile[][] level) {
+		this.level = level;
+	}
+
+	public static int getLvl() {
+		return lvl;
+	}
+
+	public static void setLvl(int lvl) {
+		Map.lvl = lvl;
+	}
+
+	public static ArrayList<Tile> inventory() {
+		return inventory;
 	}
 
 }

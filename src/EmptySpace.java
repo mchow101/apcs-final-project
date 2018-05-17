@@ -1,5 +1,8 @@
+//Basic EmptySpace to fill spaces in the map
 public class EmptySpace implements Tile {
-	private TileStatus contents;
+	//wow we really don't use anything in here do we 
+	private TileStatus contents; //can delete?
+	//question applies to basically the entire file
 	
 	public EmptySpace() {
 		contents = TileStatus.EMPTY;

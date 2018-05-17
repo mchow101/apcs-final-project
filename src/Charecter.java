@@ -1,74 +1,41 @@
-
+//The player's character, despite the lovely spelling mistake
 public class Charecter implements Tile, Creature {
-
+	// stats
 	private int health;
 	private int strength;
 	private int maxHealth;
-	
-	public int getStrength() {
-		return strength;
-	}
-
-	public void setStrength(int strength) {
-		this.strength = strength;
-	}
-
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
-	}
-
+	// location variables
 	private int x;
 	private int y;
-
+	// movement variables
 	private int dx;
 	private int dy;
-
+	// armor class
+	// air conditioning
+	// and alternating current
+	// all at the same time
+	// :)
 	private int AC;
-
+	// prevents eating of special tiles
 	private Tile tile;
+	// checks for death
 	private boolean dead = false;
 
-	public void setDead(boolean dead) {
-		this.dead = dead;
-	}
-
 	public Charecter() {
+		// initialize stats
 		health = 5000;
 		strength = 15;
 		maxHealth = 5000;
-
+		// initialize location
 		x = 5;
 		y = 5;
-
+		// initialize AC
 		AC = 12;
-
+		// initialize starting space as an EmptySpace
 		tile = new EmptySpace();
 	}
 
-	public int getAC() {
-		return AC;
-	}
-
-	public void setAC(int aC) {
-		AC = aC;
-	}
-
-	public Tile getTile() {
-		return tile;
-	}
-
-	public void setTile(Tile tile) {
-		this.tile = tile;
-	}
-	
-	public String[] stats() {
-		return new String[] {"Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth};
-	}
-
+	// moves character
 	public void move() {
 		x = x + dx;
 		y = y + dy;
@@ -76,40 +43,29 @@ public class Charecter implements Tile, Creature {
 		dy = 0;
 	}
 
+	// attacks enemy
 	public void attack(Creature enemy, Map map) {
 		int damage = 0;
 
 		damage += this.strength;
 
 		if (enemy.getAC() > Math.random() * 100) {
+			// random chance of blocking damage
 			damage = 0;
 		}
 
 		enemy.setHealth(enemy.getHealth() - damage);
-		
+
 		if (enemy.getHealth() <= 0)
 			enemy.die(map);
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
-
-	public void setDy(int dy) {
-		this.dy = dy;
-	}
-
 	public String toString() {
+		// because the character has no idea what's going on
 		return "!?";
 	}
+
+	// implemented methods for interfaces
 
 	@Override
 	public boolean canContainMtD() {
@@ -121,27 +77,15 @@ public class Charecter implements Tile, Creature {
 		return false;
 	}
 
-	public void setHealth(int a) {
-		health = a;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
 	@Override
 	public void die(Map map) {
 		map.getLevel()[this.y][this.x] = this.getTile();
 		this.setDead(true);
 	}
 
-	public void move(Charecter MtD) {
-	}
-
 	@Override
 	public void move(Creature a, Map map) {
 		this.move();
-
 	}
 
 	@Override
@@ -171,6 +115,72 @@ public class Charecter implements Tile, Creature {
 	public void setY(int prevY) {
 		// TODO Auto-generated method stub
 
+	}
+
+	// getters and setters
+
+	public void setHealth(int a) {
+		health = a;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public int getStrength() {
+		return strength;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
+	public int getAC() {
+		return AC;
+	}
+
+	public void setAC(int aC) {
+		AC = aC;
+	}
+
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+
+	public String[] stats() {
+		return new String[] { "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth };
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
 	}
 
 }
