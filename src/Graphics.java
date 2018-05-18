@@ -13,6 +13,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	private Map map;
 	private Tile imSad; // because he's empty inside D=
 	ArrayList<Items> choices = new ArrayList<Items>();
+	private Tyler tyler;
 	private ArrayList<Creature> enemy = new ArrayList<>();
 
 	public Graphics() {
@@ -28,14 +29,16 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		addKeyListener(this);
 		this.setFocusable(true);
 		MtD = new Charecter();
+		tyler = new Tyler(18, 25, enemy);
 		frame.setVisible(true);
 		choices.add(Items.NONE);
 		
 		int randomx;
 		int randomy;
 		
+	enemy.add(tyler);
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 			randomx = (int) (Math.random()*48) + 1;
 			randomy = (int) (Math.random()*48) + 1;
 			
@@ -51,12 +54,9 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			
 		}
 		
-//		for (int i = 4; i < map.getLevel1().length-4; i++) {
-//			for (int j = 4; j < map.getLevel1()[i].length-4; j++) {
-//				if (map.getLevel1()[i][j].canContainMonster())
-//					enemy.add(new KaiH(i, j));
-//			}
-//		}
+		
+		
+	//	
 		}
 
 	public void paint(java.awt.Graphics g) {
@@ -87,7 +87,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void keyPressed(KeyEvent event) {
-
+		
 		if (!MtD.isDead()) {
 
 			choices = Map.updateInventory(MtD, choices);
@@ -125,7 +125,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 			for (int i = 0; i < enemy.size(); i++) {
 				map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = enemy.get(i).getTile();
-
 				if (enemy.get(i).isDead()) {
 					enemy.remove(i);
 					break;
@@ -135,12 +134,10 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 				if (map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()].canContainMonster()) {
 
-					// map.getLevel1()[enemy.getPrevY()][enemy.getPrevX()] = enemy.getTile();
 					map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = (Tile) enemy.get(i);
-					//System.out.println(enemy.get(i).toString());
 				} else {
-					enemy.get(i).setX(enemy.get(i).getPrevX());
-					enemy.get(i).setY(enemy.get(i).getPrevY());
+//					enemy.get(i).setX(enemy.get(i).getPrevX());
+//					enemy.get(i).setY(enemy.get(i).getPrevY());
 				}
 			}
 
@@ -162,7 +159,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		else if (map.getLevel()[y2][x2] instanceof Door) {
 			((Door) map.getLevel()[y2][x2]).setOpen(true);
 		}
-
+		
 		else if (map.getLevel()[y2][x2] instanceof Creature) {
 			MtD.attack((Creature) map.getLevel()[y2][x2], map);
 		}

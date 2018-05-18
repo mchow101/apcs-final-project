@@ -37,9 +37,9 @@ public class Charecter implements Tile, Creature {
 	}
 
 	public Charecter() {
-		health = 5000;
+		health = 5000000;
 		strength = 15;
-		maxHealth = 5000;
+		maxHealth = 5000000;
 
 		x = 5;
 		y = 5;
