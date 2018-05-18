@@ -1,3 +1,4 @@
+
 // This class handles all the graphics
 import javax.swing.JFrame;
 import javax.swing.*;
@@ -7,13 +8,15 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class Graphics extends JPanel implements KeyListener, Runnable {
-	
+
 	private Thread t;
 	private Charecter MtD; // main character
 	private JFrame frame;
 	private int dim = 600; // to easily change dimensions
 	private Map map;
-	ArrayList<Items> choices = new ArrayList<Items>(); // contains available inventory items
+	private Tile imSad; // because he's empty inside D=
+	ArrayList<Items> choices = new ArrayList<Items>();
+	private Tyler tyler;
 	private ArrayList<Creature> enemy = new ArrayList<>(); // contains live enemies
 
 	public Graphics() {
@@ -30,15 +33,19 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		addKeyListener(this);
 		this.setFocusable(true);
 		MtD = new Charecter();
+		tyler = new Tyler(18, 25, enemy);
 		frame.setVisible(true);
 		choices.add(Items.NONE);
 
 		// random enemies
 		int randomx;
 		int randomy;
-		for (int i = 0; i < 10; i++) {
-			randomx = (int) (Math.random() * 48) + 1;
-			randomy = (int) (Math.random() * 48) + 1;
+		
+	enemy.add(tyler);
+
+		for (int i = 0; i < 15; i++) {
+			randomx = (int) (Math.random()*48) + 1;
+			randomy = (int) (Math.random()*48) + 1;
 
 			if (map.getLevel()[randomy][randomx].canContainMonster()) {
 				if (Math.random() > 1.0/3.0)
@@ -53,16 +60,16 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 	}
 
 	public void paint(java.awt.Graphics g) {
-		//more graphics stuff
+		// more graphics stuff
 		super.paintComponent(g);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim, dim);
 		g.setColor(Color.WHITE);
-		//draw map
+		// draw map
 		if (!MtD.isDead()) {
 			map.drawMap(g);
 		}
-		//display game over screen
+		// display game over screen
 		else {
 			Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
 			// image from
@@ -130,8 +137,8 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 				if (map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()].canContainMonster()) {
 					map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = (Tile) enemy.get(i);
 				} else {
-					enemy.get(i).setX(enemy.get(i).getPrevX());
-					enemy.get(i).setY(enemy.get(i).getPrevY());
+//					enemy.get(i).setX(enemy.get(i).getPrevX());
+//					enemy.get(i).setY(enemy.get(i).getPrevY());
 				}
 			}
 
@@ -139,9 +146,9 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 
 	}
 
-	//checks for valid spaces and performs an action
+	// checks for valid spaces and performs an action
 	public void move(int x1, int x2, int y1, int y2, int dx, int dy, Creature thing) {
-		//check and move
+		// check and move
 		if (map.getLevel()[y2][x2].canContainMtD()) {
 			map.getLevel()[y1][x1] = thing.getTile();
 			thing.setTile(map.getLevel()[y2][x2]);
@@ -151,15 +158,15 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 			map.getLevel()[thing.getY()][thing.getX()] = MtD;
 
 		}
-		//open door
+		// open door
 		else if (map.getLevel()[y2][x2] instanceof Door) {
 			((Door) map.getLevel()[y2][x2]).setOpen(true);
 		}
-		//attack enemy
+		// attack enemy
 		else if (map.getLevel()[y2][x2] instanceof Creature) {
 			MtD.attack((Creature) map.getLevel()[y2][x2], map);
 		}
-		//randomly regenerate health
+		// randomly regenerate health
 		if (MtD.getStrength() > Math.random() * 25 && MtD.getHealth() != MtD.getMaxHealth()) {
 			MtD.setHealth(MtD.getHealth() + 1);
 		}

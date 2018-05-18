@@ -75,6 +75,8 @@ public class Bryce implements Creature, Tile {
 				this.setDx(-1);
 			else if (right != -10000)
 				this.setDx(1);
+			else 
+				System.out.println(this.dx + " " + this.dy);
 
 		}
 
@@ -122,8 +124,8 @@ public class Bryce implements Creature, Tile {
 	}
 
 	public void attack(Creature MtD, Map map) {
-		int distance = Math.abs(this.y - MtD.getY()) + (this.x - MtD.getY());
-
+		int distance = Math.abs(this.y - MtD.getY()) + Math.abs(this.x - MtD.getX());
+		
 		int damage = 0;
 
 		damage += this.strength;
@@ -131,9 +133,42 @@ public class Bryce implements Creature, Tile {
 		if (MtD.getAC() > Math.random() * 100) {
 			damage = 0;
 		}
-
-		MtD.setHealth(MtD.getHealth() - damage);
-
+		
+		if (distance > 25) {
+			if (Math.random() < .95) {
+				damage = 0;
+			}
+			
+			else
+				damage = (int) (damage * .2);
+		}
+		
+		if (distance < 25 && distance > 15) {
+			if (Math.random() < .85) {
+				damage = 0;
+			}
+			
+			else {
+				damage = (int) (damage*.33);
+			}
+			
+		}
+		
+		else if (distance > 5) {
+			if (Math.random() < .65) {
+				damage = 0;
+			}
+		}
+		
+			else {
+				if (Math.random() < .17) {
+					damage = 0;
+				}
+			}
+		
+		
+		MtD.setHealth(MtD.getHealth()-damage);
+		
 		if (MtD.getHealth() <= 0) {
 			MtD.die(map);
 		}
