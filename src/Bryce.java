@@ -1,4 +1,5 @@
-
+//Level 2 Monster
+//Add description of abilities
 public class Bryce implements Creature, Tile {
 
 	private int health;
@@ -19,36 +20,13 @@ public class Bryce implements Creature, Tile {
 
 	private boolean dead;
 
-	public boolean isDead() {
-		return dead;
-	}
-
-	public void setDead(boolean dead) {
-		this.dead = dead;
-	}
-
-	public int getPrevX() {
-		return prevX;
-	}
-
-	public int getPrevY() {
-		return prevY;
-	}
-
 	private int dx;
 	private int dy;
 
 	private Tile tile;
 
-	public Tile getTile() {
-		return tile;
-	}
-
-	public void setTile(Tile tile) {
-		this.tile = tile;
-	}
-
 	public Bryce(int x, int y) {
+		// initialize variables
 		health = 25;
 		maxHealth = 25;
 		strength = 5;
@@ -70,12 +48,11 @@ public class Bryce implements Creature, Tile {
 	public void move(Creature MtD, Map map) {
 
 		int direction = 0;
-
+		// checks to attack MtD
 		if (straightLine(MtD, map)) {
 			this.attack((Charecter) MtD, map);
-		}
-		else {
-
+		} else {
+			// finds best way to run away from MtD
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
@@ -89,7 +66,7 @@ public class Bryce implements Creature, Tile {
 				right = -10000;
 			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
 				left = -10000;
-			
+
 			if (up > down && up > left && up > right)
 				this.setDy(1);
 			else if (down > left && down > right)
@@ -103,6 +80,7 @@ public class Bryce implements Creature, Tile {
 
 		}
 
+		// random health regeneration
 		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
 			this.health++;
 		}
@@ -118,59 +96,41 @@ public class Bryce implements Creature, Tile {
 
 	}
 
+	// checks if MtD can be attacked
+	// this can be done when *insert when*
 	private boolean straightLine(Creature MtD, Map map) {
-		
+
 		int x = MtD.getX();
 		int y = MtD.getY();
-		
+
+		// yeah you put something here
 		while (x != this.x || y != this.y) {
 			if (!map.getLevel()[y][x].canContainMonster() && !map.getLevel()[y][x].canContainMtD())
 				return false;
-			if (Math.abs(this.x - x) > Math.abs(this.y-y)) {
+			if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
 				if (x - this.x > 0)
 					x--;
-				else 
+				else
 					x++;
-			}
-			else {
+			} else {
 				if (y - this.y > 0)
 					y--;
 				else
 					y++;
 			}
 		}
-		
+
 		return true;
-	}
-
-	public int getStrength() {
-		return strength;
-	}
-
-	public int getIntel() {
-		return intel;
-	}
-
-	public int getAC() {
-		return AC;
-	}
-
-	public int getDx() {
-		return dx;
-	}
-
-	public int getDy() {
-		return dy;
 	}
 
 	public void attack(Creature MtD, Map map) {
 		int distance = Math.abs(this.y - MtD.getY()) + Math.abs(this.x - MtD.getX());
 		
 		int damage = 0;
-		
-		damage+=this.strength;
-		
-		if (MtD.getAC() > Math.random()*100) {
+
+		damage += this.strength;
+
+		if (MtD.getAC() > Math.random() * 100) {
 			damage = 0;
 		}
 		
@@ -214,15 +174,13 @@ public class Bryce implements Creature, Tile {
 		}
 	}
 
+	// implemented methods for interfaces
+
 	@Override
 	public void die(Map map) {
 		map.getLevel()[this.y][this.x] = this.getTile();
 		this.dead = true;
 
-	}
-
-	public String toString() {
-		return "b";
 	}
 
 	@Override
@@ -233,6 +191,76 @@ public class Bryce implements Creature, Tile {
 	@Override
 	public boolean canContainMonster() {
 		return false;
+	}
+
+	@Override
+	public int getHealth() {
+		return health;
+	}
+
+	@Override
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	@Override
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	@Override
+	public void setDy(int dy) {
+		this.dy = dy;
+	}
+
+	// toString, getters and setters
+
+	public String toString() {
+		return "b";
+	}
+
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
+	public int getPrevX() {
+		return prevX;
+	}
+
+	public int getPrevY() {
+		return prevY;
+	}
+
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+
+	public int getStrength() {
+		return strength;
+	}
+
+	public int getIntel() {
+		return intel;
+	}
+
+	public int getAC() {
+		return AC;
+	}
+
+	public int getDx() {
+		return dx;
+	}
+
+	public int getDy() {
+		return dy;
 	}
 
 	public int getX() {
@@ -253,27 +281,5 @@ public class Bryce implements Creature, Tile {
 
 	public void setHealth(int a) {
 		health = a;
-
-	}
-
-	@Override
-	public int getHealth() {
-		return health;
-	}
-	
-	@Override
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
-	@Override
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
-
-	@Override
-	public void setDy(int dy) {
-		this.dy = dy;
-
 	}
 }

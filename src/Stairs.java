@@ -1,4 +1,4 @@
-
+//Stairs: allows character to go to next level
 public class Stairs implements Tile, Item {
 	private boolean up;
 	private int x, y, i;
@@ -8,6 +8,17 @@ public class Stairs implements Tile, Item {
 		this.y = y;
 		this.i = 0;
 	}
+	
+	//increases level by 1
+	public void nextLevel() {
+		Map.setLvl(Map.getLvl()+1);
+	}
+	
+	public String toString() {
+		return ">";
+	}
+	
+	//implemented methods for interfaces
 
 	@Override
 	public boolean canContainMtD() {
@@ -17,14 +28,6 @@ public class Stairs implements Tile, Item {
 	@Override
 	public boolean canContainMonster() {
 		return true;
-	}
-	
-	public void nextLevel() {
-		Map.setLvl(Map.getLvl()+1);
-	}
-	
-	public String toString() {
-		return ">";
 	}
 
 	@Override
