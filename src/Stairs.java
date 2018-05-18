@@ -11,7 +11,7 @@ public class Stairs implements Tile, Item {
 	
 	//increases level by 1
 	public void nextLevel() {
-		Map.setLvl(Map.getLvl()+1);
+//		Map.setLvl(Map.getLvl()+1);
 	}
 	
 	public String toString() {

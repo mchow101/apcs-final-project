@@ -8,13 +8,12 @@ public class Map {
 	private Tile[][] level1;
 	private Tile[][] level2;
 	private int dim;
-	//static variables for inventory and level tracking
-	private static Graphics graphics;
-	private static Tile[][] level;
-	private static ArrayList<Tile> inventory;
-	private static int lvl = 1;
+	// variables for inventory and level tracking
+	private Tile[][] level;
+//	private ArrayList<Tile> inventory;
+	private int lvl = 1;
 
-	public Map(int dim, Graphics graphics) {
+	public Map(int dim) {
 		this.dim = dim;
 		// character blueprint for the map
 		char[][] level1bp =  {{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'},
@@ -65,8 +64,8 @@ public class Map {
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','d','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','w','.','.','.','.','.','w'},
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','w','.','.','.','.','.','w'},
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','.','.','.','.','w'},
-				{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
-				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'}
+				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'},
+				{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'}
 				};
 		//translate character blueprint to tile array
 		level1 = new Tile[50][50];
@@ -140,8 +139,8 @@ public class Map {
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','d','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','w','.','.','.','.','.','w'},
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','.','w','w','.','w','.','.','.','.','.','w'},
 				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','.','.','.','.','w'},
-				{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
-				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'}
+				{'w','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','w'}, 
+				{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'}
 				};
 		level2 = new Tile[50][50];
 		for (int i = 0; i < level2.length; i++) {
@@ -165,9 +164,9 @@ public class Map {
 				}
 			}
 		}
-		inventory = new ArrayList<Tile>();
+//		inventory = new ArrayList<Tile>();
 		setLevel(level1);
-		Map.graphics = graphics;
+//		Map.graphics = mapGraphics;
 	}
 
 	// converts array to actual map
@@ -206,53 +205,53 @@ public class Map {
 	}
 
 	// finds usable items and adds to inventory
-	public static ArrayList<Items> updateInventory(Charecter MtD, ArrayList<Items> choices) {
-		int locx = MtD.getX();
-		int locy = MtD.getY();
-		choices.clear();
-		inventory.clear();
-		for (int i = 0; i < level.length; i++) {
-			for (int j = 0; j < level[i].length; j++) {
-				if (level[i][j] instanceof Item) {
-					if (((Item) (level[i][j])).canUse(locx, locy)) {
-						inventory.add(level[i][j]);
-						((Item) level[i][j]).setIndex(inventory.size() - 1);
-						// Doors
-						if ((level[i][j] instanceof Door)) {
-							choices.add(Items.DOORS);
-						}
-					}
-				}
-				// Stairs
-				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Stairs)) {
-					inventory.add(MtD.getTile());
-					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
-					choices.add(Items.STAIRS);
-				}
-				// Potion
-				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Potion)) {
-					inventory.add(MtD.getTile());
-					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
-					choices.add(Items.POTION);
-				}	
-			}
-		}
-
-		if (choices.size() == 0)
-			choices.add(Items.NONE);
-		return choices;
-	}
-
-	// performs an action based on selected item
-	public static void act(Items item, int i) {
-		if (item.equals(Items.DOORS)) {
-			((Door) inventory.get(i)).setOpen(!(((Door) inventory.get(i)).getOpen()));
-		} else if(item.equals(Items.STAIRS)) {
-			((Stairs) inventory.get(i)).nextLevel();
-		} else if(item.equals(Items.POTION)) {
-			((Potion) inventory.get(i)).quaff(graphics.getMtD());
-		}
-	}
+//	public static ArrayList<Items> updateInventory(Charecter MtD, ArrayList<Items> choices) {
+//		int locx = MtD.getX();
+//		int locy = MtD.getY();
+//		choices.clear();
+//		inventory.clear();
+//		for (int i = 0; i < level.length; i++) {
+//			for (int j = 0; j < level[i].length; j++) {
+//				if (level[i][j] instanceof Item) {
+//					if (((Item) (level[i][j])).canUse(locx, locy)) {
+//						inventory.add(level[i][j]);
+//						((Item) level[i][j]).setIndex(inventory.size() - 1);
+//						// Doors
+//						if ((level[i][j] instanceof Door)) {
+//							choices.add(Items.DOORS);
+//						}
+//					}
+//				}
+//				// Stairs
+//				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Stairs)) {
+//					inventory.add(MtD.getTile());
+//					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
+//					choices.add(Items.STAIRS);
+//				}
+//				// Potion
+//				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Potion)) {
+//					inventory.add(MtD.getTile());
+//					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
+//					choices.add(Items.POTION);
+//				}	
+//			}
+//		}
+//
+//		if (choices.size() == 0)
+//			choices.add(Items.NONE);
+//		return choices;
+//	}
+//
+//	// performs an action based on selected item
+//	public static void act(Items item, int i) {
+//		if (item.equals(Items.DOORS)) {
+//			((Door) inventory.get(i)).setOpen(!(((Door) inventory.get(i)).getOpen()));
+//		} else if(item.equals(Items.STAIRS)) {
+//			((Stairs) inventory.get(i)).nextLevel();
+//		} else if(item.equals(Items.POTION)) {
+//			((Potion) inventory.get(i)).quaff(graphics.getMtD());
+//		}
+//	}
 	
 	//getters and setters
 
@@ -264,16 +263,16 @@ public class Map {
 		this.level = level;
 	}
 
-	public static int getLvl() {
+	public int getLvl() {
 		return lvl;
 	}
 
-	public static void setLvl(int lvl) {
-		Map.lvl = lvl;
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
 	}
 
-	public static ArrayList<Tile> inventory() {
-		return inventory;
-	}
+//	public static ArrayList<Tile> inventory() {
+//		return inventory;
+//	}
 
 }
