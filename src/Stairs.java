@@ -7,9 +7,17 @@ public class Stairs implements Tile, Item {
 		this.x = x;
 		this.y = y;
 		this.i = 0;
+		up = true;
 	}
 	
-	//increases level by 1
+	public Stairs(int x, int y, boolean up) {	
+		this.x = x;
+		this.y = y;
+		this.i = 0;
+		this.up = up;
+	}
+	
+	//increases or decreases level by 1
 	public void nextLevel() {
 //		Map.setLvl(Map.getLvl()+1);
 	}
@@ -32,19 +40,17 @@ public class Stairs implements Tile, Item {
 
 	@Override
 	public String action() {
-		return "Next Level";
+		return "Climb";
 	}
 
 	@Override
 	public boolean canUse(int locx, int locy) {
-		if (locx == x && locy == y)
-			return true;
-		return false;
+		return this.x == locx && this.y == locy;
 	}
 
 	@Override
-	public Items getType() {
-		return Items.STAIRS;
+	public String getType() {
+		return "Stairs" + (up ? " to Next Level" : " to Previous Level");
 	}
 
 	@Override
@@ -55,6 +61,11 @@ public class Stairs implements Tile, Item {
 	@Override
 	public void setIndex(int i) {
 		this.i = i;
+	}
+
+	@Override
+	public char key() {
+		return 's';
 	}
 	
 }

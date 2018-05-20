@@ -1,7 +1,6 @@
 //Contains all the Tiles of the map
 //Also contains variables to control inventory
 import java.awt.Color;
-import java.util.ArrayList;
 
 public class Map {
 	//Arrays for each level
@@ -10,7 +9,6 @@ public class Map {
 	private int dim;
 	// variables for inventory and level tracking
 	private Tile[][] level;
-//	private ArrayList<Tile> inventory;
 	private int lvl = 1;
 
 	public Map(int dim) {
@@ -24,7 +22,7 @@ public class Map {
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','d','.','.','.','.','.','.','.','.','.','.','.','.','.','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','.','.','.','.','w'},
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','w','w','w','w','w','w','.','w','w','w','w','w','w','d','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
 				{'w','.','d','.','.','.','.','.','.','w','.','.','.','.','w','.','.','.','.','.','.','.','.','.','.','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
-				{'w','.','w','p','.','.','.','.','.','w','.','.','.','.','w','.','w','w','w','w','w','w','w','w','w','w','w','w','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
+				{'w','.','w','h','.','.','.','.','.','w','.','.','.','.','w','.','w','w','w','w','w','w','w','w','w','w','w','w','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','w','.','.','.','.','w'},
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','w','.','w','.','.','.','.','.','.','.','.','.','.','.','w','w','d','w','w','w','d','w','w','w','d','w','w','w','d','w','w','.','.','.','.','w'},
 				{'w','.','w','.','.','.','s','.','.','w','.','.','.','.','w','.','d','.','.','.','.','.','.','.','.','.','.','.','d','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','d','.','.','.','.','w'},
 				{'w','.','w','.','.','.','.','.','.','w','.','.','.','.','w','.','w','.','.','.','.','.','.','.','.','.','.','.','w','w','d','w','w','w','d','w','w','w','d','w','w','w','d','w','w','.','.','.','.','w'},
@@ -84,9 +82,11 @@ public class Map {
 				case 's':
 					level1[i][j] = new Stairs(j, i);
 					break;
-				case 'p':
-					level1[i][j] = new Potion(j, i);
+				case 'h':
+					level1[i][j] = new HealthPotion(j, i);
 					break;
+				default:
+					level1[i][j] = new EmptySpace();
 				}
 			}
 		}
@@ -158,9 +158,9 @@ public class Map {
 				case 's':
 					level2[i][j] = new Stairs(j, i);
 					break;
-				case 'p':
-					level2[i][j] = new Potion(j, i);
-					break;
+//				case 'p':
+//					level2[i][j] = new Potion(j, i);
+//					break;
 				}
 			}
 		}
@@ -192,6 +192,8 @@ public class Map {
 					g.setColor(Color.LIGHT_GRAY);
 				} else if (level[i][j] instanceof Stairs) {
 					g.setColor(Color.LIGHT_GRAY);
+				} else if (level[i][j] instanceof Potion) {
+					g.setColor(Color.MAGENTA);
 				} else if (level[i][j] instanceof Charecter) {
 					double hp = (double)((Charecter) (level[i][j])).getHealth()/((Charecter) (level[i][j])).getMaxHealth();
 					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
@@ -204,55 +206,6 @@ public class Map {
 		}
 	}
 
-	// finds usable items and adds to inventory
-//	public static ArrayList<Items> updateInventory(Charecter MtD, ArrayList<Items> choices) {
-//		int locx = MtD.getX();
-//		int locy = MtD.getY();
-//		choices.clear();
-//		inventory.clear();
-//		for (int i = 0; i < level.length; i++) {
-//			for (int j = 0; j < level[i].length; j++) {
-//				if (level[i][j] instanceof Item) {
-//					if (((Item) (level[i][j])).canUse(locx, locy)) {
-//						inventory.add(level[i][j]);
-//						((Item) level[i][j]).setIndex(inventory.size() - 1);
-//						// Doors
-//						if ((level[i][j] instanceof Door)) {
-//							choices.add(Items.DOORS);
-//						}
-//					}
-//				}
-//				// Stairs
-//				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Stairs)) {
-//					inventory.add(MtD.getTile());
-//					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
-//					choices.add(Items.STAIRS);
-//				}
-//				// Potion
-//				if ((level[i][j] instanceof Charecter) && (MtD.getTile() instanceof Potion)) {
-//					inventory.add(MtD.getTile());
-//					((Item) MtD.getTile()).setIndex(inventory.size() - 1);
-//					choices.add(Items.POTION);
-//				}	
-//			}
-//		}
-//
-//		if (choices.size() == 0)
-//			choices.add(Items.NONE);
-//		return choices;
-//	}
-//
-//	// performs an action based on selected item
-//	public static void act(Items item, int i) {
-//		if (item.equals(Items.DOORS)) {
-//			((Door) inventory.get(i)).setOpen(!(((Door) inventory.get(i)).getOpen()));
-//		} else if(item.equals(Items.STAIRS)) {
-//			((Stairs) inventory.get(i)).nextLevel();
-//		} else if(item.equals(Items.POTION)) {
-//			((Potion) inventory.get(i)).quaff(graphics.getMtD());
-//		}
-//	}
-	
 	//getters and setters
 
 	public Tile[][] getLevel() {
@@ -270,9 +223,5 @@ public class Map {
 	public void setLvl(int lvl) {
 		this.lvl = lvl;
 	}
-
-//	public static ArrayList<Tile> inventory() {
-//		return inventory;
-//	}
 
 }

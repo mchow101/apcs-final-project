@@ -2,16 +2,17 @@
 //Graphics and JFrame for SideBar
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class SidebarGraphics extends JPanel {
 	private int dim;
 	private ArrayList<String> display;
 
-	private Thread t;
 	private JFrame frame;
 
 	public SidebarGraphics(int dim) {
@@ -26,6 +27,9 @@ public class SidebarGraphics extends JPanel {
 		frame.add(this);
 		frame.repaint();
 		frame.setVisible(true);
+		
+		display = new ArrayList<String>();
+		display.add("Generic Message");
 	}
 
 	public void paintComponent(java.awt.Graphics g) {
@@ -33,7 +37,17 @@ public class SidebarGraphics extends JPanel {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim / 2, dim);
 		g.setColor(Color.WHITE);
-		// for(int i = 0; i < MtD.stats())
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		for(int i = 0; i < display.size(); i++) {
+			g.drawString(display.get(i), 10, i*22 + 20);
+		}
 		frame.repaint();
+	}
+	
+	public void setDisplay(ArrayList<String> toDisplay) {
+		display = new ArrayList<String>();
+		for(int i = 0; i < toDisplay.size(); i++) {
+			display.add(toDisplay.get(i));
+		}
 	}
 }
