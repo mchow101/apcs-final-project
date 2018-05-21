@@ -189,17 +189,17 @@ public class Map {
 			for (int j = 0; j < level[i].length; j++) {
 				g.setColor(Color.WHITE);
 				// different colors for different types of Tiles
-				if (level[i][j] instanceof Door) {
-					g.setColor(Color.LIGHT_GRAY);
-				} else if (level[i][j] instanceof Stairs) {
-					g.setColor(Color.LIGHT_GRAY);
-				} else if (level[i][j] instanceof Charecter) {
-					double hp = (double)((Charecter) (level[i][j])).getHealth()/((Charecter) (level[i][j])).getMaxHealth();
-					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
-				} else if (level[i][j] instanceof Creature) {
-					double hp = (double)((Creature) (level[i][j])).getHealth()/((Creature) (level[i][j])).getMaxHealth();
-					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
-				}
+//				if (level[i][j] instanceof Door) {
+//					g.setColor(Color.LIGHT_GRAY);
+//				} else if (level[i][j] instanceof Stairs) {
+//					g.setColor(Color.LIGHT_GRAY);
+//				} else if (level[i][j] instanceof Charecter) {
+//					double hp = (double)((Charecter) (level[i][j])).getHealth()/((Charecter) (level[i][j])).getMaxHealth();
+//					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
+//				} else if (level[i][j] instanceof Creature) {
+//					double hp = (double)((Creature) (level[i][j])).getHealth()/((Creature) (level[i][j])).getMaxHealth();
+//					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
+//				}
 				g.drawString(level[i][j].toString(), j * y, i * x);
 			}
 		}

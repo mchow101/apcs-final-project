@@ -134,8 +134,10 @@ public class Tyler implements Creature, Tile {
 		for (int i = 0; i < 10; i++) {
 			randomx = (int) ((Math.random() * 5) - 2.5) + this.x;
 			randomy = (int) ((Math.random() * 5) - 2.5) + this.y;
+			
+			
 
-			if (map.getLevel()[randomy][randomx].canContainMonster()) {
+			if (map.getLevel()[randomx][randomy].canContainMonster()) {
 				if (Math.random() > .5)
 					enemy.add(new Bryce(randomy, randomx));
 				else

@@ -77,8 +77,8 @@ public class KaiH implements Creature, Tile {
 				this.setDx(-1);
 			else if (right != 10000)
 				this.setDx(1);
-			else
-				System.out.println(this.dx + " " + this.dy);
+			else {}
+				//System.out.println(this.dx + " " + this.dy);
 
 
 		}
@@ -87,7 +87,11 @@ public class KaiH implements Creature, Tile {
 			this.health++;
 		}
 
+		
+		if (prevX != x)
 		this.prevX = this.x;
+		
+		if (prevY != y)
 		this.prevY = this.y;
 
 		this.x = this.x + this.dx;

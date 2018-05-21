@@ -41,16 +41,17 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		int randomx;
 		int randomy;
 		
-	enemy.add(tyler);
+		//enemy.add(tyler);
 
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 1; i++) {
 			randomx = (int) (Math.random()*48) + 1;
 			randomy = (int) (Math.random()*48) + 1;
 
 			if (map.getLevel()[randomy][randomx].canContainMonster()) {
-				if (Math.random() > .5)
-					enemy.add(new Bryce(randomy, randomx));
-				else
+				System.out.println(map.getLevel()[randomy][randomx]);
+//				if (Math.random() > .5)
+//					enemy.add(new Bryce(randomy, randomx));
+//				else
 					enemy.add(new KaiH(randomy, randomx));
 			} else
 				i--;
@@ -138,6 +139,22 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 //					enemy.get(i).setX(enemy.get(i).getPrevX());
 //					enemy.get(i).setY(enemy.get(i).getPrevY());
 				}
+				
+//				if (enemy.get(i).isDead()) {
+//					System.out.println(enemy.get(i).getTile());
+//					map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = enemy.get(i).getTile();
+//					enemy.remove(i);
+//					break;
+//				}
+//				
+//				enemy.get(i).move(MtD, map);
+//				
+//				map.getLevel()[enemy.get(i).getPrevY()][enemy.get(i).getPrevX()] = enemy.get(i).getTile();
+//				map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = (Tile) enemy.get(i);
+				
+				
+				
+				
 			}
 
 		}
