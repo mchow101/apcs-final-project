@@ -12,7 +12,10 @@ public class Runner {
 	}
 	
 	public static void updateDisplay(ArrayList<String> toDisplay) {
-		sidebar.setDisplay(graphics.getToDisplay());
+		try {
+			sidebar.setDisplay(graphics.getToDisplay());
+		} catch (NullPointerException e) {
+		}
 	}
 
 	public static int getSelectedIndex() {
