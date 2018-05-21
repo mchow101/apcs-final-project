@@ -16,7 +16,14 @@ public class Runner {
 	}
 
 	public static int getSelectedIndex() {
-		return 0;
-//		return graphics.getSelectedIndex();
+		try {
+			return graphics.getSelectedIndex();
+		} catch (NullPointerException e) {
+			return 0;
+		}
+	}
+	
+	public static ArrayList<Creature> getEnemy() {
+		return graphics.getEnemy();
 	}
 }

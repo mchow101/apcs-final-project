@@ -45,7 +45,7 @@ public class Stairs implements Tile, Item {
 
 	@Override
 	public boolean canUse(int locx, int locy) {
-		return this.x == locx && this.y == locy;
+		return this.x == locx && this.y == locy && Runner.getEnemy().size() == 0;
 	}
 
 	@Override

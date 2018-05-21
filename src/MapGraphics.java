@@ -20,8 +20,8 @@ public class MapGraphics extends JPanel implements KeyListener {
 	private ArrayList<Creature> enemy; // contains live enemies
 	private ArrayList<String> toDisplay; // stats, notifications, etc. to be displayed
 	private ArrayList<Item> inventory; // items available for use
-	private ArrayList<Tile> temp; // holds inventory temporarily
-	private int selected;
+	private int base = 5; // for item selection
+	private int selected = base;
 
 	public MapGraphics(int dim) {
 		this.dim = dim;
@@ -49,10 +49,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		enemy = new ArrayList<Creature>();
 		toDisplay = new ArrayList<String>();
 		inventory = new ArrayList<Item>();
-		temp = new ArrayList<Tile>();
 		
-		selected = 0;
-
 		// random enemies
 		int randomx;
 		int randomy;
@@ -149,6 +146,9 @@ public class MapGraphics extends JPanel implements KeyListener {
 		if (MtD.getStrength() > Math.random() * 25 && MtD.getHealth() != MtD.getMaxHealth()) {
 			MtD.setHealth(MtD.getHealth() + 1);
 		}
+		
+		// reset tracking of inventory
+		if (selected >= inventory.size()) selected = base;
 	}
 	
 	// update enemies
@@ -175,7 +175,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	// update player stats
 	public void updateStats() {
 		toDisplay.clear();
-		temp.clear();
+		inventory.clear();
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
 		}
@@ -189,83 +189,93 @@ public class MapGraphics extends JPanel implements KeyListener {
 				if (map.getLevel()[i][j] instanceof Item && (((Item) map.getLevel()[i][j]).canUse(MtD.getX(), MtD.getY()))) {
 					toDisplay.add("Press " + (((Item) map.getLevel()[i][j]).key() + " to " + (((Item) map.getLevel()[i][j]).action()).toLowerCase() + 
 							" " + (((Item) map.getLevel()[i][j]).getType())).toLowerCase());
-					temp.add(map.getLevel()[i][j]);
-					((Item) map.getLevel()[i][j]).setIndex(temp.size() - 1);
+					inventory.add((Item) map.getLevel()[i][j]);
+					((Item) map.getLevel()[i][j]).setIndex(inventory.size() - 1);
 				}
 			}
 		}
 
 		if (MtD.getTile() instanceof Item && ((Item) MtD.getTile()).canUse(MtD.getX(), MtD.getY())) {
 			toDisplay.add("Press " +  (((Item) MtD.getTile()).key()) + " to " + (((Item) MtD.getTile()).action()).toLowerCase() + " " + (((Item) MtD.getTile()).getType()).toLowerCase());
-			temp.add(MtD.getTile());
-			((Item) MtD.getTile()).setIndex(temp.size() - 1);
+			inventory.add((Item) MtD.getTile());
+			((Item) MtD.getTile()).setIndex(inventory.size() - 1);
 		}
 	}
 
 	// perform an action if applicable
 	public void act(char key) {
-		for(int i = 0; i < temp.size(); i++) {
-			switch (key) {
-			case ('q'): // Quaff a potion
-				if(temp.get(i) instanceof Potion) {
-					((Potion) temp.get(i)).quaff(MtD);
-					MtD.setTile(new EmptySpace());
+		if (key == ' ') {
+			if(selected - base < inventory.size() - 1) selected++;
+			else selected = base;
+		}
+		
+		for(int i = 0; i < inventory.size(); i++) {
+			if(selected - base == inventory.get(i).getIndex()) {
+				switch (key) {
+				case ('q'): // Quaff a potion
+					if(inventory.get(i) instanceof Potion) {
+						((Potion) inventory.get(i)).quaff(MtD);
+						MtD.setTile(new EmptySpace());
+					}
+					break;
+				case ('w'): // wear/wield an item
+					break;
+				case ('e'): // Equipment list
+					break;
+				case ('r'): // Read a scroll
+					break;
+				case ('t'): // Take of an item
+					break;
+				case ('i'): // Open inventory
+					break;
+				case ('o'): // Open a door
+					if(inventory.get(i) instanceof Door) {
+						((Door) inventory.get(i)).setOpen(true);
+					}
+					break;
+				case ('p'): // Cast a prayer
+					break;
+				case ('l'): // Look a direction
+					break;
+				case ('m'): // Cast a magic spell
+					break;
+				case ('j'): // Jam a door
+					break;
+				case ('s'): // Stairs
+					//what is search
+					if(inventory.get(i) instanceof Stairs)
+						map.setLvl(map.getLvl() + 1);
+					break;
+				case ('u'): // Use a staff
+					break;
+				case ('c'): // Close a Door
+					if(inventory.get(i) instanceof Door) {
+						((Door) inventory.get(i)).setOpen(false);
+					}
+					break;
+				case ('d'): // Drop an item
+					break;
+				case ('f'): // fire/throw an item
+					break;
+				case ('b'): // Browse a book
+					break;
+				case ('C'): // Display character
+					break;
+				case ('D'): // Disarm a trap
+					break;
+				case ('E'): // Eat some food
+					break;
+				case ('F'): // Fill a lamp with fuel
+					break;
+				case ('R'): // Rest for x amount of time
+					break;
+				case ('a'): // aim/fire a wand
+					break;
+				case ('z'): // Zap a rod
+					break;
+				case ('T'): // Tunnel into the earth.
+					break;
 				}
-				break;
-			case ('w'): // wear/wield an item
-				break;
-			case ('e'): // Equipment list
-				break;
-			case ('r'): // Read a scroll
-				break;
-			case ('t'): // Take of an item
-				break;
-			case ('i'): // Open inventory
-				break;
-			case ('o'): // Open a door
-				if(temp.get(i) instanceof Door) {
-					((Door) temp.get(i)).setOpen(true);
-				}
-				break;
-			case ('p'): // Cast a prayer
-				break;
-			case ('l'): // Look a direction
-				break;
-			case ('m'): // Cast a magic spell
-				break;
-			case ('j'): // Jam a door
-				break;
-			case ('s'): // search
-				break;
-			case ('u'): // Use a staff
-				break;
-			case ('c'): // Close a Door
-				if(temp.get(i) instanceof Door) {
-					((Door) temp.get(i)).setOpen(false);
-				}
-				break;
-			case ('d'): // Drop an item
-				break;
-			case ('f'): // fire/throw an item
-				break;
-			case ('b'): // Browse a book
-				break;
-			case ('C'): // Display character
-				break;
-			case ('D'): // Disarm a trap
-				break;
-			case ('E'): // Eat some food
-				break;
-			case ('F'): // Fill a lamp with fuel
-				break;
-			case ('R'): // Rest for x amount of time
-				break;
-			case ('a'): // aim/fire a wand
-				break;
-			case ('z'): // Zap a rod
-				break;
-			case ('T'): // Tunnel into the earth.
-				break;
 			}
 		}
 	}
@@ -292,5 +302,9 @@ public class MapGraphics extends JPanel implements KeyListener {
 	
 	public int getSelectedIndex() {
 		return selected;
+	}
+
+	public ArrayList<Creature> getEnemy() {
+		return enemy;
 	}
 }
