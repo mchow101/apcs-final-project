@@ -1,8 +1,7 @@
 //Potions: give character special abilities
-public class Potion implements Item, Tile {
+public abstract class Potion implements Tile, Item {
 
 	private int x, y, i;
-	private CharacterStats type;
 
 	public Potion(int x, int y) {
 		this.x = x;
@@ -11,10 +10,8 @@ public class Potion implements Item, Tile {
 	}
 
 	// gives character abilities based on potion type
-	public void quaff(Charecter mtD) {
-		System.out.println("yay");
-	}
-
+	public abstract void quaff(Charecter MtD);
+	
 	// implemented methods for interfaces
 
 	@Override
@@ -24,12 +21,12 @@ public class Potion implements Item, Tile {
 
 	@Override
 	public boolean canUse(int locx, int locy) {
-		return (locx == this.x) && (locy == this.y);
+		return this.x == locx && this.y == locy;
 	}
 
 	@Override
-	public Items getType() {
-		return Items.POTION;
+	public String getType() {
+		return "Potion";
 	}
 
 	@Override
@@ -49,12 +46,17 @@ public class Potion implements Item, Tile {
 
 	@Override
 	public boolean canContainMonster() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public String toString() {
 		return "@";
+	}
+
+	@Override
+	public char key() {
+		return 'q';
 	}
 
 }

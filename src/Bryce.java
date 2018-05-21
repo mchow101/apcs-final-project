@@ -75,8 +75,7 @@ public class Bryce implements Creature, Tile {
 				this.setDx(-1);
 			else if (right != -10000)
 				this.setDx(1);
-			else 
-				System.out.println(this.dx + " " + this.dy);
+//				System.out.println(this.dx + " " + this.dy);
 
 		}
 
