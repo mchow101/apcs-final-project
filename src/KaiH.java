@@ -51,50 +51,50 @@ public class KaiH implements Creature, Tile {
 
 		int direction = 0;
 
-		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
-			this.attack((Charecter) MtD, map);
-		} else {
-
-			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
-			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
-			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
-			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
-
-			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
-				up = 10000;
-			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
-				down = 10000;
-			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
-				right = 10000;
-			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
-				left = 10000;
-
-			if (up < down && up < left && up < right)
-				this.setDy(1);
-			else if (down < left && down < right)
-				this.setDy(-1);
-			else if (left < right)
-				this.setDx(-1);
-			else if (right != 10000)
-				this.setDx(1);
-			else
-				System.out.println(this.dx + " " + this.dy);
-
-
-		}
-
-		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
-			this.health++;
-		}
-
-		this.prevX = this.x;
-		this.prevY = this.y;
-
-		this.x = this.x + this.dx;
-		this.y = this.y + this.dy;
-		this.dx = 0;
-		this.dy = 0;
-		this.setTile(map.getLevel()[this.y][this.x]);
+//		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
+//			this.attack((Charecter) MtD, map);
+//		} else {
+//
+//			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
+//			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
+//			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
+//			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
+//
+//			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
+//				up = 10000;
+//			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
+//				down = 10000;
+//			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
+//				right = 10000;
+//			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
+//				left = 10000;
+//
+//			if (up < down && up < left && up < right)
+//				this.setDy(1);
+//			else if (down < left && down < right)
+//				this.setDy(-1);
+//			else if (left < right)
+//				this.setDx(-1);
+//			else if (right != 10000)
+//				this.setDx(1);
+//			else
+//				System.out.println(this.dx + " " + this.dy);
+//
+//
+//		}
+//
+//		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
+//			this.health++;
+//		}
+//
+//		this.prevX = this.x;
+//		this.prevY = this.y;
+//
+//		this.x = this.x + this.dx;
+//		this.y = this.y + this.dy;
+//		this.dx = 0;
+//		this.dy = 0;
+//		this.setTile(map.getLevel()[this.y][this.x]);
 
 	}
 

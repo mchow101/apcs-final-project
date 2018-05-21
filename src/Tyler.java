@@ -123,7 +123,7 @@ public class Tyler implements Creature, Tile {
 		this.y = this.y + this.dy;
 		this.dx = 0;
 		this.dy = 0;
-		this.setTile(map.getLevel()[this.y][this.x]);
+//		this.setTile(map.getLevel()[this.y][this.x]);
 
 	}
 
@@ -135,10 +135,10 @@ public class Tyler implements Creature, Tile {
 			randomx = (int) ((Math.random() * 5) - 2.5) + this.x;
 			randomy = (int) ((Math.random() * 5) - 2.5) + this.y;
 
-			if (map.getLevel()[randomy][randomx].canContainMonster()) {
-				if (Math.random() > .5)
+			if (map.getLevel()[randomx][randomy].canContainMonster()) {
+				if (Math.random() > .5) 
 					enemy.add(new Bryce(randomy, randomx));
-				else
+				else 
 					enemy.add(new KaiH(randomy, randomx));
 			}
 

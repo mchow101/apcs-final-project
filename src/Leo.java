@@ -1,4 +1,5 @@
-
+//Level 3 Monster
+//Add description of abilities
 public class Leo implements Creature, Tile {
 	private int health;
 	private int strength;

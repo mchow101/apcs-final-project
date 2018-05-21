@@ -200,7 +200,11 @@ public class Map {
 					double hp = (double)((Creature) (level[i][j])).getHealth()/((Creature) (level[i][j])).getMaxHealth();
 					g.setColor(new Color((int)(225 - 225*hp), (int)(hp*225), (int)(hp*225)));
 				}
-				g.drawString(level[i][j].toString(), j * y, i * x);
+				if(i == 25 && j == 18 && level[i][j] instanceof EmptySpace) {
+					g.drawString("***", j * y, i * x);
+				} else {
+					g.drawString(level[i][j].toString(), j * y, i * x);
+				}
 			}
 		}
 	}

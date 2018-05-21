@@ -41,7 +41,7 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 		int randomx;
 		int randomy;
 		
-	enemy.add(tyler);
+		enemy.add(tyler);
 
 		for (int i = 0; i < 15; i++) {
 			randomx = (int) (Math.random()*48) + 1;
@@ -141,7 +141,6 @@ public class Graphics extends JPanel implements KeyListener, Runnable {
 //					enemy.get(i).setY(enemy.get(i).getPrevY());
 				}
 			}
-
 		}
 
 	}
