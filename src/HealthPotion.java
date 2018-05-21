@@ -1,4 +1,4 @@
-
+// Regenerate to full health
 public class HealthPotion extends Potion implements Tile {
 
 	public HealthPotion(int x, int y) {

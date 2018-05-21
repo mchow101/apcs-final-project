@@ -14,4 +14,8 @@ public class Runner {
 	public static void updateDisplay(ArrayList<String> toDisplay) {
 		sidebar.setDisplay(graphics.getToDisplay());
 	}
+
+	public static int getSelectedIndex() {
+		return graphics.getSelectedIndex();
+	}
 }

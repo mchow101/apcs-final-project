@@ -21,6 +21,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	private ArrayList<String> toDisplay; // stats, notifications, etc. to be displayed
 	private ArrayList<Item> inventory; // items available for use
 	private ArrayList<Tile> temp; // holds inventory temporarily
+	private int selected;
 
 	public MapGraphics(int dim) {
 		this.dim = dim;
@@ -34,6 +35,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 		frame = new JFrame("Super Fun Game");
 		frame.setSize(dim, dim);
+		frame.setLocation(dim/3, 0);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.add(panel);
@@ -48,6 +50,8 @@ public class MapGraphics extends JPanel implements KeyListener {
 		toDisplay = new ArrayList<String>();
 		inventory = new ArrayList<Item>();
 		temp = new ArrayList<Tile>();
+		
+		selected = 0;
 
 		// random enemies
 		int randomx;
@@ -82,9 +86,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		// display game over screen
 		else {
 			Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
-			// image from
-			// https: //
-			// experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
+			// image from https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
 			g.drawImage(image, 50, 5, 500, 375, this);
 		}
 		this.repaint();
@@ -204,7 +206,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	public void act(char key) {
 		for(int i = 0; i < temp.size(); i++) {
 			switch (key) {
-			case ('q'): 
+			case ('q'): // Quaff a potion
 				if(temp.get(i) instanceof Potion) {
 					((Potion) temp.get(i)).quaff(MtD);
 					MtD.setTile(new EmptySpace());
@@ -220,7 +222,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 				break;
 			case ('i'): // Open inventory
 				break;
-			case ('o'):
+			case ('o'): // Open a door
 				if(temp.get(i) instanceof Door) {
 					((Door) temp.get(i)).setOpen(true);
 				}
@@ -237,7 +239,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 				break;
 			case ('u'): // Use a staff
 				break;
-			case ('c'): 
+			case ('c'): // Close a Door
 				if(temp.get(i) instanceof Door) {
 					((Door) temp.get(i)).setOpen(false);
 				}
@@ -286,5 +288,9 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 	public void setInventory(ArrayList<Item> inventory) {
 		this.inventory = inventory;
+	}
+	
+	public int getSelectedIndex() {
+		return selected;
 	}
 }

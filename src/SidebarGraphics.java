@@ -20,8 +20,7 @@ public class SidebarGraphics extends JPanel {
 		// frame setup
 		frame = new JFrame("Sidebar");
 
-		frame.setSize(dim / 2, dim);
-		frame.setLocation(dim + 10, 0);
+		frame.setSize(dim / 3, dim);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.add(this);
@@ -37,8 +36,17 @@ public class SidebarGraphics extends JPanel {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim / 2, dim);
 		g.setColor(Color.WHITE);
-		g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		Font plain = new Font("Times New Roman", Font.PLAIN, 18);
+		Font heading = new Font("Times New Roman", Font.BOLD, 20);
 		for(int i = 0; i < display.size(); i++) {
+			if(display.get(i).equals("Player Stats") || display.get(i).equals("Inventory"))
+				g.setFont(heading);
+			else
+				g.setFont(plain);
+			if(Runner.getSelectedIndex() == i)
+				g.setColor(Color.RED);
+			else
+				g.setColor(Color.WHITE);
 			g.drawString(display.get(i), 10, i*22 + 20);
 		}
 		frame.repaint();
