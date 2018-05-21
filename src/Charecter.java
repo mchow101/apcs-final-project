@@ -120,7 +120,10 @@ public class Charecter implements Tile, Creature {
 	// getters and setters
 
 	public void setHealth(int a) {
-		health = a;
+		if(a >=  0)
+			health = a;
+		else
+			health = 0;
 	}
 
 	public int getHealth() {
@@ -164,7 +167,7 @@ public class Charecter implements Tile, Creature {
 	}
 
 	public String[] stats() {
-		return new String[] { "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth };
+		return new String[] { "Player Stats", "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth };
 	}
 
 	public int getX() {
