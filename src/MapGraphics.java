@@ -20,7 +20,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	private ArrayList<Creature> enemy; // contains live enemies
 	private ArrayList<String> toDisplay; // stats, notifications, etc. to be displayed
 	private ArrayList<Item> inventory; // items available for use
-	private int base = 5; // for item selection
+	private int base = 7; // for item selection
 	private int selected = base;
 
 	public MapGraphics(int dim) {
@@ -35,7 +35,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 		frame = new JFrame("Super Fun Game");
 		frame.setSize(dim, dim);
-		frame.setLocation(dim/3, 0);
+		frame.setLocation(dim/3 + 10, 0);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.add(panel);
@@ -219,61 +219,40 @@ public class MapGraphics extends JPanel implements KeyListener {
 					}
 					break;
 				case ('w'): // wear/wield an item
-					break;
-				case ('e'): // Equipment list
+					if(inventory.get(i) instanceof Weapons) {
+						((Weapons) inventory.get(i)).use(MtD);
+						MtD.setTile(new EmptySpace());
+					} else if(inventory.get(i) instanceof Armor) {
+						((Armor) inventory.get(i)).wear(MtD);
+						MtD.setTile(new EmptySpace());
+					}
 					break;
 				case ('r'): // Read a scroll
+					if(inventory.get(i) instanceof Scroll) {
+						((Scroll) inventory.get(i)).read(MtD, map);
+					}
 					break;
-				case ('t'): // Take of an item
-					break;
-				case ('i'): // Open inventory
+				case ('t'): // Take off an item
 					break;
 				case ('o'): // Open a door
 					if(inventory.get(i) instanceof Door) {
 						((Door) inventory.get(i)).setOpen(true);
 					}
 					break;
-				case ('p'): // Cast a prayer
-					break;
-				case ('l'): // Look a direction
-					break;
 				case ('m'): // Cast a magic spell
 					break;
-				case ('j'): // Jam a door
-					break;
 				case ('s'): // Stairs
-					//what is search
 					if(inventory.get(i) instanceof Stairs)
 						map.setLvl(map.getLvl() + 1);
-					break;
-				case ('u'): // Use a staff
 					break;
 				case ('c'): // Close a Door
 					if(inventory.get(i) instanceof Door) {
 						((Door) inventory.get(i)).setOpen(false);
 					}
 					break;
-				case ('d'): // Drop an item
-					break;
 				case ('f'): // fire/throw an item
 					break;
-				case ('b'): // Browse a book
-					break;
-				case ('C'): // Display character
-					break;
-				case ('D'): // Disarm a trap
-					break;
-				case ('E'): // Eat some food
-					break;
-				case ('F'): // Fill a lamp with fuel
-					break;
-				case ('R'): // Rest for x amount of time
-					break;
 				case ('a'): // aim/fire a wand
-					break;
-				case ('z'): // Zap a rod
-					break;
-				case ('T'): // Tunnel into the earth.
 					break;
 				}
 			}
