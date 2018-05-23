@@ -6,7 +6,7 @@ public class EnemyScroll extends Scroll {
 
 	public EnemyScroll(int x, int y) {
 		super(x, y);
-		r = (int) (Math.random() * 10);
+		r = 10;// (int) (Math.random() * 10);
 	}
 
 	@Override
@@ -16,26 +16,24 @@ public class EnemyScroll extends Scroll {
 		int i = 1;
 		boolean canGo = true;
 		while(canGo && i <= r) {
-			if(!(map.getLevel()[getX() + i][getY()].canContainMonster() || map.getLevel()[getX() + i][getY()] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX() + i][getY() + i].canContainMonster() || map.getLevel()[getX() + i][getY() + i] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX() + i][getY() - i].canContainMonster() || map.getLevel()[getX() + i][getY() - i] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX()][getY() + i].canContainMonster() || map.getLevel()[getX()][getY() + i] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX()][getY() - i].canContainMonster() || map.getLevel()[getX()][getY() - i] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX() - i][getY() + i].canContainMonster() || map.getLevel()[getX() - i][getY() + i] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX() - i][getY()].canContainMonster() || map.getLevel()[getX() - i][getY()] instanceof Creature))
-				canGo = false;
-			if(!(map.getLevel()[getX() - i][getY() - i].canContainMonster() || map.getLevel()[getX() - i][getY() - i] instanceof Creature))
-				canGo = false;
-			System.out.println(i + " " + canGo);
+			for(int a = -i; a <= i; a++) {
+				for(int b = -i; b <= i; b++) {
+					if(!(a == b && a == 0)) {
+						if(map.getLevel()[MtD.getY() + b][MtD.getX() + a].canContainMtD()) {
+							System.out.println("yay " + map.getLevel()[MtD.getY() + b][MtD.getX() + a]);
+							map.getLevel()[MtD.getY() + b][MtD.getX() + a] = new StrengthPotion(MtD.getX() + a, MtD.getY() + b);
+						} else {
+							System.out.println("faisl at " + map.getLevel()[MtD.getY() + b][MtD.getX() + a]);
+							canGo = false;
+							System.out.println(i);
+						}
+					}
+				}
+			}
 			i++;
+			if(MtD.getY() - i < 0 || MtD.getX() - i < 0)
+				canGo = false;
 		}
-		System.out.println(i);
 		
 		MtD.setTile(new EmptySpace());
 	}

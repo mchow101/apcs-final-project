@@ -53,7 +53,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		// random enemies
 		int randomx;
 		int randomy;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1; i++) {
 			randomx = (int) (Math.random() * 49) + 1;
 			randomy = (int) (Math.random() * 49) + 1;
 
@@ -88,7 +88,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		}
 		this.repaint();
 
-		Runner.updateDisplay(toDisplay);
+		Runner.updateDisplay();
 	}
 
 	@Override

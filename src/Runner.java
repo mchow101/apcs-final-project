@@ -11,7 +11,7 @@ public class Runner {
 		graphics = new MapGraphics(dim);
 	}
 	
-	public static void updateDisplay(ArrayList<String> toDisplay) {
+	public static void updateDisplay() {
 		try {
 			sidebar.setDisplay(graphics.getToDisplay());
 		} catch (NullPointerException e) {
