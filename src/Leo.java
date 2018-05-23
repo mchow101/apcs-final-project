@@ -1,7 +1,6 @@
-//Level 1 Monster
+//Level 3 Monster
 //Add description of abilities
-public class KaiH implements Creature, Tile {
-
+public class Leo implements Creature, Tile {
 	private int health;
 	private int strength;
 	private int intel;
@@ -25,7 +24,7 @@ public class KaiH implements Creature, Tile {
 
 	private Tile tile;
 
-	public KaiH(int x, int y) {
+	public Leo(int x, int y) {
 		// initialize stats
 		health = 25;
 		maxHealth = 25;
@@ -77,8 +76,6 @@ public class KaiH implements Creature, Tile {
 				this.setDx(-1);
 			else if (right != 10000)
 				this.setDx(1);
-			else {}
-				//System.out.println(this.dx + " " + this.dy);
 
 		}
 
@@ -86,11 +83,7 @@ public class KaiH implements Creature, Tile {
 			this.health++;
 		}
 
-		
-		if (prevX != x)
 		this.prevX = this.x;
-		
-		if (prevY != y)
 		this.prevY = this.y;
 
 		this.x = this.x + this.dx;
@@ -98,6 +91,7 @@ public class KaiH implements Creature, Tile {
 		this.dx = 0;
 		this.dy = 0;
 		this.setTile(map.getLevel()[this.y][this.x]);
+
 	}
 
 	// attacks MtD
@@ -161,7 +155,7 @@ public class KaiH implements Creature, Tile {
 	// toString, getters and setters
 
 	public String toString() {
-		return "k";
+		return "l";
 	}
 
 	public Tile getTile() {
