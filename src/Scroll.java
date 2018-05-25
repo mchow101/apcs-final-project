@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 //Scrolls: do stuff to dungeon
 public abstract class Scroll implements Tile, Item {
 
@@ -10,7 +12,7 @@ public abstract class Scroll implements Tile, Item {
 	}
 
 	// does stuff based on scroll type
-	public abstract void read(Charecter MtD, Map map);
+	public abstract void read(Charecter MtD, Map map, ArrayList<Creature> enemy);
 	
 	// implemented methods for interfaces
 

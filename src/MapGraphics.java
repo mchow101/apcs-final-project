@@ -53,7 +53,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		// random enemies
 		int randomx;
 		int randomy;
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 100; i++) {
 			randomx = (int) (Math.random() * 49) + 1;
 			randomy = (int) (Math.random() * 49) + 1;
 
@@ -82,7 +82,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 			randomx =(int) Math.random()*9 - 4;
 			randomy =(int) Math.random()*9 - 4;
 			
-			if (!(randomy+y >= 50 || randomx+x >= 50)) {
+			if (!(randomy+y >= 50 || randomx+x >= 50 || randomy+y < 0 || randomx+x < 0)) {
 			if (map.getLevel()[randomy+y][randomx+x].canContainMonster())
 			enemy.add(new KaiH(randomy+y, randomx+x));
 			}
@@ -263,7 +263,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 					break;
 				case ('r'): // Read a scroll
 					if(inventory.get(i) instanceof Scroll) {
-						((Scroll) inventory.get(i)).read(MtD, map);
+						((Scroll) inventory.get(i)).read(MtD, map, enemy);
 					}
 					break;
 				case ('t'): // Take off an item
