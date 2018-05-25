@@ -51,21 +51,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		inventory = new ArrayList<Item>();
 		
 		// random enemies
-		int randomx;
-		int randomy;
-		for (int i = 0; i < 1; i++) {
-			randomx = (int) (Math.random() * 49) + 1;
-			randomy = (int) (Math.random() * 49) + 1;
-
-			if (map.getLevel()[randomy][randomx].canContainMonster()) {
-				if (Math.random() > .5) 
-					enemy.add(new Bryce(randomy, randomx));
-				else 
-					addKais(randomy, randomx);
-				
-			}   else
-				i--;
-		}
+		genEnemies(10);
 						
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
@@ -73,12 +59,35 @@ public class MapGraphics extends JPanel implements KeyListener {
 			
 	}
 
+	private void genEnemies(int size) {
+		double random;
+		int randomx;
+		int randomy;
+		for (int i = 0; i < size; i++) {
+			randomx = (int) (Math.random() * 49) + 1;
+			randomy = (int) (Math.random() * 49) + 1;
+			random = Math.random();
+			
+			if (map.getLevel()[randomy][randomx].canContainMonster()) {
+				if (random > .66) 
+					enemy.add(new Bryce(randomy, randomx));
+				else if (random > .33)
+					addKais(randomy, randomx);
+				else 
+					enemy.add(new Cammy(randomy, randomx));
+				
+			}   else
+				i--;
+		}
+		
+	}
+
 	private void addKais(int y, int x) {
 		
 		int randomx;
 		int randomy;
 		
-		for (int i = 0; i < ((int) Math.random() * 8) + 8; i++) {
+		for (int i = 0; i < ((int) Math.random() * 8) + 6; i++) {
 			randomx =(int) Math.random()*9 - 4;
 			randomy =(int) Math.random()*9 - 4;
 			
@@ -276,8 +285,10 @@ public class MapGraphics extends JPanel implements KeyListener {
 				case ('m'): // Cast a magic spell
 					break;
 				case ('s'): // Stairs
-					if(inventory.get(i) instanceof Stairs)
+					if(inventory.get(i) instanceof Stairs) {
 						map.setLvl(map.getLvl() + 1);
+						genEnemies(20);
+					}
 					break;
 				case ('c'): // Close a Door
 					if(inventory.get(i) instanceof Door) {

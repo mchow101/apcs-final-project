@@ -1,6 +1,6 @@
 //Level 1 Monster
 //Add description of abilities
-public class KaiH implements Creature, Tile {
+public class Cammy implements Creature, Tile {
 
 	private int health;
 	private int strength;
@@ -25,16 +25,17 @@ public class KaiH implements Creature, Tile {
 
 	private Tile tile;
 
-	public KaiH(int x, int y) {
+	public Cammy(int x, int y) {
 		// initialize stats
 		health = 25;
 		maxHealth = 25;
+		strength = 3;
+		intel = 3;
 		AC = 12;
 		this.y = x;
 		this.x = y;
 		prevX = x;
 		prevY = y;
-		strength = 5;
 		tile = new EmptySpace();
 		// initialize movement variables
 		right = 0;
@@ -103,7 +104,10 @@ public class KaiH implements Creature, Tile {
 	public void attack(Creature MtD, Map map) {
 
 		int damage = 0;
-
+		int weakness = 0;
+		
+		weakness = (int) (Math.random()*3);
+		
 		damage += this.strength;
 
 		if (MtD.getAC() > Math.random() * 100) {
@@ -112,7 +116,7 @@ public class KaiH implements Creature, Tile {
 		}
 
 		MtD.setHealth(MtD.getHealth() - damage);
-
+		((Charecter) MtD).setMaxHealth(MtD.getMaxHealth() - weakness);
 		if (MtD.getHealth() <= 0) {
 			MtD.die(map);
 		}
@@ -160,7 +164,7 @@ public class KaiH implements Creature, Tile {
 	// toString, getters and setters
 
 	public String toString() {
-		return "k";
+		return "C";
 	}
 
 	public Tile getTile() {
@@ -226,4 +230,5 @@ public class KaiH implements Creature, Tile {
 	public void setHealth(int a) {
 		health = a;
 	}
+
 }

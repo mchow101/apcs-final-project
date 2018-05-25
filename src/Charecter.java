@@ -25,9 +25,9 @@ public class Charecter implements Tile, Creature {
 
 	public Charecter() {
 		// initialize stats
-		health = 50;
+		health = 40;
 		strength = 15;
-		maxHealth = 50;
+		maxHealth = 40;
 		// initialize location
 		x = 5;
 		y = 5;
