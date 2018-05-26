@@ -65,6 +65,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 			} else
 				i--;
 		}
+		enemy.add(new Tyler(10, 10, enemy));
 
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
