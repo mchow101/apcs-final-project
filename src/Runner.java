@@ -5,12 +5,12 @@ public class Runner {
 	private static SidebarGraphics sidebar;
 	private static MapGraphics graphics;
 
-	public static void main (String [] args) {
+	public static void main(String[] args) {
 		int dim = 750; // to easily change dimensions
 		sidebar = new SidebarGraphics(dim);
 		graphics = new MapGraphics(dim);
 	}
-	
+
 	public static void updateDisplay() {
 		try {
 			sidebar.setDisplay(graphics.getToDisplay());
@@ -25,7 +25,7 @@ public class Runner {
 			return 0;
 		}
 	}
-	
+
 	public static ArrayList<Creature> getEnemy() {
 		try {
 			return graphics.getEnemy();
@@ -33,39 +33,68 @@ public class Runner {
 			return null;
 		}
 	}
-	
-	public static void setMap(Map noob){
+
+	public static void setMap(Map noob) {
 		try {
-		graphics.setMap(noob);
+			graphics.setMap(noob);
 		} catch (NullPointerException e) {
 		}
-		
+
 	}
-	
+
 	public static Tile[][] getMap() {
 		try {
-		return graphics.getMap();
+			return graphics.getMap();
 		} catch (NullPointerException e) {
-			System.out.println("nice");
 		}
 		return null;
-		
+
 	}
-	
+
 	public static MapGraphics getGraphics() {
 		try {
-		return graphics;
+			return graphics;
 		} catch (NullPointerException e) {
-		return null;
+			return null;
 		}
 	}
 
 	public static void setEnemy(ArrayList<Creature> enemy) {
 		try {
-			System.out.println("bob");
-		graphics.setEnemy(enemy);
+			graphics.setEnemy(enemy);
 		} catch (NullPointerException e) {
 		}
 	}
-	
+
+	public static int getLvl() {
+		try {
+			return graphics.getMapObj().getLvl();
+		} catch (NullPointerException e) {
+			return 0;
+		}
+	}
+
+	public static int geteNum() {
+		try {
+			return graphics.geteNum();
+		} catch (NullPointerException e) {
+			return 0;
+		}
+	}
+
+	public static Map getMapObj() {
+		try {
+			return graphics.getMapObj();
+		} catch (NullPointerException e) {
+			return null;
+		}
+	}
+
+	public static void seteNum() {
+		try {
+			graphics.seteNum(graphics.getEnemy().size());
+		} catch (NullPointerException e) {
+		}
+	}
+
 }

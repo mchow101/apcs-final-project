@@ -55,7 +55,7 @@ public class Weapons implements Item, Tile {
 	}
 	
 	public String toString() {
-		return "w";
+		return "/";
 	}
 	
 }

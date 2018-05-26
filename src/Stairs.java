@@ -19,11 +19,12 @@ public class Stairs implements Tile, Item {
 	
 	//increases or decreases level by 1
 	public void nextLevel() {
-//		Map.setLvl(Map.getLvl()+1);
+		Runner.getMapObj().setLvl(Runner.getMapObj().getLvl() + 1);
+		Runner.seteNum();
 	}
 	
 	public String toString() {
-		return ">";
+		return Runner.getEnemy().size() <= Runner.geteNum() - Runner.getLvl()*10 ? ">" : ".";
 	}
 	
 	//implemented methods for interfaces
@@ -45,7 +46,7 @@ public class Stairs implements Tile, Item {
 
 	@Override
 	public boolean canUse(int locx, int locy) {
-		return this.x == locx && this.y == locy && Runner.getEnemy().size() == 0;
+		return this.x == locx && this.y == locy && Runner.getEnemy().size() <= Runner.geteNum() - Runner.getLvl()*10;
 	}
 
 	@Override

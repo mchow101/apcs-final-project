@@ -51,7 +51,7 @@ public class Armor implements Item, Tile {
 	}
 	
 	public String toString() {
-		return "a";
+		return "()";
 	}
 	
 	public void wear(Charecter MtD) {
