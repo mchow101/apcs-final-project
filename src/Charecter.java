@@ -16,6 +16,8 @@ public class Charecter implements Tile, Creature {
 	// all at the same time
 	// :)
 	private int AC;
+	// weapon
+	private int weapon;
 	// prevents eating of special tiles
 	private Tile tile;
 	// checks for death
@@ -23,14 +25,15 @@ public class Charecter implements Tile, Creature {
 
 	public Charecter() {
 		// initialize stats
-		health = 5000000;
+		maxHealth = 500;
 		strength = 15;
-		maxHealth = 5000000;
+		health = maxHealth;
 		// initialize location
 		x = 5;
 		y = 5;
-		// initialize AC
+		// initialize AC and weapon
 		AC = 12;
+		weapon = 3;
 		// initialize starting space as an EmptySpace
 		tile = new EmptySpace();
 	}
@@ -45,7 +48,7 @@ public class Charecter implements Tile, Creature {
 
 	// attacks enemy
 	public void attack(Creature enemy, Map map) {
-		int damage = 0;
+		int damage = weapon;
 
 		damage += this.strength;
 
@@ -157,6 +160,14 @@ public class Charecter implements Tile, Creature {
 	public void setAC(int aC) {
 		AC = aC;
 	}
+	
+	public int getWeapon() {
+		return weapon;
+	}
+	
+	public void setWeapon(int w) {
+		weapon = w;
+	}
 
 	public Tile getTile() {
 		return tile;
@@ -167,7 +178,8 @@ public class Charecter implements Tile, Creature {
 	}
 
 	public String[] stats() {
-		return new String[] { "Player Stats", "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth };
+		return new String[] { "Player Stats", "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth, 
+				"Weapon: " + weapon, "Armor Class: " + AC};
 	}
 
 	public int getX() {

@@ -51,7 +51,7 @@ public abstract class Potion implements Tile, Item {
 
 	@Override
 	public String toString() {
-		return "@";
+		return "%";
 	}
 
 	@Override

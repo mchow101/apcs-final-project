@@ -1,7 +1,6 @@
-//Level 1 Monster
+//Level 3 Monster
 //Add description of abilities
-public class KaiH implements Creature, Tile {
-
+public class Leo implements Creature, Tile {
 	private int health;
 	private int strength;
 	private int intel;
@@ -25,7 +24,7 @@ public class KaiH implements Creature, Tile {
 
 	private Tile tile;
 
-	public KaiH(int x, int y) {
+	public Leo(int x, int y) {
 		// initialize stats
 		health = 25;
 		maxHealth = 25;
@@ -60,29 +59,23 @@ public class KaiH implements Creature, Tile {
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 
-			if (this.y > 0 && this.x > 0) {
+			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
+				up = 10000;
+			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
+				down = 10000;
+			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
+				right = 10000;
+			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
+				left = 10000;
 
-				if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
-					up = 10000;
-				if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
-					down = 10000;
-				if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
-					right = 10000;
-				if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
-					left = 10000;
-
-				if (up < down && up < left && up < right)
-					this.setDy(1);
-				else if (down < left && down < right)
-					this.setDy(-1);
-				else if (left < right)
-					this.setDx(-1);
-				else if (right != 10000)
-					this.setDx(1);
-				else {
-				}
-			}
-			// System.out.println(this.dx + " " + this.dy);
+			if (up < down && up < left && up < right)
+				this.setDy(1);
+			else if (down < left && down < right)
+				this.setDy(-1);
+			else if (left < right)
+				this.setDx(-1);
+			else if (right != 10000)
+				this.setDx(1);
 
 		}
 
@@ -90,17 +83,15 @@ public class KaiH implements Creature, Tile {
 			this.health++;
 		}
 
-		if (prevX != x)
-			this.prevX = this.x;
-
-		if (prevY != y)
-			this.prevY = this.y;
+		this.prevX = this.x;
+		this.prevY = this.y;
 
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
 		this.dx = 0;
 		this.dy = 0;
 		this.setTile(map.getLevel()[this.y][this.x]);
+
 	}
 
 	// attacks MtD
@@ -164,7 +155,7 @@ public class KaiH implements Creature, Tile {
 	// toString, getters and setters
 
 	public String toString() {
-		return "k";
+		return "l";
 	}
 
 	public Tile getTile() {
