@@ -1,29 +1,29 @@
 import java.util.ArrayList;
 
-// Kills all enemies within a random radius
-public class EnemyScroll extends Scroll {
-	int r;
+public class LightningBall extends Wand {
 
-	public EnemyScroll(int x, int y) {
+	public LightningBall(int x, int y) {
 		super(x, y);
-		r = (int) (Math.random() * 10);
 	}
 
 	@Override
-	public void read(Charecter MtD, Map map, ArrayList<Creature> enemy) {
-		// finds all enemies in random radius and kills them
+	public void magic(Charecter MtD, Map map, ArrayList<Creature> enemy) {
+		this.usable();
+
+		// finds and kill nearest enemy
 		int i = 1;
 		boolean canGo = true;
-		while (canGo && i <= r) {
+		while (canGo) {
 			for (int a = -i; a <= i; a++) {
 				for (int b = -i; b <= i; b++) {
 					if (!(a == b && a == 0)) {
 						if (map.getLevel()[MtD.getY() + b][MtD.getX() + a] instanceof Creature) {
-							Tile t = (Tile)((Creature) map.getLevel()[MtD.getY() + b][MtD.getX() + a]).getTile();
+							Tile t = (Tile) ((Creature) map.getLevel()[MtD.getY() + b][MtD.getX() + a]).getTile();
 							enemy.remove(enemy.indexOf((Creature) (map.getLevel()[MtD.getY() + b][MtD.getX() + a])));
 							map.getLevel()[MtD.getY() + b][MtD.getX() + a] = t;
+							reset();
 						} else {
-							if(!map.getLevel()[MtD.getY() + b][MtD.getX() + a].canContainMtD()) {
+							if (!map.getLevel()[MtD.getY() + b][MtD.getX() + a].canContainMtD()) {
 								canGo = false;
 							}
 						}
@@ -35,6 +35,16 @@ public class EnemyScroll extends Scroll {
 				canGo = false;
 		}
 
-		MtD.setTile(new EmptySpace());
 	}
+
+	@Override
+	public String action() {
+		return "use";
+	}
+
+	@Override
+	public String getType() {
+		return "Lightning Ball";
+	}
+
 }

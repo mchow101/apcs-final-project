@@ -28,8 +28,8 @@ public class Charecter implements Tile, Creature {
 		strength = 15;
 		maxHealth = 40;
 		// initialize location
-		x = 27;
-		y = 16;
+		x = 5;
+		y = 5;
 		// initialize AC and weapon
 		AC = 12;
 		weapon = 3;
