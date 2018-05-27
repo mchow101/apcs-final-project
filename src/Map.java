@@ -158,8 +158,8 @@ public class Map implements ImageObserver {
 					g.setColor(new Color((int) (225 - 225 * hp), (int) (hp * 150), (int) (hp * 100)));
 				} else if (level[i][j].toString().equals(".")) {
 					g.setColor(Color.WHITE);
-				}
-
+				} 
+				// sets images based on Tile
 				if (level[i][j].toString().equals(".")) {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/floor.jpg");
 					// image from
@@ -171,16 +171,45 @@ public class Map implements ImageObserver {
 					// https://s3.envato.com/files/45171752/main2_590.JPG
 					g.drawImage(image, j * y, i * x, x, y, this);
 				} else if (level[i][j].toString().equals("+")) {
-					Image image = Toolkit.getDefaultToolkit().getImage("src/door.png");
+					Image image = Toolkit.getDefaultToolkit().getImage("src/closedoor.jpg");
 					// image from
 					// https://orig00.deviantart.net/a007/f/2012/074/7/6/rpg_maker_vx___gate_iv_by_ayene_chan-d4sutyi.png
 					g.drawImage(image, j * y, i * x, x, y, this);
 				} else if (level[i][j].toString().equals("'")) {
-					Image image = Toolkit.getDefaultToolkit().getImage("src/dooropen.png");
+					Image image = Toolkit.getDefaultToolkit().getImage("src/opendoor.jpg");
 					// image from
 					// https://orig00.deviantart.net/a007/f/2012/074/7/6/rpg_maker_vx___gate_iv_by_ayene_chan-d4sutyi.png
 					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("%")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/potion.png");
+					// image from
+					// http://game-icons.net/tags/glass.html
+					g.drawImage(image, j * y, i * x, x, y, this);
+				}  else if (level[i][j].toString().equals("$")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/scroll.png");
+					// image from
+					// http://game-icons.net/lorc/originals/tied-scroll.html
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("-")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/wand.png");
+					// image from
+					// http://game-icons.net/tags/wand.html 
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("()")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/armor.png");
+					// image from
+					// http://game-icons.net/tags/armor.html 
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("/")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/weapon.png");
+					// image from
+					// http://game-icons.net/tags/blade.html
+					g.drawImage(image, j * y, i * x, x, y, this);
 				} else {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/floor.jpg");
+					// image from
+					// http://www.dundjinni.com/forums/uploads/heruca/Dungeon_Floor_Tile_hrc.jpg
+					g.drawImage(image, j * y, i * x, x, y, this);
 					g.drawString(level[i][j].toString(), j * y + 5, i * x + 15);
 				}
 			}
