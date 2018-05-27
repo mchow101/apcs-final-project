@@ -69,12 +69,14 @@ public class MapGraphics extends JPanel implements KeyListener {
 			random = Math.random();
 			
 			if (map.getLevel()[randomy][randomx].canContainMonster()) {
-				if (random > .66) 
+				if (random > .75) 
 					enemy.add(new Bryce(randomy, randomx));
-				else if (random > .33)
+				else if (random > .5)
 					addKais(randomy, randomx);
-				else 
+				else if (random > .25)
 					enemy.add(new Cammy(randomy, randomx));
+				else
+					enemy.add(new Leo(randomy, randomx));
 				
 			}   else
 				i--;
@@ -91,7 +93,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 			randomx =(int) Math.random()*9 - 4;
 			randomy =(int) Math.random()*9 - 4;
 			
-			if (!(randomy+y >= 50 || randomx+x >= 50)) {
+			if (!(randomy+y >= 50 || randomx+x >= 50 || randomy+y < 0 || randomx+x < 0)) {
 			if (map.getLevel()[randomy+y][randomx+x].canContainMonster())
 			enemy.add(new KaiH(randomy+y, randomx+x));
 			}
@@ -101,7 +103,6 @@ public class MapGraphics extends JPanel implements KeyListener {
 	}
 
 	public void setEnemy(ArrayList<Creature> enemy) {
-		System.out.println(enemy.size());
 		this.enemy = enemy;
 	}
 
@@ -200,6 +201,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 			map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = enemy.get(i).getTile();
 			// check health
 			if (enemy.get(i).isDead()) {
+				map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = new PileOfDead();
 				enemy.remove(i);
 				break;
 			}
@@ -234,7 +236,12 @@ public class MapGraphics extends JPanel implements KeyListener {
 							" " + (((Item) map.getLevel()[i][j]).getType())).toLowerCase());
 					inventory.add((Item) map.getLevel()[i][j]);
 					((Item) map.getLevel()[i][j]).setIndex(inventory.size() - 1);
-				}
+				} else if (map.getLevel()[i][j] instanceof PileOfDead) {
+					if( ((PileOfDead) map.getLevel()[i][j]).increment()) {
+						map.getLevel()[i][j] = new EmptySpace();
+					}
+					}
+				
 			}
 		}
 
@@ -272,7 +279,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 					break;
 				case ('r'): // Read a scroll
 					if(inventory.get(i) instanceof Scroll) {
-						((Scroll) inventory.get(i)).read(MtD, map);
+						((Scroll) inventory.get(i)).read(MtD, map, enemy);
 					}
 					break;
 				case ('t'): // Take off an item
@@ -306,6 +313,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		
 	}
 
 	public ArrayList<String> getToDisplay() {
@@ -329,7 +337,6 @@ public class MapGraphics extends JPanel implements KeyListener {
 	}
 
 	public ArrayList<Creature> getEnemy() {
-		System.out.println("goood");
 		return enemy;
 	}
 }

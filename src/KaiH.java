@@ -59,25 +59,29 @@ public class KaiH implements Creature, Tile {
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 
-			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
-				up = 10000;
-			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
-				down = 10000;
-			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
-				right = 10000;
-			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
-				left = 10000;
+			if (this.y > 0 && this.x > 0) {
 
-			if (up < down && up < left && up < right)
-				this.setDy(1);
-			else if (down < left && down < right)
-				this.setDy(-1);
-			else if (left < right)
-				this.setDx(-1);
-			else if (right != 10000)
-				this.setDx(1);
-			else {}
-				//System.out.println(this.dx + " " + this.dy);
+				if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
+					up = 10000;
+				if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
+					down = 10000;
+				if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
+					right = 10000;
+				if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
+					left = 10000;
+
+				if (up < down && up < left && up < right)
+					this.setDy(1);
+				else if (down < left && down < right)
+					this.setDy(-1);
+				else if (left < right)
+					this.setDx(-1);
+				else if (right != 10000)
+					this.setDx(1);
+				else {
+				}
+			}
+			// System.out.println(this.dx + " " + this.dy);
 
 		}
 
@@ -85,12 +89,11 @@ public class KaiH implements Creature, Tile {
 			this.health++;
 		}
 
-		
 		if (prevX != x)
-		this.prevX = this.x;
-		
+			this.prevX = this.x;
+
 		if (prevY != y)
-		this.prevY = this.y;
+			this.prevY = this.y;
 
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;

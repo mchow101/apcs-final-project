@@ -62,7 +62,6 @@ public class Runner {
 
 	public static void setEnemy(ArrayList<Creature> enemy) {
 		try {
-			System.out.println("bob");
 		graphics.setEnemy(enemy);
 		} catch (NullPointerException e) {
 		}
