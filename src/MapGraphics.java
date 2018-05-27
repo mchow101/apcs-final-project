@@ -52,7 +52,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		inventory = new ArrayList<Item>();
 
 		// random enemies
-		genEnemies(10);
+		genEnemies(5);
 						
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
@@ -64,7 +64,6 @@ public class MapGraphics extends JPanel implements KeyListener {
 		double random;
 		int randomx;
 		int randomy;
-<<<<<<< HEAD
 		for (int i = 0; i < size; i++) {
 			randomx = (int) (Math.random() * 49) + 1;
 			randomy = (int) (Math.random() * 49) + 1;
@@ -83,43 +82,18 @@ public class MapGraphics extends JPanel implements KeyListener {
 			}   else
 				i--;
 		}
-		
-=======
-		for (int i = 0; i < 30; i++) {
-			randomx = (int) (Math.random() * 49) + 1;
-			randomy = (int) (Math.random() * 49) + 1;
-
-			if (getMapObj().getLevel()[randomy][randomx].canContainMonster()) {
-				if (Math.random() > .5)
-					enemy.add(new Bryce(randomy, randomx));
-				else
-					addKais(randomy, randomx);
-
-			} else
-				i--;
-		}
 
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
 		}
 		eNum = enemy.size();
->>>>>>> 38c6df341a7a75f536876024f7977e8f7db1304d
 	}
 
 	private void addKais(int y, int x) {
 
 		int randomx;
 		int randomy;
-<<<<<<< HEAD
 		
-		for (int i = 0; i < ((int) Math.random() * 8) + 6; i++) {
-			randomx =(int) Math.random()*9 - 4;
-			randomy =(int) Math.random()*9 - 4;
-			
-			if (!(randomy+y >= 50 || randomx+x >= 50 || randomy+y < 0 || randomx+x < 0)) {
-			if (map.getLevel()[randomy+y][randomx+x].canContainMonster())
-			enemy.add(new KaiH(randomy+y, randomx+x));
-=======
 
 		for (int i = 0; i < ((int) Math.random() * 8) + 8; i++) {
 			randomx = (int) Math.random() * 9 - 4;
@@ -128,7 +102,6 @@ public class MapGraphics extends JPanel implements KeyListener {
 			if (!(randomy + y >= 50 || randomx + x >= 50 || randomy + y < 0 || randomx + x < 0)) {
 				if (getMapObj().getLevel()[randomy + y][randomx + x].canContainMonster())
 					enemy.add(new KaiH(randomy + y, randomx + x));
->>>>>>> 38c6df341a7a75f536876024f7977e8f7db1304d
 			}
 
 		}
@@ -264,21 +237,6 @@ public class MapGraphics extends JPanel implements KeyListener {
 	public void updateInventory() {
 		toDisplay.add("Current Level: " + map.getLvl());
 		toDisplay.add("Inventory");
-<<<<<<< HEAD
-		for (int i = 0; i < map.getLevel().length; i++) {
-			for (int j = 0; j < map.getLevel()[i].length; j++) {
-				if (map.getLevel()[i][j] instanceof Item && (((Item) map.getLevel()[i][j]).canUse(MtD.getX(), MtD.getY()))) {
-					toDisplay.add("Press " + (((Item) map.getLevel()[i][j]).key() + " to " + (((Item) map.getLevel()[i][j]).action()).toLowerCase() + 
-							" " + (((Item) map.getLevel()[i][j]).getType())).toLowerCase());
-					inventory.add((Item) map.getLevel()[i][j]);
-					((Item) map.getLevel()[i][j]).setIndex(inventory.size() - 1);
-				} else if (map.getLevel()[i][j] instanceof PileOfDead) {
-					if( ((PileOfDead) map.getLevel()[i][j]).increment()) {
-						map.getLevel()[i][j] = new EmptySpace();
-					}
-					}
-				
-=======
 		for (int i = 0; i < getMapObj().getLevel().length; i++) {
 			for (int j = 0; j < getMapObj().getLevel()[i].length; j++) {
 				if (getMapObj().getLevel()[i][j] instanceof Item
@@ -291,7 +249,6 @@ public class MapGraphics extends JPanel implements KeyListener {
 				}
 				if (getMapObj().getLevel()[i][j] instanceof Wand)
 					((Wand) (getMapObj().getLevel()[i][j])).count();
->>>>>>> 38c6df341a7a75f536876024f7977e8f7db1304d
 			}
 		}
 
@@ -346,15 +303,8 @@ public class MapGraphics extends JPanel implements KeyListener {
 				case ('m'): // Cast a magic spell
 					break;
 				case ('s'): // Stairs
-<<<<<<< HEAD
-					if(inventory.get(i) instanceof Stairs) {
-						map.setLvl(map.getLvl() + 1);
-						genEnemies(20);
-					}
-=======
 					if (inventory.get(i) instanceof Stairs)
 						((Stairs) inventory.get(i)).nextLevel();
->>>>>>> 38c6df341a7a75f536876024f7977e8f7db1304d
 					break;
 				case ('c'): // Close a Door
 					if (inventory.get(i) instanceof Door) {
