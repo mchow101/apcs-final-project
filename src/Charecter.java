@@ -11,10 +11,6 @@ public class Charecter implements Tile, Creature {
 	private int dx;
 	private int dy;
 	// armor class
-	// air conditioning
-	// and alternating current
-	// all at the same time
-	// :)
 	private int AC;
 	// weapon
 	private int weapon;
@@ -22,12 +18,15 @@ public class Charecter implements Tile, Creature {
 	private Tile tile;
 	// checks for death
 	private boolean dead = false;
+	private int xp;
+	private int need;
+	private int levelPL;
 
 	public Charecter() {
 		// initialize stats
-		maxHealth = 500;
+		health = 400;
 		strength = 15;
-		health = maxHealth;
+		maxHealth = 400;
 		// initialize location
 		x = 5;
 		y = 5;
@@ -36,6 +35,17 @@ public class Charecter implements Tile, Creature {
 		weapon = 3;
 		// initialize starting space as an EmptySpace
 		tile = new EmptySpace();
+		xp = 0;
+		need = 10;
+		levelPL = 1;
+	}
+
+	public int getXp() {
+		return xp;
+	}
+
+	public void setXp(int xp) {
+		this.xp = xp;
 	}
 
 	// moves character
@@ -59,8 +69,22 @@ public class Charecter implements Tile, Creature {
 
 		enemy.setHealth(enemy.getHealth() - damage);
 
-		if (enemy.getHealth() <= 0)
+		if (enemy.getHealth() <= 0) {
 			enemy.die(map);
+			xp++;
+			if (need <= xp)
+				this.setlevel();
+		}
+	}
+
+	private void setlevel() {
+		levelPL++;
+		need =+10;
+		xp = 0;
+		
+		this.setMaxHealth(maxHealth + 10);
+		this.setStrength(strength + 4);
+		
 	}
 
 	public String toString() {
@@ -178,6 +202,8 @@ public class Charecter implements Tile, Creature {
 	}
 
 	public String[] stats() {
+		String s;
+		
 		return new String[] { "Player Stats", "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth, 
 				"Weapon: " + weapon, "Armor Class: " + AC};
 	}

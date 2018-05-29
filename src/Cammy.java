@@ -1,6 +1,6 @@
 //Level 1 Monster
 //Add description of abilities
-public class KaiH implements Creature, Tile {
+public class Cammy implements Creature, Tile {
 
 	private int health;
 	private int strength;
@@ -24,26 +24,25 @@ public class KaiH implements Creature, Tile {
 	private int dy;
 
 	private Tile tile;
-	
-	private boolean attack;
 
-	public KaiH(int x, int y) {
+	public Cammy(int x, int y) {
 		// initialize stats
 		health = 25;
 		maxHealth = 25;
+		strength = 3;
+		intel = 3;
 		AC = 12;
 		this.y = x;
 		this.x = y;
 		prevX = x;
 		prevY = y;
-		strength = 5;
 		tile = new EmptySpace();
 		// initialize movement variables
 		right = 0;
 		left = 0;
 		up = 0;
 		down = 0;
-		attack = false;
+
 	}
 
 	// either attacks or moves monster per turn
@@ -53,38 +52,33 @@ public class KaiH implements Creature, Tile {
 		int direction = 0;
 
 		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
-			attack = true;
 			this.attack((Charecter) MtD, map);
 		} else {
-			attack = false;
+
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
 
-			if (this.y > 0 && this.x > 0) {
+			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
+				up = 10000;
+			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
+				down = 10000;
+			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
+				right = 10000;
+			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
+				left = 10000;
 
-				if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
-					up = 10000;
-				if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
-					down = 10000;
-				if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
-					right = 10000;
-				if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
-					left = 10000;
-
-				if (up < down && up < left && up < right)
-					this.setDy(1);
-				else if (down < left && down < right)
-					this.setDy(-1);
-				else if (left < right)
-					this.setDx(-1);
-				else if (right != 10000)
-					this.setDx(1);
-				else {
-				}
-			}
-			// System.out.println(this.dx + " " + this.dy);
+			if (up < down && up < left && up < right)
+				this.setDy(1);
+			else if (down < left && down < right)
+				this.setDy(-1);
+			else if (left < right)
+				this.setDx(-1);
+			else if (right != 10000)
+				this.setDx(1);
+			else {}
+				//System.out.println(this.dx + " " + this.dy);
 
 		}
 
@@ -92,11 +86,12 @@ public class KaiH implements Creature, Tile {
 			this.health++;
 		}
 
+		
 		if (prevX != x)
-			this.prevX = this.x;
-
+		this.prevX = this.x;
+		
 		if (prevY != y)
-			this.prevY = this.y;
+		this.prevY = this.y;
 
 		this.x = this.x + this.dx;
 		this.y = this.y + this.dy;
@@ -109,7 +104,10 @@ public class KaiH implements Creature, Tile {
 	public void attack(Creature MtD, Map map) {
 
 		int damage = 0;
-
+		int weakness = 0;
+		
+		weakness = (int) (Math.random()*3);
+		
 		damage += this.strength;
 
 		if (MtD.getAC() > Math.random() * 100) {
@@ -118,15 +116,10 @@ public class KaiH implements Creature, Tile {
 		}
 
 		MtD.setHealth(MtD.getHealth() - damage);
-
+		((Charecter) MtD).setMaxHealth(MtD.getMaxHealth() - weakness);
 		if (MtD.getHealth() <= 0) {
 			MtD.die(map);
 		}
-		
-	}
-	
-	public boolean didAttack() {
-		return attack;
 	}
 
 	// implemented methods for interfaces
@@ -171,7 +164,7 @@ public class KaiH implements Creature, Tile {
 	// toString, getters and setters
 
 	public String toString() {
-		return "k";
+		return "C";
 	}
 
 	public Tile getTile() {
@@ -238,7 +231,4 @@ public class KaiH implements Creature, Tile {
 		health = a;
 	}
 
-	public void setAttack(boolean b) {
-		attack = b;
-	}
 }

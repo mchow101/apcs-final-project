@@ -81,7 +81,7 @@ public abstract class Wand implements Tile, Item {
 
 	@Override
 	public boolean canContainMonster() {
-		return false;
+		return true;
 	}
 
 }

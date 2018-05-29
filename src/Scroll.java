@@ -48,7 +48,7 @@ public abstract class Scroll implements Tile, Item {
 
 	@Override
 	public boolean canContainMonster() {
-		return false;
+		return true;
 	}
 
 	@Override

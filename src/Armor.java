@@ -17,7 +17,7 @@ public class Armor implements Item, Tile {
 
 	@Override
 	public boolean canContainMonster() {
-		return false;
+		return true;
 	}
 
 	@Override

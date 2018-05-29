@@ -51,8 +51,8 @@ public class Tyler implements Creature, Tile {
 	}
 
 	public Tyler(int x, int y, ArrayList<Creature> enemy) {
-		health = 25;
-		maxHealth = 25;
+		health = 55;
+		maxHealth = 55;
 		strength = 5;
 		intel = 5;
 		AC = 12;
@@ -82,36 +82,36 @@ public class Tyler implements Creature, Tile {
 
 		int direction = 0;
 
-//		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
-//			this.attack((Charecter) MtD, map);
-//		} else if (Math.random() > .2) {
-//
-//			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
-//			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
-//			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
-//			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
-//
-//			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
-//				up = 10000;
-//			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
-//				down = 10000;
-//			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
-//				right = 10000;
-//			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
-//				left = 10000;
-//
-//			if (up < down && up < left && up < right)
-//				this.setDy(1);
-//			else if (down < left && down < right)
-//				this.setDy(-1);
-//			else if (left < right)
-//				this.setDx(-1);
-//			else if (right != 10000)
-//				this.setDx(1);
-//		}
+		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
+			this.attack((Charecter) MtD, map);
+		} else if (Math.random() > .125) {
 
+			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
+			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
+			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
+			right = Math.abs((this.x + 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
+
+			if (!map.getLevel()[this.y + 1][this.x].canContainMonster())
+				up = 10000;
+			if (!map.getLevel()[this.y - 1][this.x].canContainMonster())
+				down = 10000;
+			if (!map.getLevel()[this.y][this.x + 1].canContainMonster())
+				right = 10000;
+			if (!map.getLevel()[this.y][this.x - 1].canContainMonster())
+				left = 10000;
+
+			if (up < down && up < left && up < right)
+				this.setDy(1);
+			else if (down < left && down < right)
+				this.setDy(-1);
+			else if (left < right)
+				this.setDx(-1);
+			else if (right != 10000)
+				this.setDx(1);
+		}
+		else {
 			doMagic(MtD, map);
-
+		}
 		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
 			this.health++;
 		}
@@ -123,28 +123,98 @@ public class Tyler implements Creature, Tile {
 		this.y = this.y + this.dy;
 		this.dx = 0;
 		this.dy = 0;
-//		this.setTile(map.getLevel()[this.y][this.x]);
+		this.setTile(map.getLevel()[this.y][this.x]);
 
 	}
 
-	private void doMagic(Creature mtD, Map map) {
+	private void doMagic(Creature MtD, Map map) {
+		int x = MtD.getX();
+		int y = MtD.getY();
 		int randomx;
 		int randomy;
-
-		for (int i = 0; i < 10; i++) {
-			randomx = (int) ((Math.random() * 5) - 2.5) + this.x;
-			randomy = (int) ((Math.random() * 5) - 2.5) + this.y;
-			
-			
-
-			if (map.getLevel()[randomx][randomy].canContainMonster()) {
-				if (Math.random() > .5)
-					enemy.add(new Bryce(randomy, randomx));
-				else 
-					enemy.add(new KaiH(randomy, randomx));
-			}
-
+		double rando = Math.random();
+		
+		if (rando > .8 && straightLine(MtD, map) && ((Charecter) MtD).getStrength() > 4)
+			((Charecter) MtD).setStrength(((Charecter) MtD).getStrength()-5);
+		else if (rando > .6 && straightLine(MtD, map)) {
+			((Charecter) MtD).setHealth(((Charecter) MtD).getHealth()-15);
+			((Charecter) MtD).setMaxHealth(((Charecter) MtD).getMaxHealth()-5);
 		}
+		
+		else if (rando > .5){
+			this.health = maxHealth;
+	}
+		else if (rando > .2 && straightLine(MtD, map)) {
+			((Charecter) MtD).setHealth(((Charecter) MtD).getHealth()-10);
+		}
+		
+		else if (rando > .1) {
+			while (x != this.x || y != this.y) {
+				if (!map.getLevel()[y][x].canContainMonster() && !map.getLevel()[y][x].canContainMtD())
+					map.getLevel()[y][x] = new EmptySpace();
+				if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
+					if (x - this.x > 0)
+						x--;
+					else
+						x++;
+				} else {
+					if (y - this.y > 0)
+						y--;
+					else
+						y++;
+				}
+			}
+		}
+		
+		else if ((((double) this.health)/this.maxHealth) < .1) {
+			genTyler(map);
+		}
+			
+		
+	}
+
+	private void genTyler(Map map) {
+		
+		System.out.println("okay");
+		
+			int randomx;
+			int randomy;
+			
+			randomx = (int) (Math.random() * 49) + 1;
+			randomy = (int) (Math.random() * 49) + 1;
+
+				if (map.getLevel()[randomy][randomx].canContainMonster()) {
+					map.getLevel()[this.y][this.x] = this.tile;
+					enemy.add(new Tyler(randomy, randomx, enemy));
+				}
+				else
+					genTyler(map);
+		
+	}
+
+	private boolean straightLine(Creature MtD, Map map) {
+
+		int x = MtD.getX();
+		int y = MtD.getY();
+
+		// yeah you put something here
+		while (x != this.x || y != this.y) {
+			if (!map.getLevel()[y][x].canContainMonster() && !map.getLevel()[y][x].canContainMtD())
+				return false;
+			if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
+				if (x - this.x > 0)
+					x--;
+				else
+					x++;
+			} else {
+				if (y - this.y > 0)
+					y--;
+				else
+					y++;
+			}
+		}
+
+		return true;
 	}
 
 	public int getStrength() {

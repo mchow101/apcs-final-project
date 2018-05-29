@@ -26,6 +26,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	private int base = 8; // for item selection
 	private int selected = base;
 	private boolean start;
+	private int monsterCount = 10;
 
 	public MapGraphics(int dim) {
 		this.dim = dim;
@@ -55,19 +56,34 @@ public class MapGraphics extends JPanel implements KeyListener {
 		inventory = new ArrayList<Item>();
 
 		// random enemies
+		genEnemies(monsterCount);
+						
+		for (int i = 0; i < MtD.stats().length; i++) {
+			toDisplay.add(MtD.stats()[i]);
+		}
+			
+	}
+
+	private void genEnemies(int size) {
+		double random;
 		int randomx;
 		int randomy;
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < size; i++) {
 			randomx = (int) (Math.random() * 49) + 1;
 			randomy = (int) (Math.random() * 49) + 1;
-
-			if (getMapObj().getLevel()[randomy][randomx].canContainMonster()) {
-				if (Math.random() > .5)
+			random = Math.random();
+			
+			if (map.getLevel()[randomy][randomx].canContainMonster()) {
+				if (random > .75) 
 					enemy.add(new Bryce(randomy, randomx));
-				else
+				else if (random > .5)
 					addKais(randomy, randomx);
-
-			} else
+				else if (random > .25)
+					enemy.add(new Cammy(randomy, randomx));
+				else
+					enemy.add(new Leo(randomy, randomx));
+				
+			}   else
 				i--;
 		}
 //		enemy.add(new Tyler(10, 10, enemy));
@@ -84,6 +100,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 		int randomx;
 		int randomy;
+		
 
 		for (int i = 0; i < ((int) Math.random() * 8) + 8; i++) {
 			randomx = (int) Math.random() * 9 - 4;
@@ -223,6 +240,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 			getMapObj().getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = enemy.get(i).getTile();
 			// check health
 			if (enemy.get(i).isDead()) {
+				map.getLevel()[enemy.get(i).getY()][enemy.get(i).getX()] = new PileOfDead();
 				enemy.remove(i);
 				break;
 			}
@@ -317,8 +335,19 @@ public class MapGraphics extends JPanel implements KeyListener {
 				case ('m'): // Cast a magic spell
 					break;
 				case ('s'): // Stairs
-					if (inventory.get(i) instanceof Stairs)
-						((Stairs) inventory.get(i)).nextLevel();
+					if (inventory.get(i) instanceof Stairs) {
+					((Stairs) inventory.get(i)).nextLevel();
+					
+					if (map.getLvl() !=5) {
+					
+					monsterCount +=10;
+					genEnemies(monsterCount);
+					}
+					
+					else 
+						genTyler();
+					
+					}
 					break;
 				case ('c'): // Close a Door
 					if (inventory.get(i) instanceof Door) {
@@ -336,6 +365,19 @@ public class MapGraphics extends JPanel implements KeyListener {
 				}
 			}
 		}
+	}
+
+	private void genTyler() {
+		int randomx;
+		int randomy;
+		
+		randomx = (int) (Math.random() * 49) + 1;
+		randomy = (int) (Math.random() * 49) + 1;
+
+			if (map.getLevel()[randomy][randomx].canContainMonster())
+				enemy.add(new Tyler(randomy, randomx, enemy));
+			else
+				genTyler();
 	}
 
 	@Override

@@ -26,11 +26,11 @@ public class Leo implements Creature, Tile {
 
 	public Leo(int x, int y) {
 		// initialize stats
-		health = 25;
-		maxHealth = 25;
+		health = 45;
+		maxHealth = 45;
 		strength = 5;
 		intel = 5;
-		AC = 12;
+		AC = 20;
 		this.y = x;
 		this.x = y;
 		prevX = x;
@@ -155,7 +155,7 @@ public class Leo implements Creature, Tile {
 	// toString, getters and setters
 
 	public String toString() {
-		return "l";
+		return "L";
 	}
 
 	public Tile getTile() {
