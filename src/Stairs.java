@@ -24,6 +24,8 @@ public class Stairs implements Tile, Item {
 	}
 	
 	public String toString() {
+		if(Runner.getEnemy().equals(null))
+			return "";
 		return Runner.getEnemy().size() <= Runner.geteNum() - Runner.getLvl()*10 ? ">" : ".";
 	}
 	

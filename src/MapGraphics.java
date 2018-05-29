@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -23,6 +25,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	private ArrayList<Item> inventory; // items available for use
 	private int base = 8; // for item selection
 	private int selected = base;
+	private boolean start;
 
 	public MapGraphics(int dim) {
 		this.dim = dim;
@@ -73,6 +76,8 @@ public class MapGraphics extends JPanel implements KeyListener {
 			toDisplay.add(MtD.stats()[i]);
 		}
 		eNum = enemy.size();
+		
+		start = true;
 	}
 
 	private void addKais(int y, int x) {
@@ -102,20 +107,44 @@ public class MapGraphics extends JPanel implements KeyListener {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim, dim);
 		g.setColor(Color.WHITE);
-		// draw map
-		if (!MtD.isDead()) {
-			getMapObj().drawMap(g);
-		}
-		// display game over screen
-		else {
-			Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
-			// image from
-			// https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
-			g.drawImage(image, 50, 5, 500, 375, this);
+		if(!start) {
+			// draw map
+			if (!MtD.isDead()) {
+				getMapObj().drawMap(g);
+				specialEffects(g);
+			}
+			// display game over screen
+			else {
+				Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
+				// image from
+				// https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
+				g.drawImage(image, 50, 5, 500, 375, this);
+			}
+		} else {
+			// start screen
+			g.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			g.drawString("Welcome to Super Fun Game!", 10, 20);
+			g.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			g.drawString("Press the arrow keys to move Mitali the Destroyer, who is represented by the \"!?\" symbol.", 10, 50);
+			g.drawString("Walking into enemies will kill them. More game description", 10, 65);
+			g.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			g.drawString("Press any key to start!", 10, 90);
 		}
 		this.repaint();
 
 		Runner.updateDisplay();
+	}
+
+	private void specialEffects(Graphics g) {
+		for(int i = 0; i < enemy.size(); i++) {
+			if(enemy.get(i) instanceof KaiH && ((KaiH)(enemy.get(i))).didAttack()) {
+				g.setColor(Color.WHITE);
+				Image image = Toolkit.getDefaultToolkit().getImage("src/bolt.png");
+				// image from
+				// https://experiencesminimalistes.com/2016/12/29/burn-out-saisonnier-de-la-quarantaine-en-crise/
+				g.drawImage(image, MtD.getX()*dim / map.getLevel().length - 10, MtD.getY()*dim / map.getLevel()[0].length - 10, 40, 40, this);
+			}
+		}
 	}
 
 	@Override
@@ -125,6 +154,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent event) {
+		start = false;
 		// key press advances turn
 		if (!MtD.isDead()) {
 			if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -310,6 +340,10 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		for(int i = 0; i < enemy.size(); i++) {
+			if(enemy.get(i) instanceof KaiH)
+				((KaiH)(enemy.get(i))).setAttack(false);
+		}
 	}
 
 	public ArrayList<String> getToDisplay() {
