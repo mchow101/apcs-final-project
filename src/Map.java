@@ -209,7 +209,19 @@ public class Map implements ImageObserver {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/stairs.png");
 					// image from https://game-icons.net/delapouite/originals/stairs.html
 					g.drawImage(image, j * y, i * x, x, y, this);
-				}  else {
+				} else if (level[i][j].toString().equals("!?")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/mitali.jpeg");
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("k")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/kai.jpg");
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("b")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/bryce.jpg");
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("T")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/tyler.png");
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/floor.jpg");
 					// image from
 					// http://www.dundjinni.com/forums/uploads/heruca/Dungeon_Floor_Tile_hrc.jpg
