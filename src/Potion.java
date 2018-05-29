@@ -46,7 +46,7 @@ public abstract class Potion implements Tile, Item {
 
 	@Override
 	public boolean canContainMonster() {
-		return false;
+		return true;
 	}
 
 	@Override
