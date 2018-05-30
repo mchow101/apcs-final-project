@@ -37,7 +37,7 @@ public class Charecter implements Tile, Creature {
 		tile = new EmptySpace();
 		xp = 0;
 		need = 10;
-		levelPL = 1;
+		setLevelPL(1);
 	}
 
 	public int getXp() {
@@ -71,14 +71,14 @@ public class Charecter implements Tile, Creature {
 
 		if (enemy.getHealth() <= 0) {
 			enemy.die(map);
-			xp++;
+			xp++; 
 			if (need <= xp)
 				this.setlevel();
 		}
 	}
 
 	private void setlevel() {
-		levelPL++;
+		setLevelPL(getLevelPL() + 1);
 		need =+10;
 		xp = 0;
 		
@@ -205,7 +205,7 @@ public class Charecter implements Tile, Creature {
 		String s;
 		
 		return new String[] { "Player Stats", "Health: " + health, "Strength: " + strength, "Max Health: " + maxHealth, 
-				"Weapon: " + weapon, "Armor Class: " + AC};
+				"Weapon: " + weapon, "Armor Class: " + AC, "Player Level: " + levelPL};
 	}
 
 	public int getX() {
@@ -222,6 +222,14 @@ public class Charecter implements Tile, Creature {
 
 	public void setDy(int dy) {
 		this.dy = dy;
+	}
+
+	public int getLevelPL() {
+		return levelPL;
+	}
+
+	public void setLevelPL(int levelPL) {
+		this.levelPL = levelPL;
 	}
 
 }

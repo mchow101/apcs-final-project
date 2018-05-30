@@ -17,6 +17,8 @@ public class Map implements ImageObserver {
 	// variables for inventory and level tracking
 	private Tile[][] level;
 	private int lvl = 1;
+	// whether or not Tyler is dead
+	private boolean tyler;
 
 	public Map(int dim) {
 		this.dim = dim;
@@ -31,6 +33,7 @@ public class Map implements ImageObserver {
 		// level 5
 		setMap(BluePrint.bp5(), 5);
 		setLevel(level1);
+		tyler = false;
 	}
 
 	// translate character blueprint to tile array
@@ -131,34 +134,34 @@ public class Map implements ImageObserver {
 		for (int i = 0; i < level.length; i++) {
 			for (int j = 0; j < level[i].length; j++) {
 				g.setColor(Color.WHITE);
-				// different colors for different types of Tiles
-				if (level[i][j] instanceof Door) {
-					g.setColor(Color.DARK_GRAY);
-				} else if (level[i][j] instanceof Stairs || level[i][j] instanceof Wall) {
-					g.setColor(Color.LIGHT_GRAY);
-				} else if (level[i][j] instanceof HealthPotion || level[i][j] instanceof MaxHealthPotion) {
-					g.setColor(Color.ORANGE.darker());
-				} else if (level[i][j] instanceof StrengthPotion) {
-					g.setColor(Color.ORANGE.brighter());
-				} else if (level[i][j] instanceof Wand) {
-					g.setColor(Color.MAGENTA.brighter());
-				} else if (level[i][j] instanceof Armor) {
-					g.setColor(Color.BLUE);
-				} else if (level[i][j] instanceof Weapons) {
-					g.setColor(Color.PINK);
-				} else if (level[i][j] instanceof Scroll) {
-					g.setColor(Color.MAGENTA.darker());
-				} else if (level[i][j] instanceof Charecter) {
-					double hp = (double) ((Charecter) (level[i][j])).getHealth()
-							/ ((Charecter) (level[i][j])).getMaxHealth();
-					g.setColor(new Color((int) (225 - 225 * hp), (int) (hp * 255), (int) (hp * 150)));
-				} else if (level[i][j] instanceof Creature) {
-					double hp = (double) ((Creature) (level[i][j])).getHealth()
-							/ ((Creature) (level[i][j])).getMaxHealth();
-					g.setColor(new Color((int) (225 - 225 * hp), (int) (hp * 150), (int) (hp * 100)));
-				} else if (level[i][j].toString().equals(".")) {
-					g.setColor(Color.WHITE);
-				} 
+//				// different colors for different types of Tiles
+//				if (level[i][j] instanceof Door) {
+//					g.setColor(Color.DARK_GRAY);
+//				} else if (level[i][j] instanceof Stairs || level[i][j] instanceof Wall) {
+//					g.setColor(Color.LIGHT_GRAY);
+//				} else if (level[i][j] instanceof HealthPotion || level[i][j] instanceof MaxHealthPotion) {
+//					g.setColor(Color.ORANGE.darker());
+//				} else if (level[i][j] instanceof StrengthPotion) {
+//					g.setColor(Color.ORANGE.brighter());
+//				} else if (level[i][j] instanceof Wand) {
+//					g.setColor(Color.MAGENTA.brighter());
+//				} else if (level[i][j] instanceof Armor) {
+//					g.setColor(Color.BLUE);
+//				} else if (level[i][j] instanceof Weapons) {
+//					g.setColor(Color.PINK);
+//				} else if (level[i][j] instanceof Scroll) {
+//					g.setColor(Color.MAGENTA.darker());
+//				} else if (level[i][j] instanceof Charecter) {
+//					double hp = (double) ((Charecter) (level[i][j])).getHealth()
+//							/ ((Charecter) (level[i][j])).getMaxHealth();
+//					g.setColor(new Color((int) (225 - 225 * hp), (int) (hp * 255), (int) (hp * 150)));
+//				} else if (level[i][j] instanceof Creature) {
+//					double hp = (double) ((Creature) (level[i][j])).getHealth()
+//							/ ((Creature) (level[i][j])).getMaxHealth();
+//					g.setColor(new Color((int) (225 - 225 * hp), (int) (hp * 150), (int) (hp * 100)));
+//				} else if (level[i][j].toString().equals(".")) {
+//					g.setColor(Color.WHITE);
+//				} 
 				// sets images based on Tile
 				if (level[i][j].toString().equals(".")) {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/floor.jpg");
@@ -218,8 +221,14 @@ public class Map implements ImageObserver {
 				} else if (level[i][j].toString().equals("b")) {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/bryce.jpg");
 					g.drawImage(image, j * y, i * x, x, y, this);
-				} else if (level[i][j].toString().equals("T")) {
+				} else if (level[i][j].toString().equals("TY")) {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/tyler.png");
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("C")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/cammy.jpg");
+					g.drawImage(image, j * y, i * x, x, y, this);
+				} else if (level[i][j].toString().equals("L")) {
+					Image image = Toolkit.getDefaultToolkit().getImage("src/leo.jpg");
 					g.drawImage(image, j * y, i * x, x, y, this);
 				} else {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/floor.jpg");
@@ -254,6 +263,14 @@ public class Map implements ImageObserver {
 	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	public boolean getTyler() {
+		return tyler;
+	}
+	
+	public void setTyler(boolean t) {
+		tyler = t;
 	}
 
 }

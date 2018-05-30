@@ -258,7 +258,7 @@ public class Tyler implements Creature, Tile {
 	public void die(Map map) {
 		map.getLevel()[this.y][this.x] = this.getTile();
 		this.dead = true;
-
+		map.setTyler(true);
 	}
 
 	public String toString() {
