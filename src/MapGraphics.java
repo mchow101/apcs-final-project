@@ -121,10 +121,10 @@ public class MapGraphics extends JPanel implements KeyListener {
 		if (!start) {
 			// draw map
 			if (!MtD.isDead()) {
-				if (!map.getTyler() && enemy.size() >= 0) {
+				if (map.getTyler() && enemy.size() == 0) {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/win.gif");
 					// image from
-					// https://cdn.videogamesblogger.com/wp-content/uploads/2012/10/resident-evil-6-you-are-dead-screen.jpg
+					// https://i.imgur.com/ZAheYBK.gif
 					g.drawImage(image, 1, 1, dim, dim, this);
 				} else {
 					getMapObj().drawMap(g);
@@ -136,7 +136,11 @@ public class MapGraphics extends JPanel implements KeyListener {
 				Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
 				// image from
 				// https://cdn.videogamesblogger.com/wp-content/uploads/2012/10/resident-evil-6-you-are-dead-screen.jpg
-				g.drawImage(image, dim / 2 - dim / 6 * 2, dim / 2 - dim / 6, dim / 3 * 2, dim / 3, this);
+				g.drawImage(image, dim / 2 - dim / 6 * 2, 5, dim / 3 * 2, dim / 3, this);
+				image = Toolkit.getDefaultToolkit().getImage("src/dead.gif");
+				// image from
+				// https://cdn.videogamesblogger.com/wp-content/uploads/2012/10/resident-evil-6-you-are-dead-screen.jpg
+				g.drawImage(image, dim / 2 - dim / 6 * 2, dim / 3, dim / 3 * 2, dim / 3 * 2, this);
 			}
 		} else {
 			// start screen
