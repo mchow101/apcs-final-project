@@ -18,6 +18,7 @@ public class Leo implements Creature, Tile {
 	private int right;
 
 	private boolean dead;
+	private boolean attack;
 
 	private int dx;
 	private int dy;
@@ -26,8 +27,8 @@ public class Leo implements Creature, Tile {
 
 	public Leo(int x, int y) {
 		// initialize stats
-		health = 45;
-		maxHealth = 45;
+		health = 55;
+		maxHealth = 55;
 		strength = 5;
 		intel = 5;
 		AC = 20;
@@ -41,7 +42,7 @@ public class Leo implements Creature, Tile {
 		left = 0;
 		up = 0;
 		down = 0;
-
+		attack = false;
 	}
 
 	// either attacks or moves monster per turn
@@ -52,8 +53,9 @@ public class Leo implements Creature, Tile {
 
 		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
 			this.attack((Charecter) MtD, map);
+			attack = true;
 		} else {
-
+			attack = false;
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
@@ -220,5 +222,14 @@ public class Leo implements Creature, Tile {
 
 	public void setHealth(int a) {
 		health = a;
+	}
+
+	@Override
+	public boolean didAttack() {
+		return attack;
+	}
+	
+	public void setAttack(boolean b) {
+		attack = b;
 	}
 }

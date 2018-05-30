@@ -29,8 +29,8 @@ public class KaiH implements Creature, Tile {
 
 	public KaiH(int x, int y) {
 		// initialize stats
-		health = 25;
-		maxHealth = 25;
+		health = 35;
+		maxHealth = 35;
 		AC = 12;
 		this.y = x;
 		this.x = y;

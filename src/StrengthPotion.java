@@ -7,7 +7,7 @@ public class StrengthPotion extends Potion implements Tile {
 
 	@Override
 	public void quaff(Charecter MtD) {
-		MtD.setStrength((int) (MtD.getStrength() * 1.05));
+		MtD.setStrength((int) (MtD.getStrength() * 1.03));
 	}
 
 }

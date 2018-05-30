@@ -57,7 +57,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 		// random enemies
 		genEnemies(monsterCount);
-		//	genTyler();			
+//			genTyler();			
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
 		}
@@ -129,7 +129,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 				if (Tyler.win()) {
 					Image image = Toolkit.getDefaultToolkit().getImage("src/win.gif");
 					// image from
-					// https://cdn.videogamesblogger.com/wp-content/uploads/2012/10/resident-evil-6-you-are-dead-screen.jpg
+					// https://i.imgur.com/ZAheYBK.gif
 					g.drawImage(image, 1, 1, dim, dim, this);
 				} else {
 					getMapObj().drawMap(g);
@@ -141,7 +141,11 @@ public class MapGraphics extends JPanel implements KeyListener {
 				Image image = Toolkit.getDefaultToolkit().getImage("src/game-over1.jpg");
 				// image from
 				// https://cdn.videogamesblogger.com/wp-content/uploads/2012/10/resident-evil-6-you-are-dead-screen.jpg
-				g.drawImage(image, dim / 2 - dim / 6 * 2, dim / 2 - dim / 6, dim / 3 * 2, dim / 3, this);
+				g.drawImage(image, dim / 2 - dim / 6 * 2, 5, dim / 3 * 2, dim / 3, this);
+				image = Toolkit.getDefaultToolkit().getImage("src/dead.gif");
+				// image from
+				// https://cdn.videogamesblogger.com/wp-content/uploads/2012/10/resident-evil-6-you-are-dead-screen.jpg
+				g.drawImage(image, dim / 2 - dim / 6 * 2, dim / 3, dim / 3 * 2, dim / 3 * 2, this);
 			}
 		} else {
 			// start screen
@@ -177,7 +181,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 	private void specialEffects(Graphics g) {
 		for (int i = 0; i < enemy.size(); i++) {
-			if (enemy.get(i) instanceof KaiH && ((KaiH) (enemy.get(i))).didAttack()) {
+			if (enemy.get(i).didAttack()) {
 				g.setColor(Color.WHITE);
 				Image image = Toolkit.getDefaultToolkit().getImage("src/bolt.png");
 				// image from
@@ -249,7 +253,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 			MtD.attack((Creature) getMapObj().getLevel()[y2][x2], getMapObj());
 		}
 		// randomly regenerate health
-		if (MtD.getStrength() > Math.random() * 25 && MtD.getHealth() != MtD.getMaxHealth()) {
+		if (MtD.getStrength() > Math.random() * 45 && MtD.getHealth() != MtD.getMaxHealth()) {
 			MtD.setHealth(MtD.getHealth() + 1);
 		}
 
@@ -397,8 +401,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		for (int i = 0; i < enemy.size(); i++) {
-			if (enemy.get(i) instanceof KaiH)
-				((KaiH) (enemy.get(i))).setAttack(false);
+			(enemy.get(i)).setAttack(false);
 		}
 	}
 

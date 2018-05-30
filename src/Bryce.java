@@ -19,6 +19,7 @@ public class Bryce implements Creature, Tile {
 	private int right;
 
 	private boolean dead;
+	private boolean attack;
 
 	private int dx;
 	private int dy;
@@ -27,8 +28,8 @@ public class Bryce implements Creature, Tile {
 
 	public Bryce(int x, int y) {
 		// initialize variables
-		health = 25;
-		maxHealth = 25;
+		health = 35;
+		maxHealth = 35;
 		strength = 5;
 		intel = 5;
 		AC = 12;
@@ -42,7 +43,7 @@ public class Bryce implements Creature, Tile {
 		left = 0;
 		up = 0;
 		down = 0;
-
+		attack = false;
 	}
 
 	public void move(Creature MtD, Map map) {
@@ -51,7 +52,9 @@ public class Bryce implements Creature, Tile {
 		// checks to attack MtD
 		if (straightLine(MtD, map)) {
 			this.attack((Charecter) MtD, map);
+			attack = true;
 		} else {
+			attack = false;
 			// finds best way to run away from MtD
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
@@ -280,5 +283,13 @@ public class Bryce implements Creature, Tile {
 
 	public void setHealth(int a) {
 		health = a;
+	}
+	
+	public boolean didAttack() {
+		return attack;
+	}
+	
+	public void setAttack(boolean b) {
+		attack = b;
 	}
 }
