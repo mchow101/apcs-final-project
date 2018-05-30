@@ -55,7 +55,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 		// random enemies
 		genEnemies(monsterCount);
-						
+//			genTyler();			
 		for (int i = 0; i < MtD.stats().length; i++) {
 			toDisplay.add(MtD.stats()[i]);
 		}
@@ -98,7 +98,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 		int randomy;
 		
 
-		for (int i = 0; i < ((int) Math.random() * 8) + 8; i++) {
+		for (int i = 0; i < ((int) Math.random() * 4) + 4; i++) {
 			randomx = (int) Math.random() * 9 - 4;
 			randomy = (int) Math.random() * 9 - 4;
 

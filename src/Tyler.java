@@ -51,11 +51,11 @@ public class Tyler implements Creature, Tile {
 	}
 
 	public Tyler(int x, int y, ArrayList<Creature> enemy) {
-		health = 55;
-		maxHealth = 55;
-		strength = 5;
+		health = 500;
+		maxHealth = 500;
+		strength = 15;
 		intel = 5;
-		AC = 12;
+		AC = 35;
 		this.x = y;
 		this.y = x;
 		prevX = x;
@@ -134,21 +134,26 @@ public class Tyler implements Creature, Tile {
 		int randomy;
 		double rando = Math.random();
 		
-		if (rando > .8 && straightLine(MtD, map) && ((Charecter) MtD).getStrength() > 4)
+		if (((((double) this.health)/this.maxHealth) < .2) && rando > .7) {
+			genTyler(map);
+		}
+		
+		
+		if (rando > .85 && straightLine(MtD, map) && ((Charecter) MtD).getStrength() > 4)
 			((Charecter) MtD).setStrength(((Charecter) MtD).getStrength()-5);
-		else if (rando > .6 && straightLine(MtD, map)) {
+		else if (rando > .65 && straightLine(MtD, map)) {
 			((Charecter) MtD).setHealth(((Charecter) MtD).getHealth()-15);
 			((Charecter) MtD).setMaxHealth(((Charecter) MtD).getMaxHealth()-5);
 		}
 		
-		else if (rando > .5){
+		else if (rando > .55){
 			this.health = maxHealth;
 	}
-		else if (rando > .2 && straightLine(MtD, map)) {
+		else if (rando > .35 && straightLine(MtD, map)) {
 			((Charecter) MtD).setHealth(((Charecter) MtD).getHealth()-10);
 		}
 		
-		else if (rando > .1) {
+		else if (rando > .25) {
 			while (x != this.x || y != this.y) {
 				if (!map.getLevel()[y][x].canContainMonster() && !map.getLevel()[y][x].canContainMtD())
 					map.getLevel()[y][x] = new EmptySpace();
@@ -166,17 +171,11 @@ public class Tyler implements Creature, Tile {
 			}
 		}
 		
-		else if ((((double) this.health)/this.maxHealth) < .1) {
-			genTyler(map);
-		}
-			
 		
 	}
 
 	private void genTyler(Map map) {
-		
-		System.out.println("okay");
-		
+				
 			int randomx;
 			int randomy;
 			
