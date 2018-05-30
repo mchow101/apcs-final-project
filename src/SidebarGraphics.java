@@ -36,18 +36,22 @@ public class SidebarGraphics extends JPanel {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, dim / 2, dim);
 		g.setColor(Color.WHITE);
-		Font plain = new Font("Times New Roman", Font.PLAIN, 18);
-		Font heading = new Font("Times New Roman", Font.BOLD, 20);
+		Font heading = new Font("Times New Roman", Font.BOLD, dim / 30);
+		Font reg = new Font("Times New Roman", Font.PLAIN, dim / 50);
+		int x = dim/30;
 		for(int i = 0; i < display.size(); i++) {
-			if(display.get(i).equals("Player Stats") || display.get(i).equals("Inventory"))
-				g.setFont(heading);
-			else
-				g.setFont(plain);
 			if(Runner.getSelectedIndex() == i)
 				g.setColor(Color.RED);
 			else
 				g.setColor(Color.WHITE);
-			g.drawString(display.get(i), 10, i*22 + 20);
+			if(display.get(i).equals("Player Stats") || display.get(i).equals("Inventory")) {
+				g.setFont(heading);
+				x += dim/30;
+				g.drawString(display.get(i), 10, i*dim/30 + x);
+			} else {
+				g.setFont(reg);
+				g.drawString(display.get(i), 10, i*dim/30 + x);
+			}
 		}
 		frame.repaint();
 	}

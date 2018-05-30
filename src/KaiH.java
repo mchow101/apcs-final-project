@@ -24,6 +24,8 @@ public class KaiH implements Creature, Tile {
 	private int dy;
 
 	private Tile tile;
+	
+	private boolean attack;
 
 	public KaiH(int x, int y) {
 		// initialize stats
@@ -41,7 +43,7 @@ public class KaiH implements Creature, Tile {
 		left = 0;
 		up = 0;
 		down = 0;
-
+		attack = false;
 	}
 
 	// either attacks or moves monster per turn
@@ -51,9 +53,10 @@ public class KaiH implements Creature, Tile {
 		int direction = 0;
 
 		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
+			attack = true;
 			this.attack((Charecter) MtD, map);
 		} else {
-
+			attack = false;
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
@@ -119,6 +122,11 @@ public class KaiH implements Creature, Tile {
 		if (MtD.getHealth() <= 0) {
 			MtD.die(map);
 		}
+		
+	}
+	
+	public boolean didAttack() {
+		return attack;
 	}
 
 	// implemented methods for interfaces
@@ -228,5 +236,9 @@ public class KaiH implements Creature, Tile {
 
 	public void setHealth(int a) {
 		health = a;
+	}
+
+	public void setAttack(boolean b) {
+		attack = b;
 	}
 }

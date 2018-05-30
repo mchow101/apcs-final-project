@@ -19,6 +19,7 @@ public class Tyler implements Creature, Tile {
 	private int right;
 
 	private boolean dead;
+	private static boolean win = false;
 
 	public boolean isDead() {
 		return dead;
@@ -51,8 +52,8 @@ public class Tyler implements Creature, Tile {
 	}
 
 	public Tyler(int x, int y, ArrayList<Creature> enemy) {
-		health = 500;
-		maxHealth = 500;
+		health = 100;
+		maxHealth = 100;
 		strength = 15;
 		intel = 5;
 		AC = 35;
@@ -257,7 +258,8 @@ public class Tyler implements Creature, Tile {
 	public void die(Map map) {
 		map.getLevel()[this.y][this.x] = this.getTile();
 		this.dead = true;
-
+		map.setTyler(true);
+		win = true;
 	}
 
 	public String toString() {
@@ -314,5 +316,9 @@ public class Tyler implements Creature, Tile {
 	public void setDy(int dy) {
 		this.dy = dy;
 
+	}
+
+	public static boolean win() {
+		return win;
 	}
 }

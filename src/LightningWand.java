@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class LightningWand extends Wand {
-
+//seth wuz heer
 	public LightningWand(int x, int y) {
 		super(x, y);
 	}

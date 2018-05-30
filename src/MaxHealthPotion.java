@@ -7,7 +7,7 @@ public class MaxHealthPotion extends Potion implements Tile {
 
 	@Override
 	public void quaff(Charecter MtD) {
-		MtD.setMaxHealth((int) (MtD.getMaxHealth() * 1.5));
+		MtD.setMaxHealth((int) (MtD.getMaxHealth() * 1.15));
 	}
 
 }
