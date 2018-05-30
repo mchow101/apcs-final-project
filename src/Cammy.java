@@ -19,6 +19,7 @@ public class Cammy implements Creature, Tile {
 	private int right;
 
 	private boolean dead;
+	private boolean attack;
 
 	private int dx;
 	private int dy;
@@ -42,7 +43,7 @@ public class Cammy implements Creature, Tile {
 		left = 0;
 		up = 0;
 		down = 0;
-
+		attack = false;
 	}
 
 	// either attacks or moves monster per turn
@@ -53,8 +54,9 @@ public class Cammy implements Creature, Tile {
 
 		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
 			this.attack((Charecter) MtD, map);
+			attack = true;
 		} else {
-
+			attack = false;
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
@@ -79,7 +81,7 @@ public class Cammy implements Creature, Tile {
 				this.setDx(1);
 			else {}
 				//System.out.println(this.dx + " " + this.dy);
-
+		
 		}
 
 		if (this.strength >= Math.random() * 25 && this.health != this.maxHealth) {
@@ -229,6 +231,15 @@ public class Cammy implements Creature, Tile {
 
 	public void setHealth(int a) {
 		health = a;
+	}
+
+	@Override
+	public boolean didAttack() {
+		return attack;
+	}
+	
+	public void setAttack(boolean b) {
+		attack = b;
 	}
 
 }

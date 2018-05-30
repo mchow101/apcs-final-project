@@ -232,4 +232,12 @@ public class Charecter implements Tile, Creature {
 		this.levelPL = levelPL;
 	}
 
+	@Override
+	public boolean didAttack() {
+		return false;
+	}
+	
+	public void setAttack(boolean b) {
+	}
+
 }

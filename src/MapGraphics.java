@@ -176,7 +176,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 
 	private void specialEffects(Graphics g) {
 		for (int i = 0; i < enemy.size(); i++) {
-			if (enemy.get(i) instanceof KaiH && ((KaiH) (enemy.get(i))).didAttack()) {
+			if (enemy.get(i).didAttack()) {
 				g.setColor(Color.WHITE);
 				Image image = Toolkit.getDefaultToolkit().getImage("src/bolt.png");
 				// image from
@@ -396,8 +396,7 @@ public class MapGraphics extends JPanel implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		for (int i = 0; i < enemy.size(); i++) {
-			if (enemy.get(i) instanceof KaiH)
-				((KaiH) (enemy.get(i))).setAttack(false);
+			(enemy.get(i)).setAttack(false);
 		}
 	}
 

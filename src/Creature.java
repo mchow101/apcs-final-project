@@ -18,4 +18,6 @@ public interface Creature {
 	public int getAC();
 	public void attack(Creature enemy, Map map);
 	public int getMaxHealth();
+	public boolean didAttack();
+	public void setAttack(boolean b);
 }

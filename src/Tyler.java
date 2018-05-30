@@ -19,6 +19,7 @@ public class Tyler implements Creature, Tile {
 	private int right;
 
 	private boolean dead;
+	private boolean attack;
 
 	public boolean isDead() {
 		return dead;
@@ -68,6 +69,7 @@ public class Tyler implements Creature, Tile {
 		down = 0;
 
 		this.enemy = enemy;
+		attack = false;
 	}
 
 	public void setEnemy(ArrayList<Creature> enemy) {
@@ -84,8 +86,9 @@ public class Tyler implements Creature, Tile {
 
 		if (Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY()) == 1) {
 			this.attack((Charecter) MtD, map);
+			attack = true;
 		} else if (Math.random() > .125) {
-
+			attack = true;
 			up = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y + 1) - ((Charecter) MtD).getY());
 			down = Math.abs(this.x - ((Charecter) MtD).getX()) + Math.abs((this.y - 1) - ((Charecter) MtD).getY());
 			left = Math.abs((this.x - 1) - ((Charecter) MtD).getX()) + Math.abs(this.y - ((Charecter) MtD).getY());
@@ -314,6 +317,13 @@ public class Tyler implements Creature, Tile {
 	@Override
 	public void setDy(int dy) {
 		this.dy = dy;
-
+	}
+	
+	public boolean didAttack() {
+		return attack;
+	}
+	
+	public void setAttack(boolean b) {
+		attack = b;
 	}
 }
